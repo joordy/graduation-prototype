@@ -1,6 +1,6 @@
 const Home = () => {
     return (
-        <main className="flex flex-col items-center justify-center w-full h-screen">
+        <main className="">
             <h1 className="text-3xl">Hello world</h1>
 
             <a href="/sign-in">Sign in</a>

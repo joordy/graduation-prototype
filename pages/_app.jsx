@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import 'react-toastify/dist/ReactToastify.css'
-import './../styles/globals.css'
+import '_styles/globals.css'
 
 import { supabase } from '_utils/auth/SupabaseClient'
 import {
-    useAuthenticatedUser,
-    useSetAuthenticatedUser,
-} from '_utils/atoms/authenticatedUser'
+    useUserIsAuthenticated,
+    useSetUserIsAuthenticated,
+} from '_utils/atoms/userIsAuthenticated'
+import { useUserData, useSetUserData } from '_utils/atoms/userData'
+
+import Sidebar from '_components/scopes/Sidebar'
 
 const ToastMessage = ({ closeToast, props }) => {
-    console.log(props)
+    // console.log(props)
     return (
         <>
             <a href="/page-two">
@@ -30,15 +32,20 @@ const ToastMessage = ({ closeToast, props }) => {
 
 const App = ({ Component, pageProps }) => {
     const router = useRouter()
+    const [profile, setProfile] = useState(null)
     const [authenticatedState, setAuthenticatedState] =
         useState('not-authenticated')
 
-    const setHeaderState = useSetAuthenticatedUser()
-    const headerState = useAuthenticatedUser()
+    const authenticated = useUserIsAuthenticated()
+    const setHeaderState = useSetUserIsAuthenticated()
+    const userData = useUserData()
+    const setUserData = useSetUserData()
 
-    console.log(headerState)
+    console.log('Authenticated user', authenticatedState, authenticated)
 
     useEffect(() => {
+        fetchProfile()
+
         const { data: authListener } = supabase.auth.onAuthStateChange(
             (event, session) => {
                 handleAuthChange(event, session)
@@ -53,20 +60,34 @@ const App = ({ Component, pageProps }) => {
                 }
             },
         )
+
         checkUser()
+
         return () => {
             authListener.unsubscribe()
         }
     }, [])
-    async function checkUser() {
+
+    const fetchProfile = async () => {
+        const profileData = await supabase.auth.user()
+
+        console.log('profileData from app.js: ', profileData)
+
+        if (!profileData) return
+
+        setUserData(profileData)
+    }
+
+    const checkUser = async () => {
         const user = await supabase.auth.user()
-        console.log(user)
+
         if (user) {
             setAuthenticatedState('authenticated')
+            setHeaderState(true)
         }
     }
 
-    async function handleAuthChange(event, session) {
+    const handleAuthChange = async (event, session) => {
         await fetch('/api/auth', {
             method: 'POST',
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -81,22 +102,6 @@ const App = ({ Component, pageProps }) => {
 
     return (
         <>
-            <nav style={navStyle}>
-                <Link href="/">
-                    <a style={linkStyle}>Home</a>
-                </Link>
-                <Link href="/profile">
-                    <a style={linkStyle}>Profile</a>
-                </Link>
-                {authenticatedState === 'not-authenticated' && (
-                    <Link href="/sign-in">
-                        <a style={linkStyle}>Sign In</a>
-                    </Link>
-                )}
-                <Link href="/protected">
-                    <a style={linkStyle}>Protected</a>
-                </Link>
-            </nav>
             <ToastContainer
                 position="top-right"
                 autoClose={8500}
@@ -106,17 +111,14 @@ const App = ({ Component, pageProps }) => {
                 closeOnClick
                 pauseOnHover
             />
-            <Component {...pageProps} />
+
+            <Sidebar />
+
+            <main className="bg-gray-100 relative left-52 w-[calc(100%-13rem)] flex flex-col items-center justify-center h-screen">
+                <Component {...pageProps} />
+            </main>
         </>
     )
-}
-
-const navStyle = {
-    margin: 20,
-}
-
-const linkStyle = {
-    marginRight: 10,
 }
 
 export default App
