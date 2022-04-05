@@ -1,6 +1,9 @@
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import './../styles/globals.css'
+// import '_styles/globals.css'
+
 const ToastMessage = ({ closeToast, props }) => {
     console.log(props)
     return (
@@ -19,7 +22,7 @@ const ToastMessage = ({ closeToast, props }) => {
 const App = ({ Component, pageProps }) => {
     setTimeout(() => {
         toast(<ToastMessage id={1234567} />, { toastId: 1234567 })
-    }, 7500)
+    }, 750000)
 
     return (
         <>

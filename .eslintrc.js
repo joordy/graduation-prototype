@@ -11,9 +11,19 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['react', 'require-jsdoc-except'],
+    plugins: [
+        'plugin:tailwindcss/recommended',
+        'react',
+        'require-jsdoc-except',
+    ],
     rules: {
         'react/react-in-jsx-scope': 'off',
+        'tailwindcss/classnames-order': [
+            'warn',
+            {
+                officialSorting: true,
+            },
+        ], // Follow the same ordering as the official plugin `prettier-plugin-tailwindcss`
     },
     settings: {
         react: {
