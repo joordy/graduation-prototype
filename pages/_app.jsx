@@ -7,41 +7,26 @@ import '_styles/globals.css'
 
 import { supabase } from '_utils/auth/SupabaseClient'
 import {
-    useUserIsAuthenticated,
-    useSetUserIsAuthenticated,
+    useUserIsAuth,
+    useSetUserIsAuth,
 } from '_utils/atoms/userIsAuthenticated'
 import { useUserData, useSetUserData } from '_utils/atoms/userData'
+import { useToggleHeader } from '_utils/atoms/toggleHeader'
 
 import Sidebar from '_components/scopes/Sidebar'
-
-const ToastMessage = ({ closeToast, props }) => {
-    // console.log(props)
-    return (
-        <>
-            <a href="/page-two">
-                <h1>Mammut.com</h1>
-                <p>Contentful stopped working</p>
-            </a>
-            <div>
-                <button>View details</button>
-                <button onClick={closeToast}>Close</button>
-            </div>
-        </>
-    )
-}
+import Notification from '_components/common/Notification'
 
 const App = ({ Component, pageProps }) => {
     const router = useRouter()
-    const [profile, setProfile] = useState(null)
     const [authenticatedState, setAuthenticatedState] =
         useState('not-authenticated')
 
-    const authenticated = useUserIsAuthenticated()
-    const setHeaderState = useSetUserIsAuthenticated()
+    // Jotai States
+    const authenticated = useUserIsAuth()
+    const setHeaderState = useSetUserIsAuth()
     const userData = useUserData()
     const setUserData = useSetUserData()
-
-    console.log('Authenticated user', authenticatedState, authenticated)
+    const toggledHeader = useToggleHeader()
 
     useEffect(() => {
         fetchProfile()
@@ -71,8 +56,6 @@ const App = ({ Component, pageProps }) => {
     const fetchProfile = async () => {
         const profileData = await supabase.auth.user()
 
-        console.log('profileData from app.js: ', profileData)
-
         if (!profileData) return
 
         setUserData(profileData)
@@ -97,14 +80,23 @@ const App = ({ Component, pageProps }) => {
     }
 
     setTimeout(() => {
-        toast(<ToastMessage id={1234567} />, { toastId: 1234567 })
-    }, 750000)
+        toast(
+            <Notification
+                id={1234567}
+                projectName={'Mammut.com'}
+                shortDescription={'Contentful stopped working'}
+                pathName={'notifications/hellothere'}
+            />,
+            { toastId: 1234567 },
+        )
+    }, 7500)
 
     return (
         <>
             <ToastContainer
                 position="top-right"
-                autoClose={8500}
+                // autoClose={8500}
+                autoClose={false}
                 hideProgressBar={false}
                 draggable={true}
                 progress={undefined}
@@ -114,7 +106,18 @@ const App = ({ Component, pageProps }) => {
 
             <Sidebar />
 
-            <main className="bg-gray-100 relative left-52 w-[calc(100%-13rem)] flex flex-col items-center justify-center h-screen">
+            <main
+                className={`
+                    z-1 relative flex h-screen flex-col items-center justify-center bg-gray-100
+                    ${toggledHeader ? 'left-20' : 'left-52'}
+                    ${
+                        toggledHeader
+                            ? 'w-[calc(100%-5rem)]'
+                            : 'w-[calc(100%-13rem)]'
+                    } 
+                    duration-200 ease-in
+                `}
+            >
                 <Component {...pageProps} />
             </main>
         </>

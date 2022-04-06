@@ -26,10 +26,12 @@
         "eslint-config-next": "12.1.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-jsdoc": "^38.0.6",
+        "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.29.4",
         "eslint-plugin-tailwindcss": "^3.5.0",
         "postcss": "^8.4.12",
-        "prettier": "2.6.0",
+        "prettier": "^2.6.2",
+        "prettier-plugin-tailwindcss": "^0.1.8",
         "tailwindcss": "^3.0.23"
     },
     "prettier": {

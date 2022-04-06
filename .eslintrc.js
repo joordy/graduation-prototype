@@ -3,7 +3,12 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    extends: ['plugin:react/recommended', 'google', 'prettier'],
+    extends: [
+        'plugin:react/recommended',
+        'google',
+        'prettier',
+        'plugin:prettier/recommended',
+    ],
     parserOptions: {
         ecmaFeatures: {
             jsx: true,
@@ -24,6 +29,7 @@ module.exports = {
                 officialSorting: true,
             },
         ], // Follow the same ordering as the official plugin `prettier-plugin-tailwindcss`
+        'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     },
     settings: {
         react: {

@@ -17,6 +17,7 @@ const Profile = () => {
         await supabase.auth.signOut()
         router.push('/sign-in')
     }
+
     // const update = async () => {
     //     const { user, error } = await supabase.auth.update({
     //         data: {
