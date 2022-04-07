@@ -1,6 +1,6 @@
 const Notification = (
     props,
-    { projectName, shortDescription, pathName, closeToast },
+    { projectName = '', shortDescription = '', pathName = '#', closeToast },
 ) => {
     console.log(props)
     return (
@@ -9,7 +9,8 @@ const Notification = (
                 <h1>{projectName}</h1>
                 <p>{shortDescription}</p>
             </a>
-            <div>
+            <p className="mb-2 text-2xl font-bold">hello?</p>
+            <div className="flex justify-between">
                 <a href="">View details</a>
                 <button onClick={closeToast}>Close</button>
             </div>
