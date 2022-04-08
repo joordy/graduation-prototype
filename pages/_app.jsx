@@ -91,6 +91,8 @@ const App = ({ Component, pageProps }) => {
         )
     }, 7500)
 
+    // const width = toggledHeader ? 'w-[calc(100%-5rem)]' : 'w-[calc(100%-13rem)]'
+
     return (
         <>
             <ToastContainer
@@ -106,14 +108,16 @@ const App = ({ Component, pageProps }) => {
 
             <Sidebar />
 
+            {/* <Main width={width} /> */}
+
             <main
                 className={`
-                    z-1 relative flex h-screen flex-col items-center justify-center bg-gray-100
-                    ${toggledHeader ? 'left-20' : 'left-52'}
+                z-1 relative  flex h-screen flex-col items-center justify-center bg-gray-100
+                    ${toggledHeader ? 'left-20' : 'left-[300px]'}
                     ${
                         toggledHeader
                             ? 'w-[calc(100%-5rem)]'
-                            : 'w-[calc(100%-13rem)]'
+                            : 'w-[calc(100%-300px)]'
                     } 
                     duration-200 ease-in
                 `}

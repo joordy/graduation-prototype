@@ -16,11 +16,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: [
-        'plugin:tailwindcss/recommended',
-        'react',
-        'require-jsdoc-except',
-    ],
+    plugins: ['react', 'require-jsdoc-except'],
     rules: {
         'react/react-in-jsx-scope': 'off',
         'tailwindcss/classnames-order': [
