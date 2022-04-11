@@ -1,7 +1,7 @@
 import { supabase } from '_utils/database/init'
 
-const Protected = ({ user }) => {
-    console.log({ user })
+const Protected = ({ userData, ...props }) => {
+    console.log({ userData })
 
     return (
         <div style={{ maxWidth: '420px' }}>
@@ -17,7 +17,7 @@ export async function getServerSideProps({ req }) {
         return { props: {}, redirect: { destination: '/sign-in' } }
     }
 
-    return { props: { user } }
+    return { props: { userData: user } }
 }
 
 export default Protected

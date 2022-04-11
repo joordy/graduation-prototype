@@ -1,40 +1,17 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 
-// import { useSetIsUserAuth } from '_utils/atoms/isUserAuth'
-// import { useUserData } from '_utils/atoms/userData'
+import { PROJECT_DATA } from '_utils/siteData'
+
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 
-const Sidebar = ({ userData, ...props }) => {
+import NavElement from '_components/blocks/navigation/NavElement'
+
+const Sidebar = ({ userData, projectData, ...props }) => {
     const navigationRef = useRef()
-    // const authenticated = useUserIsAuth()
-    // const userData = useUserData()
 
     const toggledHeader = useToggleHeader()
     const setToggledHeader = useSetToggleHeader()
-
-    const projects = [
-        {
-            icon: '/icons/mammut.ico',
-            projectName: 'Mammut',
-            slug: 'mammut',
-        },
-        {
-            icon: '/icons/foam_icon.png',
-            projectName: 'Foam',
-            slug: 'foam',
-        },
-        {
-            icon: '/icons/landofride.ico',
-            projectName: 'Land of Ride',
-            slug: 'land-of-ride',
-        },
-        {
-            icon: '/icons/aubade_icon.png',
-            projectName: 'Aubade',
-            slug: 'aubade',
-        },
-    ]
 
     const widthAbove =
         navigationRef?.current?.getBoundingClientRect().width >= 207
@@ -43,10 +20,11 @@ const Sidebar = ({ userData, ...props }) => {
         setToggledHeader(!toggledHeader)
     }
 
-    // useEffect(() => {
-    // console.log(navigationRef?.current?.getBoundingClientRect()?.width)
-    // console.log(navigationRef?.current?.getBoundingClientRect())
-    // }, [toggledHeader, navigationRef?.current])
+    const test = useMemo(() => {
+        return navigationRef?.current?.getBoundingClientRect().width >= 299
+    }, [navigationRef?.current])
+
+    console.log('🚀 ~ file: Sidebar.jsx ~ line 53 ~ test ~ test', test)
 
     const navPadding = toggledHeader ? 'px-5 py-5' : 'px-11 py-5'
     const navWidth = toggledHeader ? 'w-20' : 'w-[300px]'
@@ -54,7 +32,7 @@ const Sidebar = ({ userData, ...props }) => {
     return (
         <nav
             ref={navigationRef}
-            className={`absolute h-screen rounded-r-2xl bg-white ${navWidth} ${navPadding}  duration-200 ease-in`}
+            className={`absolute h-screen rounded-r-2xl bg-white ${navWidth} ${navPadding}  duration-100 ease-in`}
         >
             <button
                 onClick={toggle}
@@ -63,7 +41,7 @@ const Sidebar = ({ userData, ...props }) => {
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-6 w-6 ${toggledHeader ? 'rotate-180' : ''}`}
+                    className={`h-6 w-6  ${toggledHeader ? 'rotate-180' : ''}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -74,45 +52,29 @@ const Sidebar = ({ userData, ...props }) => {
                         strokeLinejoin="round"
                         d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
                     />
-                </svg>{' '}
+                </svg>
             </button>
             <div className="flex flex-col items-center justify-between h-full">
-                <Link href="/">
-                    <a>
-                        <h1>Uptime</h1>
-                    </a>
-                </Link>
-                <ul>
-                    {projects.map(({ icon, projectName, slug }, i) => {
+                <NavElement name={'ErrorDetect'} slug={'/'} />
+
+                <ul className="block max-h-[75%] overflow-auto">
+                    {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
                         return (
-                            <li key={i} className="my-2 ">
-                                <Link href={`/projects/${slug}`}>
-                                    <a className="flex flex-row items-center">
-                                        <img
-                                            src={icon}
-                                            alt={`icon of ${projectName}`}
-                                            className="h-[32px] w-[32px]"
-                                        />
-                                        {!toggledHeader && (
-                                            <span className="ml-2 ">
-                                                {projectName}
-                                            </span>
-                                        )}
-                                    </a>
-                                </Link>
+                            <li className="my-4 ">
+                                <NavElement
+                                    key={i}
+                                    name={projectName}
+                                    slug={`/projects/${slug}`}
+                                    icon={icon}
+                                />
                             </li>
                         )
                     })}
-                    <li>
-                        <Link href="/notifications/">
-                            <a>Notification center</a>
-                        </Link>
-                    </li>
                 </ul>
 
                 {userData ? (
                     <Link href="/profile">
-                        <a className="flex text-hotpink">
+                        <a className="flex ">
                             <span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -129,9 +91,11 @@ const Sidebar = ({ userData, ...props }) => {
                                     />
                                 </svg>
                             </span>
-                            <p className="px-2">
-                                Hi, {userData.user_metadata.name}!
-                            </p>
+                            {!toggledHeader && (
+                                <p className="px-2">
+                                    Hi, {userData.user_metadata.name}!
+                                </p>
+                            )}
                         </a>
                     </Link>
                 ) : (
@@ -153,7 +117,7 @@ const Sidebar = ({ userData, ...props }) => {
                                     />
                                 </svg>
                             </span>
-                            Log in
+                            {!toggledHeader && <p>Log in</p>}
                         </a>
                     </Link>
                 )}

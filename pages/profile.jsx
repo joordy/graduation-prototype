@@ -1,8 +1,13 @@
 import { useRouter } from 'next/router'
 
 import { supabase } from '_utils/database/init'
+import { PROJECT_DATA } from '_utils/siteData'
 
-const Profile = ({ userData, ...props }) => {
+const Profile = ({ userData, projectData, ...props }) => {
+    console.log(
+        '🚀 ~ file: profile.jsx ~ line 7 ~ Profile ~ projectData',
+        projectData,
+    )
     const router = useRouter()
 
     const signOut = async () => {
@@ -38,23 +43,44 @@ const Profile = ({ userData, ...props }) => {
 
         console.log(data, error)
     }
+
+    const handleSubmit = (e) => {}
     return (
-        <div>
-            <button onClick={updateData}>set profile data</button>
-            <button onClick={signOut}>Sign Out</button>
-            <pre>{JSON.stringify(userData, null, 2)}</pre>
-        </div>
+        <>
+            <div>
+                <button onClick={updateData}>set profile data</button>
+                <button onClick={signOut}>Sign Out</button>
+                <pre>{JSON.stringify(userData, null, 2)}</pre>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <fieldset className="flex flex-col">
+                    {projectData.map(({ projectName }, i) => {
+                        return (
+                            <label key={i}>
+                                {projectName}
+                                <input type="checkbox" text="ji" />
+                            </label>
+                        )
+                    })}
+                </fieldset>
+            </form>
+        </>
     )
 }
 
 export async function getServerSideProps({ req }) {
+    const projectData = PROJECT_DATA
+    console.log(
+        '🚀 ~ file: profile.jsx ~ line 60 ~ getServerSideProps ~ PROJECT_DATA',
+        PROJECT_DATA,
+    )
     const { user } = await supabase.auth.api.getUserByCookie(req)
 
     if (!user) {
         return { props: {}, redirect: { destination: '/sign-in' } }
     }
 
-    return { props: { userData: user } }
+    return { props: { userData: user, projectData } }
 }
 
 export default Profile
