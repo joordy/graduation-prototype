@@ -23,8 +23,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
 
 export async function getStaticProps() {
     const data = NOTIFICATION_DATA
-
-    console.log(data)
+    console.log('🚀 ~ file: index.jsx ~ line 26 ~ getStaticProps ~ data', data)
 
     return {
         props: { notifications: data },

@@ -5,7 +5,8 @@ import { useUserIsAuth } from '_utils/atoms/userIsAuthenticated'
 import { useUserData } from '_utils/atoms/userData'
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
+    console.log(user)
     const navigationRef = useRef()
     const authenticated = useUserIsAuth()
     const userData = useUserData()
@@ -105,7 +106,7 @@ const Sidebar = () => {
                     })}
                     <li>
                         <Link href="/notifications/">
-                            <a style={linkStyle}>Notification center</a>
+                            <a>Notification center</a>
                         </Link>
                     </li>
                     {/* 
@@ -113,18 +114,18 @@ const Sidebar = () => {
                         <>
                             <li>
                                 <Link href="/">
-                                    <a style={linkStyle}>Home</a>
+                                    <a >Home</a>
                                 </Link>
                             </li>
 
                             <li>
                                 <Link href="/sign-in">
-                                    <a style={linkStyle}>Sign In</a>
+                                    <a >Sign In</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/protected">
-                                    <a style={linkStyle}>Protected</a>
+                                    <a >Protected</a>
                                 </Link>
                             </li>
                         </>
@@ -133,8 +134,26 @@ const Sidebar = () => {
 
                 {userData ? (
                     <Link href="/profile">
-                        <a className="text-hotpink">
-                            Hi, {userData.user_metadata.name}!
+                        <a className="flex text-hotpink">
+                            <span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                    />
+                                </svg>
+                            </span>
+                            <p className="px-2">
+                                Hi, {userData.user_metadata.name}!
+                            </p>
                         </a>
                     </Link>
                 ) : (
@@ -163,10 +182,6 @@ const Sidebar = () => {
             </div>
         </nav>
     )
-}
-
-const linkStyle = {
-    marginRight: 10,
 }
 
 export default Sidebar

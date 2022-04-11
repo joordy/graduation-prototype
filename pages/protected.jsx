@@ -13,8 +13,6 @@ const Protected = ({ user }) => {
 export async function getServerSideProps({ req }) {
     const { user } = await supabase.auth.api.getUserByCookie(req)
 
-    console.log('user', user)
-
     if (!user) {
         return { props: {}, redirect: { destination: '/sign-in' } }
     }

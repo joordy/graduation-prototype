@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { PROJECT_DATA } from '_utils/siteData'
 
 const Project = ({ projectName, ...props }) => {
-    console.log(props)
+    console.log('🚀 ~ file: [slug].jsx ~ line 6 ~ Project ~ props', props)
     return (
         <>
             <Head>

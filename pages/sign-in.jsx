@@ -2,6 +2,12 @@ import { useState } from 'react'
 
 import { supabase } from '_utils/auth/SupabaseClient'
 
+import {
+    useUserIsAuth,
+    useSetUserIsAuth,
+} from '_utils/atoms/userIsAuthenticated'
+import { useUserData, useSetUserData } from '_utils/atoms/userData'
+
 const SignIn = () => {
     const [email, setEmail] = useState('')
     const [submitted, setSubmitted] = useState(false)
@@ -24,16 +30,9 @@ const SignIn = () => {
         }
         return
     }
-    if (submitted) {
-        return (
-            <div>
-                <h1>Please check your email to sign in</h1>
-            </div>
-        )
-    }
 
     return (
-        <div className="absolute top-0 -left-[300px] z-10 flex h-screen w-screen flex-col items-center justify-center bg-grey-100">
+        <div className="flex flex-col items-center justify-center w-screen h-screen bg-grey-100">
             <h1 className="text-3xl">Hello world</h1>
 
             <div className="flex items-center justify-center bg-gray-800">
@@ -51,8 +50,6 @@ const SignIn = () => {
 
 export async function getServerSideProps({ req }) {
     const { user } = await supabase.auth.api.getUserByCookie(req)
-
-    console.log('user', user)
 
     if (user) {
         return { props: {}, redirect: { destination: '/' } }

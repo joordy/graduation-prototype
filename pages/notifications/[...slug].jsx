@@ -1,7 +1,10 @@
 import { NOTIFICATION_DATA } from '_utils/siteData'
 
 const Notification = ({ slug, ...props }) => {
-    console.log(props)
+    console.log(
+        '🚀 ~ file: [...slug].jsx ~ line 4 ~ Notification ~ props',
+        props,
+    )
     return (
         <>
             <h1 className="text-3xl">notificatie van {slug}</h1>

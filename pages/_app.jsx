@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import '_styles/globals.css'
 
 import { supabase } from '_utils/auth/SupabaseClient'
+
 import {
     useUserIsAuth,
     useSetUserIsAuth,
@@ -16,8 +17,10 @@ import { useToggleHeader } from '_utils/atoms/toggleHeader'
 import Sidebar from '_components/scopes/Sidebar'
 import Notification from '_components/common/Notification'
 
-const App = ({ Component, pageProps }) => {
+const App = ({ user, Component, pageProps }) => {
     const router = useRouter()
+
+    // console.log('🚀 ~ file: _app.jsx ~ line 21 ~ App ~ router', router)
     const [authenticatedState, setAuthenticatedState] =
         useState('not-authenticated')
 
@@ -28,9 +31,9 @@ const App = ({ Component, pageProps }) => {
     const setUserData = useSetUserData()
     const toggledHeader = useToggleHeader()
 
-    useEffect(() => {
-        fetchProfile()
+    console.log('app.jsx', { authenticated: authenticated, userData: userData })
 
+    useEffect(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange(
             (event, session) => {
                 handleAuthChange(event, session)
@@ -60,6 +63,8 @@ const App = ({ Component, pageProps }) => {
 
         setUserData(profileData)
     }
+
+    fetchProfile()
 
     const checkUser = async () => {
         const user = await supabase.auth.user()
@@ -93,6 +98,13 @@ const App = ({ Component, pageProps }) => {
 
     // const width = toggledHeader ? 'w-[calc(100%-5rem)]' : 'w-[calc(100%-13rem)]'
 
+    if (router.pathname === '/sign-in') {
+        return (
+            <main>
+                <Component {...pageProps} />
+            </main>
+        )
+    }
     return (
         <>
             <ToastContainer
@@ -106,7 +118,7 @@ const App = ({ Component, pageProps }) => {
                 pauseOnHover
             />
 
-            <Sidebar />
+            <Sidebar user={user} />
 
             {/* <Main width={width} /> */}
 
@@ -128,5 +140,21 @@ const App = ({ Component, pageProps }) => {
         </>
     )
 }
+
+// export async function getInitialProps(appContext) {
+//     console.log('hi', appContext)
+//     return {
+//         props: {
+//             user: 'hi',
+//         },
+//     }
+//     // const { user } = await supabase.auth.api.getUserByCookie(req)
+//     // console.log(
+//     //     '🚀 ~ file: _app.jsx ~ line 134 ~ getServerSideProps ~ user',
+//     //     user,
+//     // )
+
+//     // return { props: { user } }
+// }
 
 export default App
