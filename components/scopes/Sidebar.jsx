@@ -108,6 +108,7 @@ const Sidebar = () => {
                             <a style={linkStyle}>Notification center</a>
                         </Link>
                     </li>
+                    {/* 
                     {widthAbove && !toggledHeader && !authenticated && (
                         <>
                             <li>
@@ -127,12 +128,14 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                         </>
-                    )}
+                    )} */}
                 </ul>
 
                 {userData ? (
                     <Link href="/profile">
-                        <a>{userData.user_metadata.name}</a>
+                        <a className="text-hotpink">
+                            Hi, {userData.user_metadata.name}!
+                        </a>
                     </Link>
                 ) : (
                     <Link href="/protected">
