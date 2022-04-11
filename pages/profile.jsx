@@ -1,39 +1,48 @@
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { supabase } from '_utils/auth/SupabaseClient'
-import { useUserData } from '_utils/atoms/userData'
+import { supabase } from '_utils/database/init'
 
-const Profile = () => {
+const Profile = ({ userData, ...props }) => {
     const router = useRouter()
-
-    const userData = useUserData()
-
-    useEffect(() => {
-        if (!userData) router.push('/sign-in')
-    }, [])
 
     const signOut = async () => {
         await supabase.auth.signOut()
         router.push('/sign-in')
     }
 
-    // const update = async () => {
-    //     const { user, error } = await supabase.auth.update({
-    //         data: {
-    //             city: 'Amsterdam',
-    //         },
-    //     })
-    // }
+    console.log(userData)
 
-    if (!userData) return null
+    const updateData = async () => {
+        const checkIfUserExist = await supabase
+            .from('users')
+            .select(userData.email)
 
+        if (checkIfUserExist.error.message.includes('does not exist')) {
+            const { data, error } = await supabase.from('users').insert([
+                {
+                    user_id: userData.id,
+                    name: userData.email,
+                    assigned_projects: ['mammut', 'foam', 'land of ride'],
+                },
+            ])
+        }
+
+        const { data, error } = await supabase
+            .from('users')
+            .update([
+                {
+                    assigned_projects: ['mammut', 'foam', 'land of ride'],
+                },
+            ])
+            .match({ name: userData.email })
+
+        console.log(data, error)
+    }
     return (
-        <div style={{ maxWidth: '420px' }}>
-            <h2>Hello, {userData.email}</h2>
-            <p>User ID: {userData.id}</p>
+        <div>
+            <button onClick={updateData}>set profile data</button>
             <button onClick={signOut}>Sign Out</button>
-            {/* <button onClick={update}>Set Attribute</button> */}
+            <pre>{JSON.stringify(userData, null, 2)}</pre>
         </div>
     )
 }
@@ -45,7 +54,7 @@ export async function getServerSideProps({ req }) {
         return { props: {}, redirect: { destination: '/sign-in' } }
     }
 
-    return { props: { user } }
+    return { props: { userData: user } }
 }
 
 export default Profile

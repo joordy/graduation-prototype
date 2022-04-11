@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 
-import { useUserIsAuth } from '_utils/atoms/userIsAuthenticated'
-import { useUserData } from '_utils/atoms/userData'
+// import { useSetIsUserAuth } from '_utils/atoms/isUserAuth'
+// import { useUserData } from '_utils/atoms/userData'
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 
-const Sidebar = ({ user }) => {
-    console.log(user)
+const Sidebar = ({ userData, ...props }) => {
     const navigationRef = useRef()
-    const authenticated = useUserIsAuth()
-    const userData = useUserData()
+    // const authenticated = useUserIsAuth()
+    // const userData = useUserData()
 
     const toggledHeader = useToggleHeader()
     const setToggledHeader = useSetToggleHeader()
@@ -109,27 +108,6 @@ const Sidebar = ({ user }) => {
                             <a>Notification center</a>
                         </Link>
                     </li>
-                    {/* 
-                    {widthAbove && !toggledHeader && !authenticated && (
-                        <>
-                            <li>
-                                <Link href="/">
-                                    <a >Home</a>
-                                </Link>
-                            </li>
-
-                            <li>
-                                <Link href="/sign-in">
-                                    <a >Sign In</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/protected">
-                                    <a >Protected</a>
-                                </Link>
-                            </li>
-                        </>
-                    )} */}
                 </ul>
 
                 {userData ? (

@@ -1,4 +1,4 @@
-import { supabase } from '_utils/auth/SupabaseClient'
+import { supabase } from '_utils/database/init'
 
 const Protected = ({ user }) => {
     console.log({ user })
