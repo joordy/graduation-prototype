@@ -112,7 +112,8 @@ const App = ({ Component, pageProps }) => {
 
             <main
                 className={`
-                z-1 relative  flex h-screen flex-col items-center justify-center bg-gray-100
+                z-1 relative flex h-screen flex-col 
+                items-center justify-center 
                     ${toggledHeader ? 'left-20' : 'left-[300px]'}
                     ${
                         toggledHeader

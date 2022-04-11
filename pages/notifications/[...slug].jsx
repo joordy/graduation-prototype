@@ -3,11 +3,9 @@ import { NOTIFICATION_DATA } from '_utils/siteData'
 const Notification = ({ slug, ...props }) => {
     console.log(props)
     return (
-        <main className="">
+        <>
             <h1 className="text-3xl">notificatie van {slug}</h1>
-
-            <a href="/sign-in">Sign in</a>
-        </main>
+        </>
     )
 }
 

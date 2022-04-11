@@ -4,7 +4,7 @@ class MyDocument extends Document {
     render = () => (
         <Html lang="en">
             <Head></Head>
-            <body>
+            <body className="bg-grey-50">
                 <Main />
                 <NextScript style={{ display: 'none' }} />
             </body>

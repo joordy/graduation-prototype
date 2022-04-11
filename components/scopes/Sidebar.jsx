@@ -48,26 +48,44 @@ const Sidebar = () => {
     // console.log(navigationRef?.current?.getBoundingClientRect())
     // }, [toggledHeader, navigationRef?.current])
 
-    const navPadding = toggledHeader ? 'px-5' : 'px-11'
+    const navPadding = toggledHeader ? 'px-5 py-5' : 'px-11 py-5'
     const navWidth = toggledHeader ? 'w-20' : 'w-[300px]'
+
     return (
         <nav
             ref={navigationRef}
-            className={`absolute h-screen rounded-r-2xl ${navWidth} #{navPadding} bg-fuchsia-400 duration-200 ease-in`}
+            className={`absolute h-screen rounded-r-2xl bg-white ${navWidth} ${navPadding}  duration-200 ease-in`}
         >
             <button
                 onClick={toggle}
-                className="absolute w-8 h-8 rounded-r-lg top-8 -right-8 bg-fuchsia-400"
+                className="absolute w-8 h-8 bg-white rounded-r-lg top-8 -right-8"
                 style={{ zIndex: 1 }}
             >
-                &lt;
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-6 w-6 ${toggledHeader ? 'rotate-180' : ''}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                    />
+                </svg>{' '}
             </button>
-            <div className="flex flex-col items-center justify-between h-screen">
-                <div></div>
+            <div className="flex flex-col items-center justify-between h-full">
+                <Link href="/">
+                    <a>
+                        <h1>Uptime</h1>
+                    </a>
+                </Link>
                 <ul>
                     {projects.map(({ icon, projectName, slug }, i) => {
                         return (
-                            <li index={i} className="my-2 ">
+                            <li key={i} className="my-2 ">
                                 <Link href={`/projects/${slug}`}>
                                     <a className="flex flex-row items-center">
                                         <img
@@ -117,7 +135,27 @@ const Sidebar = () => {
                         <a>{userData.user_metadata.name}</a>
                     </Link>
                 ) : (
-                    <span></span>
+                    <Link href="/protected">
+                        <a className="flex px-8 py-2 border rounded-md border-grey-900 stroke-grey-900 text-grey-900">
+                            <span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6 "
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                                    />
+                                </svg>
+                            </span>
+                            Log in
+                        </a>
+                    </Link>
                 )}
             </div>
         </nav>

@@ -15,7 +15,7 @@ const SignIn = () => {
             const { user, session, error } = await supabase.auth.signIn({
                 provider: 'google',
             })
-
+            console.log({ user: user, session: session, error: error })
             if (error) {
                 console.log(error)
             } else {
@@ -33,7 +33,7 @@ const SignIn = () => {
     }
 
     return (
-        <main className="flex flex-col items-center justify-center w-full h-screen">
+        <div className="absolute top-0 -left-[300px] z-10 flex h-screen w-screen flex-col items-center justify-center bg-grey-100">
             <h1 className="text-3xl">Hello world</h1>
 
             <div className="flex items-center justify-center bg-gray-800">
@@ -41,12 +41,24 @@ const SignIn = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     style={{ margin: 10 }}
                 />
-                <button onClick={() => handleLogin()} className="text-white">
+                <button onClick={() => handleLogin()} className="">
                     Sign In
                 </button>
             </div>
-        </main>
+        </div>
     )
+}
+
+export async function getServerSideProps({ req }) {
+    const { user } = await supabase.auth.api.getUserByCookie(req)
+
+    console.log('user', user)
+
+    if (user) {
+        return { props: {}, redirect: { destination: '/' } }
+    }
+
+    return { props: { user } }
 }
 
 export default SignIn

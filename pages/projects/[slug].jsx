@@ -1,13 +1,16 @@
+import Head from 'next/head'
+
 import { PROJECT_DATA } from '_utils/siteData'
 
 const Project = ({ projectName, ...props }) => {
     console.log(props)
     return (
-        <main className="">
+        <>
+            <Head>
+                <title>{projectName} — Uptime Tracker</title>
+            </Head>
             <h1 className="text-3xl">{projectName}</h1>
-
-            <a href="/sign-in">Sign in</a>
-        </main>
+        </>
     )
 }
 
