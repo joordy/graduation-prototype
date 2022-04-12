@@ -24,8 +24,6 @@ const Sidebar = ({ userData, projectData, ...props }) => {
         return navigationRef?.current?.getBoundingClientRect().width >= 299
     }, [navigationRef?.current])
 
-    console.log('🚀 ~ file: Sidebar.jsx ~ line 53 ~ test ~ test', test)
-
     const navPadding = toggledHeader ? 'px-5 py-5' : 'px-11 py-5'
     const navWidth = toggledHeader ? 'w-20' : 'w-[300px]'
 

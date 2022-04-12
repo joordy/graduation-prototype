@@ -7,42 +7,51 @@ const Home = ({ userData, notificationData, ...props }) => {
     console.log('user dataaaaa', props)
 
     return (
-        <div className="w-full h-full px-16 py-8">
-            <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
+        <section className="w-full h-full px-16 py-8">
+            <header>
+                <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
+            </header>
 
-            <ul className=" flex w-[50%] flex-col gap-y-4">
-                {notificationData.map(
-                    (
-                        { projectName, projectIcon, shortDescription, slug },
-                        i,
-                    ) => {
-                        return (
-                            <li key={i} className="p-4 bg-white rounded-xl">
-                                <Link href={`/notifications/${slug}`}>
-                                    <a>
-                                        <div className="flex">
-                                            <div>
-                                                <img
-                                                    src={projectIcon}
-                                                    alt={`icon of ${projectName}`}
-                                                    className="h-[32px] w-[32px]"
-                                                />{' '}
+            <main>
+                <ul className=" flex w-[50%] flex-col gap-y-4">
+                    {notificationData.map(
+                        (
+                            {
+                                projectName,
+                                projectIcon,
+                                shortDescription,
+                                slug,
+                            },
+                            i,
+                        ) => {
+                            return (
+                                <li key={i} className="p-4 bg-white rounded-xl">
+                                    <Link href={`/notifications/${slug}`}>
+                                        <a>
+                                            <div className="flex">
+                                                <div>
+                                                    <img
+                                                        src={projectIcon}
+                                                        alt={`icon of ${projectName}`}
+                                                        className="h-[32px] w-[32px]"
+                                                    />{' '}
+                                                </div>
+                                                <div className="ml-4">
+                                                    <p className="text-xl font-bold">
+                                                        {projectName}
+                                                    </p>
+                                                    <p>{shortDescription}</p>
+                                                </div>
                                             </div>
-                                            <div className="ml-4">
-                                                <p className="text-xl font-bold">
-                                                    {projectName}
-                                                </p>
-                                                <p>{shortDescription}</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </Link>
-                            </li>
-                        )
-                    },
-                )}
-            </ul>
-        </div>
+                                        </a>
+                                    </Link>
+                                </li>
+                            )
+                        },
+                    )}
+                </ul>
+            </main>
+        </section>
     )
 }
 
