@@ -5,7 +5,7 @@ import { PROJECT_DATA } from '_utils/siteData'
 
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 
-import NavElement from '_components/blocks/navigation/NavElement'
+import NavElement from '_components/blocks/NavElement'
 
 const Sidebar = ({ userData, projectData, ...props }) => {
     const navigationRef = useRef()
@@ -30,7 +30,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
     return (
         <nav
             ref={navigationRef}
-            className={`absolute h-screen rounded-r-2xl bg-white ${navWidth} ${navPadding}  duration-100 ease-in`}
+            className={`absolute h-screen rounded-r-2xl bg-white ${navWidth} ${navPadding}  duration-200 ease-in`}
         >
             <button
                 onClick={toggle}
@@ -53,12 +53,20 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                 </svg>
             </button>
             <div className="flex flex-col items-center justify-between h-full">
-                <NavElement name={'ErrorDetect'} slug={'/'} />
-
-                <ul className="block max-h-[75%] overflow-auto">
+                {/* <NavElement name={'ErrorDetect'} slug={'/'} /> */}
+                <Link href="/">
+                    <a className="flex ">
+                        {toggledHeader ? 'ED' : 'ErrorDetect '}
+                    </a>
+                </Link>
+                <ul
+                    className={`block max-h-[75%] ${
+                        toggledHeader ? 'w-[32px]' : 'w-full'
+                    } overflow-auto duration-200 ease-in`}
+                >
                     {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
                         return (
-                            <li className="my-4 ">
+                            <li className="my-4 w-max">
                                 <NavElement
                                     key={i}
                                     name={projectName}
@@ -72,7 +80,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
 
                 {userData ? (
                     <Link href="/profile">
-                        <a className="flex ">
+                        <a className={`flex w-max`}>
                             <span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -89,11 +97,14 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                                     />
                                 </svg>
                             </span>
-                            {!toggledHeader && (
-                                <p className="px-2">
-                                    Hi, {userData.user_metadata.name}!
-                                </p>
-                            )}
+
+                            <p className="px-2">
+                                {!toggledHeader && (
+                                    <p className="px-2">
+                                        Hi, {userData.user_metadata.name}!
+                                    </p>
+                                )}
+                            </p>
                         </a>
                     </Link>
                 ) : (

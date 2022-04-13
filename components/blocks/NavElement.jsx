@@ -12,10 +12,13 @@ const NavElement = ({ name, icon, slug }) => {
                     <img
                         src={icon}
                         alt={`icon of ${name}`}
-                        className="h-[32px] w-[32px]"
+                        className="h-[32px] w-[32px] "
                     />
                 )}
-                {!toggledHeader && <span className="ml-2 ">{name}</span>}
+
+                <span className="ml-2">{name}</span>
+                {/* {!toggledHeader &&
+                // }  */}
             </a>
         </Link>
     )

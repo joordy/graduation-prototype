@@ -7,13 +7,13 @@ const Home = ({ userData, notificationData, ...props }) => {
     console.log('user dataaaaa', props)
 
     return (
-        <section className="w-full h-full px-16 py-8">
+        <section className="">
             <header>
                 <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
             </header>
 
             <main>
-                <ul className=" flex w-[50%] flex-col gap-y-4">
+                <ul className="flex flex-col gap-y-4">
                     {notificationData.map(
                         (
                             {
@@ -34,7 +34,7 @@ const Home = ({ userData, notificationData, ...props }) => {
                                                         src={projectIcon}
                                                         alt={`icon of ${projectName}`}
                                                         className="h-[32px] w-[32px]"
-                                                    />{' '}
+                                                    />
                                                 </div>
                                                 <div className="ml-4">
                                                     <p className="text-xl font-bold">

@@ -4,19 +4,22 @@ import Link from 'next/link'
 const NotificationCenter = ({ notifications, ...props }) => {
     return (
         <>
-            <h1 className="text-3xl">Hallooo notificatie center?</h1>
+            <h1 className="mb-8 text-3xl font-bold">
+                Hallooo notificatie center?
+            </h1>
 
-            {notifications.map(({ slug, projectName }, i) => {
-                return (
-                    <li key={i}>
-                        <Link href={`/notifications/${slug}`}>
-                            <a>
-                                {projectName} {slug}
-                            </a>
-                        </Link>
-                    </li>
-                )
-            })}
+            {notifications &&
+                notifications.map(({ slug, projectName }, i) => {
+                    return (
+                        <li key={i}>
+                            <Link href={`/notifications/${slug}`}>
+                                <a>
+                                    {projectName} {slug}
+                                </a>
+                            </Link>
+                        </li>
+                    )
+                })}
         </>
     )
 }

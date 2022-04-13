@@ -3,6 +3,22 @@ export const PROJECT_DATA = [
         icon: '/icons/mammut.ico',
         projectName: 'Mammut',
         slug: 'mammut',
+        connections: [
+            {
+                name: 'Auth0',
+                status: true,
+                relatedTo: 'MammutIO',
+            },
+            {
+                name: 'iShop',
+                status: true,
+                relatedTo: 'MammutIO',
+            },
+            {
+                name: 'Algolia',
+                status: true,
+            },
+        ],
     },
     {
         icon: '/icons/foam_icon.png',
@@ -25,8 +41,14 @@ export const NOTIFICATION_DATA = [
     {
         projectName: 'Mammut',
         projectIcon: '/icons/mammut.ico',
-        slug: '12-345',
+        name: 'mammut',
+        slug: '12345',
         shortDescription: 'Contentful stopped working',
+        errorMessage: '',
+        codeFile: '',
+        codeFunction: '',
+        codeLine: '',
+        priorityLevel: '',
     },
     {
         projectName: 'Aubade',
@@ -41,7 +63,7 @@ export const NOTIFICATION_DATA = [
         shortDescription: 'MailChimp stopped working',
     },
     {
-        projectName: 'Land of ride',
+        projectName: 'Land of Ride',
         projectIcon: '/icons/landofride.ico',
         slug: '45-678',
         shortDescription: 'Storyblok stopped working',

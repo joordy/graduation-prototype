@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import { supabase } from '_utils/database/init'
 import { PROJECT_DATA } from '_utils/siteData'
@@ -47,10 +48,16 @@ const Profile = ({ userData, projectData, ...props }) => {
     const handleSubmit = (e) => {}
     return (
         <>
+            <Head>
+                <title>Profile — Uptime Tracker</title>
+            </Head>
+
             <div>
                 <button onClick={updateData}>set profile data</button>
                 <button onClick={signOut}>Sign Out</button>
-                <pre>{JSON.stringify(userData, null, 2)}</pre>
+                <pre className="text-xs ">
+                    {JSON.stringify(userData, null, 2)}
+                </pre>
             </div>
             <form onSubmit={handleSubmit}>
                 <fieldset className="flex flex-col">

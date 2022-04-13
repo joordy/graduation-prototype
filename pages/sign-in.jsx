@@ -43,7 +43,7 @@ const SignIn = () => {
 
     return (
         <div className="flex flex-col items-center justify-center w-screen h-screen bg-grey-100">
-            <h1 className="text-3xl">Hello world</h1>
+            {/* <h1 className="text-3xl">Hello world</h1> */}
 
             {/* <section className="flex bg-white">
                 <div className="flex flex-col items-center justify-center bg-gray-800">
@@ -88,7 +88,7 @@ const SignIn = () => {
 
                     <div className="w-full">
                         <button
-                            className="w-full p-2 my-2 text-white rounded-md bg-grey-900"
+                            className="w-full p-2 my-2 bg-white border-2 rounded-md border-grey-900 text-grey-900"
                             onClick={handleGoogleAuth}
                         >
                             Or sign in with Google Auth

@@ -7,7 +7,7 @@ const Notification = ({ slug, ...props }) => {
     )
     return (
         <>
-            <h1 className="text-3xl">notificatie van {slug}</h1>
+            <h1 className="mb-8 text-3xl font-bold">notificatie van {slug}</h1>
         </>
     )
 }
