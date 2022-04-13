@@ -20,10 +20,10 @@ const Search = ({ data, onClick }) => {
     const handleSearchClick = () => setOpenSearch(!openSearch)
 
     return (
-        <main className="flex flex-col items-center justify-center h-full">
-            <form className="w-[40vw]">
+        <main className="flex flex-col items-center h-full mt-60">
+            <form className="min-w-[40vw] max-w-[1000px]">
                 <fieldset className="flex p-4 bg-white rounded-lg">
-                    <label className="pr-4">
+                    <label className="flex items-center justify-center pr-4">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="w-6 h-6"
@@ -44,7 +44,10 @@ const Search = ({ data, onClick }) => {
                         type="text"
                         placeholder="Mammut, Foam, Aubade...."
                     />
-                    <button className="flex pl-4" onClick={onClick}>
+                    <button
+                        className="flex items-center justify-center pl-4"
+                        onClick={onClick}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="w-6 h-6"

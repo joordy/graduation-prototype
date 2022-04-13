@@ -122,7 +122,7 @@ const App = ({ Component, pageProps }) => {
                         : 'open overflow-auto'
                 } h-screen md:absolute md:top-0 md:bottom-0 md:right-0  ${
                     toggledHeader ? 'md:left-[100px]' : 'md:left-[300px]'
-                } delay-100 duration-[250ms] md:p-8`}
+                } delay-100 duration-[250ms] md:p-8 md:pl-12`}
             >
                 <TopNavigation />
 
@@ -131,7 +131,7 @@ const App = ({ Component, pageProps }) => {
 
             <dialog
                 open={openSearch}
-                className="absolute top-0 left-0 right-0 bottom-8 z-20 h-full w-full bg-grey-800/75 backdrop-blur-[2px]"
+                className="absolute top-0 left-0 right-0 bottom-0 z-20 h-full w-full bg-grey-800/75 backdrop-blur-[2px]"
             >
                 <Search data={NOTIFICATION_DATA} />
             </dialog>
