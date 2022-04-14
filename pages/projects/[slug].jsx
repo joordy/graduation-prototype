@@ -28,7 +28,7 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                             Current status:
                         </h2>
 
-                        {!connections.length >= 1 ? (
+                        {/*  {!connections.length >= 1 ? (
                             <p>No connections on this platform</p>
                         ) : (
                             <ul>
@@ -44,14 +44,17 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                                 }`}
                                             >
                                                 <div>
-                                                    <img
+                                                    <div
+                                                        className={`h-[32px] w-[32px] rounded-lg bg-[#000000]`}
+                                                    ></div>
+                                                    /* <img
                                                         src={icon}
                                                         alt={`icon of ${name}`}
                                                         className="h-[32px] w-[32px]"
-                                                    />
+                                                    /> *
                                                 </div>
 
-                                                <div className="ml-4 flex w-full justify-between">
+                                                <div className="flex items-center justify-between w-full ml-4">
                                                     <p>{name}</p>
                                                     <span
                                                         className={`h-[20px] w-[20px] ${
@@ -66,7 +69,7 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                     },
                                 )}
                             </ul>
-                        )}
+                                )}*/}
                     </article>
 
                     <article>
