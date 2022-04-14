@@ -1,35 +1,31 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
-import { motion, AnimatePresence } from 'framer-motion'
-
-import Link from 'next/link'
 
 import 'react-toastify/dist/ReactToastify.css'
 import '_styles/globals.css'
 
 import { supabase } from '_utils/database/init'
-import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/siteData'
+import { NOTIFICATION_DATA } from '_utils/siteData'
 import { useToggleHeader } from '_utils/atoms/toggleHeader'
 import { useUser, useSetUser } from '_utils/atoms/user'
 import { useIsUserAuth, useSetIsUserAuth } from '_utils/atoms/isUserAuth'
 import { useOpenSearch } from '_utils/atoms/openSearch'
 
-import Notification from '_components/common/Notification'
+import NotificationPopup from '_components/common/NotificationPopup'
 import Sidebar from '_components/scopes/Navigation'
 import Search from '_components/scopes/Search'
-import TopNavigation from '_components/scopes/TopNavigation'
 
 const App = ({ Component, pageProps }) => {
     const router = useRouter()
 
     const authState = useIsUserAuth()
-    const setAuthState = useSetIsUserAuth()
-
     const userData = useUser()
-    const setUserData = useSetUser()
-
     const openSearch = useOpenSearch()
+    const toggledHeader = useToggleHeader()
+
+    const setAuthState = useSetIsUserAuth()
+    const setUserData = useSetUser()
 
     useEffect(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -93,7 +89,7 @@ const App = ({ Component, pageProps }) => {
             priorityLevel: '',
         }
         toast(
-            <Notification
+            <NotificationPopup
                 id={1234567}
                 projectName={dummy.projectName}
                 shortDescription={dummy.shortDescription}
@@ -102,9 +98,7 @@ const App = ({ Component, pageProps }) => {
             />,
             { toastId: 1234567 },
         )
-    }, 7500)
-
-    const toggledHeader = useToggleHeader()
+    }, 750000)
 
     if (router.pathname === '/sign-in') {
         return (
@@ -117,7 +111,6 @@ const App = ({ Component, pageProps }) => {
         <div className="flex w-full">
             <ToastContainer
                 position="top-right"
-                // autoClose={8500}
                 autoClose={false}
                 hideProgressBar={false}
                 draggable={true}
@@ -128,18 +121,7 @@ const App = ({ Component, pageProps }) => {
 
             <Sidebar userData={userData} />
 
-            <main
-                key={router.pathname}
-                className={`w-full ${
-                    toggledHeader
-                        ? 'close overflow-hidden'
-                        : 'open overflow-auto'
-                } h-screen md:top-0 md:bottom-0 md:right-0  ${
-                    toggledHeader ? 'md:ml-[0]' : 'md:ml-[0]'
-                }  md:p-8 md:pl-12`}
-            >
-                <Component {...pageProps} />
-            </main>
+            <Component {...pageProps} />
 
             <dialog
                 open={openSearch}

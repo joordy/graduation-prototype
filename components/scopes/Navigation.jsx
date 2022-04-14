@@ -69,13 +69,6 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                     toggledHeader ? 'w-[32px] pl-0' : 'w-full pl-[36px]'
                 } overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
             >
-                <Link href="/">
-                    <a>Home</a>
-                </Link>
-                <Link href="/notifications">
-                    <a>About</a>
-                </Link>
-
                 {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
                     const activePath = query.slug === slug
                     return (

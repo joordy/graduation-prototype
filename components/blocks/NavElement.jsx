@@ -9,11 +9,14 @@ const NavElement = ({ name, icon, slug }) => {
         <Link href={slug}>
             <a className="flex flex-row items-center">
                 {icon && (
-                    <img
-                        src={icon}
-                        alt={`icon of ${name}`}
-                        className="h-[32px] w-[32px] "
-                    />
+                    <div
+                        className={`h-[32px] w-[32px] rounded-lg bg-[#000000]`}
+                    ></div>
+                    // <img
+                    //     src={icon}
+                    //     alt={`icon of ${name}`}
+                    //     className="h-[32px] w-[32px] "
+                    // />
                 )}
 
                 <span className="ml-2">{name}</span>

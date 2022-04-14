@@ -4,10 +4,11 @@ import Head from 'next/head'
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/siteData'
 
 import Page from '_components/scopes/Page'
+import Notification from '_components/blocks/Notification'
 
 const Project = ({ notificationData = [], projectData = {}, ...props }) => {
     const { connections } = projectData
-    console.log(props, connections)
+    console.log(connections)
     return (
         <>
             <Head>
@@ -20,13 +21,16 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                         {projectData.projectName}
                     </h1>
                 </header>
-                <main className="grid grid-cols-2 gap-3">
+
+                <section className="grid grid-cols-2 gap-3">
                     <article>
-                        <h2 className="text-xl font-semibold">
+                        <h2 className="mb-2 text-xl font-semibold">
                             Current status:
                         </h2>
 
-                        {/* {connections && connections.length >= 1 && (
+                        {!connections.length >= 1 ? (
+                            <p>No connections on this platform</p>
+                        ) : (
                             <ul>
                                 {projectData?.connections.map(
                                     ({ name, icon, status }, i) => {
@@ -47,7 +51,7 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                                     />
                                                 </div>
 
-                                                <div className="flex justify-between w-full ml-4">
+                                                <div className="ml-4 flex w-full justify-between">
                                                     <p>{name}</p>
                                                     <span
                                                         className={`h-[20px] w-[20px] ${
@@ -62,11 +66,11 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                     },
                                 )}
                             </ul>
-                        )} */}
+                        )}
                     </article>
 
                     <article>
-                        <h2 className="text-xl font-semibold">
+                        <h2 className="mb-2 text-xl font-semibold">
                             Recent Notifications:
                         </h2>
                         {!notificationData.length >= 1 ? (
@@ -84,47 +88,21 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                         i,
                                     ) => {
                                         return (
-                                            <li
-                                                key={i}
-                                                className="p-4 bg-white rounded-xl"
-                                            >
-                                                <Link
-                                                    href={`/notifications/${slug}`}
-                                                >
-                                                    <a>
-                                                        <div className="flex">
-                                                            <div>
-                                                                <img
-                                                                    src={
-                                                                        projectIcon
-                                                                    }
-                                                                    alt={`icon of ${projectName}`}
-                                                                    className="h-[32px] w-[32px]"
-                                                                />
-                                                            </div>
-                                                            <div className="ml-4">
-                                                                <p className="text-xl font-bold">
-                                                                    {
-                                                                        projectName
-                                                                    }
-                                                                </p>
-                                                                <p>
-                                                                    {
-                                                                        shortDescription
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </Link>
-                                            </li>
+                                            <Notification
+                                                slug={slug}
+                                                projectName={projectName}
+                                                projectIcon={projectIcon}
+                                                shortDescription={
+                                                    shortDescription
+                                                }
+                                            />
                                         )
                                     },
                                 )}
                             </ul>
                         )}
                     </article>
-                </main>
+                </section>
             </Page>
         </>
     )

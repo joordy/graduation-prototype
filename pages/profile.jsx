@@ -42,7 +42,7 @@ const Profile = ({ userData, projectData, ...props }) => {
 
     const handleSubmit = (e) => {}
     return (
-        <Page topNav={true}>
+        <Page topNav={true} breadCrumbs={false}>
             <Head>
                 <title>Profile — Uptime Tracker</title>
             </Head>

@@ -5,60 +5,39 @@ import { supabase } from '_utils/database/init'
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/siteData'
 
 import Page from '_components/scopes/Page'
+import Notification from '_components/blocks/Notification'
 
 const Home = ({ userData, notificationData, ...props }) => {
     return (
         <Page topNav={true}>
-            <>
-                <header>
-                    <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
-                </header>
+            <header>
+                <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
+            </header>
 
-                <main>
-                    <ul className="flex flex-col gap-y-4">
-                        {notificationData.map(
-                            (
-                                {
-                                    projectName,
-                                    projectIcon,
-                                    shortDescription,
-                                    slug,
-                                },
-                                i,
-                            ) => {
-                                return (
-                                    <li
-                                        key={i}
-                                        className="rounded-xl bg-white p-4"
-                                    >
-                                        <Link href={`/notifications/${slug}`}>
-                                            <a>
-                                                <div className="flex">
-                                                    <div>
-                                                        <img
-                                                            src={projectIcon}
-                                                            alt={`icon of ${projectName}`}
-                                                            className="h-[32px] w-[32px]"
-                                                        />
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <p className="text-xl font-bold">
-                                                            {projectName}
-                                                        </p>
-                                                        <p>
-                                                            {shortDescription}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </Link>
-                                    </li>
-                                )
+            <section className="grid gap-12 xl:grid-cols-2">
+                <ul className="flex flex-col gap-y-4">
+                    {notificationData.map(
+                        (
+                            {
+                                projectName,
+                                projectIcon,
+                                shortDescription,
+                                slug,
                             },
-                        )}
-                    </ul>
-                </main>
-            </>
+                            i,
+                        ) => {
+                            return (
+                                <Notification
+                                    slug={slug}
+                                    projectName={projectName}
+                                    projectIcon={projectIcon}
+                                    shortDescription={shortDescription}
+                                />
+                            )
+                        },
+                    )}
+                </ul>
+            </section>
         </Page>
     )
 }

@@ -88,7 +88,7 @@ export const NOTIFICATION_DATA = [
         slug: '12345',
         shortDescription: 'Contentful stopped working',
         errorMessage: '',
-        codeFile: '',
+        specificCodeFile: '_components/scopes/DummyComponent.jsx',
         codeFunction: '',
         codeLine: '',
         priorityLevel: '',

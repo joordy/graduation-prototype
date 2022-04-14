@@ -1,11 +1,117 @@
+import Breadcrumbs from '_components/blocks/Breadcrumbs'
 import Page from '_components/scopes/Page'
 
 import { NOTIFICATION_DATA } from '_utils/siteData'
 
-const Notification = ({ slug, ...props }) => {
+const Notification = ({
+    projectName,
+    shortDescription,
+    projectIcon,
+    slug,
+    specificCodeFile,
+    ...props
+}) => {
+    const status = [
+        {
+            index: 2,
+            state: 'Currently in Progress',
+            date: '02-04-2022 — 9:32',
+        },
+        {
+            index: 2,
+            state: 'Currently in To-Do',
+            date: '01-04-2022 — 10:32',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+        {
+            index: 1,
+            state: 'Reported on backlog',
+            date: '01-04-2022 — 10:22',
+        },
+    ]
     return (
         <Page topNav={true}>
-            <h1 className="mb-8 text-3xl font-bold">notificatie van {slug}</h1>
+            <h1 className="mt-8 text-3xl font-bold">
+                {projectName} — {shortDescription}
+            </h1>
+
+            <article className="mt-8 grid gap-12  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-2 xl:grid-rows-6">
+                <div className=" xl:row-start-1 xl:row-end-6">
+                    <h2 className="mb-4 text-xl font-semibold">
+                        Current status
+                    </h2>
+                    <ul className="flex flex-col  overflow-y-auto  xl:h-[calc(100%-45px)]">
+                        {status.map(({ state, date, index }, i) => {
+                            return (
+                                <li
+                                    key={i}
+                                    className="after:bg-pink-500 relative ml-12 inline-block rounded-lg p-4 before:absolute before:-left-6 before:top-[50%] before:block before:h-[12px] before:w-[12px] before:translate-y-[-50%] before:rounded-full before:bg-grey-500 after:absolute after:-left-6 after:z-[-1] after:block after:h-[40px] after:w-[4px]
+                                    after:translate-x-[4px] after:bg-[#000] first-of-type:m-0
+                                    first-of-type:bg-grey-900 first-of-type:pl-16 
+                                    first-of-type:text-white first-of-type:before:left-6 first-of-type:after:left-6 after:last-of-type:hidden
+                                    "
+                                >
+                                    {!i == 0 ? (
+                                        <p>abc</p>
+                                    ) : (
+                                        <p>abc weg er mee</p>
+                                    )}
+                                    <div className="flex justify-between">
+                                        <p>{state}</p>
+                                        <p>{date}</p>
+                                    </div>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+                <div className="xl:row-start-1 xl:row-end-7 xl:grid-cols-2">
+                    <pre>Code line: {specificCodeFile}</pre>
+                    <pre className="mt-4 text-xs ">Error itself</pre>
+                </div>
+                <div className="xl:row-start-6 xl:row-end-7 xl:grid-cols-1">
+                    <a
+                        href=""
+                        className="my-2 block rounded-md border-2 border-grey-900 bg-white p-2 text-center text-grey-900"
+                    >
+                        Ticket naar jira bord
+                    </a>
+                </div>
+            </article>
         </Page>
     )
 }
