@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import Link from 'next/link'
 
@@ -78,17 +79,30 @@ const App = ({ Component, pageProps }) => {
         })
     }
 
-    // setTimeout(() => {
-    //     toast(
-    //         <Notification
-    //             id={1234567}
-    //             projectName={'Mammut.com'}
-    //             shortDescription={'Contentful stopped working'}
-    //             pathName={'notifications/hellothere'}
-    //         />,
-    //         { toastId: 1234567 },
-    //     )
-    // }, 7500)
+    setTimeout(() => {
+        const dummy = {
+            projectName: 'Mammut',
+            projectIcon: '/icons/mammut.ico',
+            name: 'mammut',
+            slug: '12345',
+            shortDescription: 'Contentful stopped working',
+            errorMessage: '',
+            codeFile: '',
+            codeFunction: '',
+            codeLine: '',
+            priorityLevel: '',
+        }
+        toast(
+            <Notification
+                id={1234567}
+                projectName={dummy.projectName}
+                shortDescription={dummy.shortDescription}
+                pathName={`notifications/${dummy.slug}`}
+                icon={dummy.projectIcon}
+            />,
+            { toastId: 1234567 },
+        )
+    }, 7500)
 
     const toggledHeader = useToggleHeader()
 
@@ -99,9 +113,8 @@ const App = ({ Component, pageProps }) => {
             </main>
         )
     }
-
     return (
-        <>
+        <div className="flex w-full">
             <ToastContainer
                 position="top-right"
                 // autoClose={8500}
@@ -116,16 +129,15 @@ const App = ({ Component, pageProps }) => {
             <Sidebar userData={userData} />
 
             <main
-                className={`${
+                key={router.pathname}
+                className={`w-full ${
                     toggledHeader
                         ? 'close overflow-hidden'
                         : 'open overflow-auto'
-                } h-screen md:absolute md:top-0 md:bottom-0 md:right-0  ${
-                    toggledHeader ? 'md:left-[100px]' : 'md:left-[300px]'
-                } delay-100 duration-[250ms] md:p-8 md:pl-12`}
+                } h-screen md:top-0 md:bottom-0 md:right-0  ${
+                    toggledHeader ? 'md:ml-[0]' : 'md:ml-[0]'
+                }  md:p-8 md:pl-12`}
             >
-                <TopNavigation />
-
                 <Component {...pageProps} />
             </main>
 
@@ -135,7 +147,7 @@ const App = ({ Component, pageProps }) => {
             >
                 <Search data={NOTIFICATION_DATA} />
             </dialog>
-        </>
+        </div>
     )
 }
 

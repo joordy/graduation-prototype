@@ -3,20 +3,15 @@ import Head from 'next/head'
 
 import { supabase } from '_utils/database/init'
 import { PROJECT_DATA } from '_utils/siteData'
+import Page from '_components/scopes/Page'
 
 const Profile = ({ userData, projectData, ...props }) => {
-    console.log(
-        '🚀 ~ file: profile.jsx ~ line 7 ~ Profile ~ projectData',
-        projectData,
-    )
     const router = useRouter()
 
     const signOut = async () => {
         await supabase.auth.signOut()
         router.push('/sign-in')
     }
-
-    console.log(userData)
 
     const updateData = async () => {
         const checkIfUserExist = await supabase
@@ -47,7 +42,7 @@ const Profile = ({ userData, projectData, ...props }) => {
 
     const handleSubmit = (e) => {}
     return (
-        <>
+        <Page topNav={true}>
             <Head>
                 <title>Profile — Uptime Tracker</title>
             </Head>
@@ -71,16 +66,12 @@ const Profile = ({ userData, projectData, ...props }) => {
                     })}
                 </fieldset>
             </form>
-        </>
+        </Page>
     )
 }
 
 export async function getServerSideProps({ req }) {
     const projectData = PROJECT_DATA
-    console.log(
-        '🚀 ~ file: profile.jsx ~ line 60 ~ getServerSideProps ~ PROJECT_DATA',
-        PROJECT_DATA,
-    )
     const { user } = await supabase.auth.api.getUserByCookie(req)
 
     if (!user) {

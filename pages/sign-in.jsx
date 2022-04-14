@@ -19,8 +19,6 @@ const SignIn = () => {
 
         if (error) console.log(error)
 
-        console.log(supabase.auth.user(), user)
-
         setUserData(user)
 
         return { user, session, error }

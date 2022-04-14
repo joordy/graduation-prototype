@@ -20,7 +20,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
 
     return (
         <nav
-            className={`md-py-16 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto rounded-r-2xl bg-white px-8 py-16 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 ${
+            className={`z-100 md-py-16 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto rounded-r-2xl bg-white px-8 py-16 shadow-[0_0_40px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 ${
                 toggledHeader ? 'md:w-[100px]' : 'md:w-[300px]'
             } fixed -left-[100vw] top-0 bottom-0 md:overflow-visible ${
                 toggledHeader && 'left-[0]'
@@ -32,7 +32,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="block w-6 h-6 md:hidden"
+                    className="block h-6 w-6 md:hidden"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -46,7 +46,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                 </svg>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="hidden w-6 h-6 md:block"
+                    className="hidden h-6 w-6 md:block"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -66,25 +66,36 @@ const Sidebar = ({ userData, projectData, ...props }) => {
 
             <ul
                 className={`block max-h-[75%] ${
-                    toggledHeader ? 'ml-0 w-[32px]' : 'ml-[36px] w-full'
+                    toggledHeader ? 'w-[32px] pl-0' : 'w-full pl-[36px]'
                 } overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
             >
+                <Link href="/">
+                    <a>Home</a>
+                </Link>
+                <Link href="/notifications">
+                    <a>About</a>
+                </Link>
+
                 {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
                     const activePath = query.slug === slug
                     return (
                         <li
-                            className={`p-[0.5rem 0.5rem 0.5rem 0] my-4 w-max ${
-                                activePath
-                                    ? 'w-[calc(100%-36px)] rounded-lg bg-grey-50'
-                                    : ''
-                            }`}
+                            key={i}
+                            className={`relative flex w-max py-4  text-sm  font-medium `}
                         >
-                            <NavElement
-                                key={i}
-                                name={projectName}
-                                slug={`/projects/${slug}`}
-                                icon={icon}
-                            />
+                            <div
+                                className={`static z-10 flex ${
+                                    activePath
+                                        ? `after:absolute after:left-[-10px] after:top-[16.25%] after:bottom-[16.25%]  after:z-[-1] after:h-[67.5%] after:w-full after:rounded-lg after:bg-grey-100/50 after:p-1 after:content-['']`
+                                        : ''
+                                }`}
+                            >
+                                <NavElement
+                                    name={projectName}
+                                    slug={`/projects/${slug}`}
+                                    icon={icon}
+                                />
+                            </div>
                         </li>
                     )
                 })}

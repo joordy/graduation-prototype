@@ -3,18 +3,18 @@ import Head from 'next/head'
 
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/siteData'
 
-const Project = ({ notificationData = [], projectData, ...props }) => {
+import Page from '_components/scopes/Page'
+
+const Project = ({ notificationData = [], projectData = {}, ...props }) => {
     const { connections } = projectData
-
-    console.log('notificationData', notificationData)
-
+    console.log(props, connections)
     return (
         <>
             <Head>
                 <title>{projectData.projectName} — Uptime Tracker</title>
             </Head>
 
-            <section className="">
+            <Page topNav={true}>
                 <header>
                     <h1 className="mb-8 text-3xl font-bold">
                         {projectData.projectName}
@@ -26,9 +26,9 @@ const Project = ({ notificationData = [], projectData, ...props }) => {
                             Current status:
                         </h2>
 
-                        {connections && (
+                        {/* {connections && connections.length >= 1 && (
                             <ul>
-                                {connections.map(
+                                {projectData?.connections.map(
                                     ({ name, icon, status }, i) => {
                                         return (
                                             <li
@@ -62,7 +62,7 @@ const Project = ({ notificationData = [], projectData, ...props }) => {
                                     },
                                 )}
                             </ul>
-                        )}
+                        )} */}
                     </article>
 
                     <article>
@@ -125,7 +125,7 @@ const Project = ({ notificationData = [], projectData, ...props }) => {
                         )}
                     </article>
                 </main>
-            </section>
+            </Page>
         </>
     )
 }

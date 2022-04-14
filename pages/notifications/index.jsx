@@ -1,9 +1,13 @@
-import { NOTIFICATION_DATA } from '_utils/siteData'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+
+import { NOTIFICATION_DATA } from '_utils/siteData'
+
+import Page from '_components/scopes/Page'
 
 const NotificationCenter = ({ notifications, ...props }) => {
     return (
-        <>
+        <Page topNav={true}>
             <h1 className="mb-8 text-3xl font-bold">
                 Hallooo notificatie center?
             </h1>
@@ -20,7 +24,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
                         </li>
                     )
                 })}
-        </>
+        </Page>
     )
 }
 

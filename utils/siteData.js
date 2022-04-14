@@ -6,6 +6,12 @@ export const PROJECT_DATA = [
         status: true,
         connections: [
             {
+                name: 'Contentful',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Mammut',
+            },
+            {
                 name: 'Auth0',
                 icon: '/icons/mammut.ico',
                 status: true,
@@ -29,21 +35,48 @@ export const PROJECT_DATA = [
         projectName: 'Foam',
         slug: 'foam',
         status: true,
-        connections: [],
+        connections: [
+            {
+                name: 'Storyblok',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Foam',
+            },
+            {
+                name: 'Mailchimp',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Foam',
+            },
+        ],
     },
     {
         icon: '/icons/landofride.ico',
         projectName: 'Land of Ride',
         slug: 'land-of-ride',
         status: true,
-        connections: [],
+        connections: [
+            {
+                name: 'Storyblok',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Foam',
+            },
+        ],
     },
     {
         icon: '/icons/aubade_icon.png',
         projectName: 'Aubade',
         slug: 'aubade',
         status: true,
-        connections: [],
+        connections: [
+            {
+                name: 'Storyblok',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Foam',
+            },
+        ],
     },
 ]
 

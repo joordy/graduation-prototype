@@ -1,14 +1,12 @@
+import Page from '_components/scopes/Page'
+
 import { NOTIFICATION_DATA } from '_utils/siteData'
 
 const Notification = ({ slug, ...props }) => {
-    console.log(
-        '🚀 ~ file: [...slug].jsx ~ line 4 ~ Notification ~ props',
-        props,
-    )
     return (
-        <>
+        <Page topNav={true}>
             <h1 className="mb-8 text-3xl font-bold">notificatie van {slug}</h1>
-        </>
+        </Page>
     )
 }
 

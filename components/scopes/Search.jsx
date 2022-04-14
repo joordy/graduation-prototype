@@ -74,7 +74,6 @@ const Search = ({ data, onClick }) => {
 }
 
 const Hit = ({ hit }) => {
-    console.log(hit)
     return (
         <div>
             <p>elem</p>

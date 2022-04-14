@@ -1,19 +1,35 @@
-const Notification = (
-    props,
-    { projectName = '', shortDescription = '', pathName = '#', closeToast },
-) => {
-    // console.log(props)
+import Link from 'next/link'
+
+const Notification = ({
+    projectName,
+    pathName,
+    shortDescription,
+    icon,
+    ...props
+}) => {
+    console.log(projectName, props)
     return (
         <>
-            <a href={pathName}>
-                <h1>{projectName}</h1>
+            {/* <a href={pathName}>
+               
                 <p>{shortDescription}</p>
-            </a>
-            <p className="mb-2 text-2xl font-bold">hello?</p>
-            <div className="flex justify-between">
-                <a href="">View details</a>
-                <button onClick={closeToast}>Close</button>
-            </div>
+    </a>*/}
+            {/* <p className="mb-2 text-2xl font-bold">{projectName}?</p> */}
+            <Link href={`/${pathName}`}>
+                <a>
+                    <div className="text-['#000'] flex">
+                        <div className="mr-4 flex w-[32px] items-center justify-center ">
+                            <img src={icon} alt={`Error on ${projectName}`} />
+                        </div>
+                        <div className="flex flex-col">
+                            <h1 className="mb-2 text-2xl font-bold">
+                                {projectName}
+                            </h1>
+                            <p>{shortDescription}</p>
+                        </div>
+                    </div>
+                </a>
+            </Link>
         </>
     )
 }

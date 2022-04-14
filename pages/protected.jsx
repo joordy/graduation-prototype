@@ -1,8 +1,6 @@
 import { supabase } from '_utils/database/init'
 
 const Protected = ({ userData, ...props }) => {
-    console.log({ userData })
-
     return (
         <div style={{ maxWidth: '420px' }}>
             <h2>Hello from protected route</h2>
