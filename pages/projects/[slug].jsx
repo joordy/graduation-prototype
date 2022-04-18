@@ -7,7 +7,7 @@ import Page from '_components/scopes/Page'
 import Notification from '_components/blocks/Notification'
 
 const Project = ({ notificationData = [], projectData = {}, ...props }) => {
-    const { connections } = projectData
+    const { connections = [] } = projectData
     console.log(connections)
     return (
         <>
@@ -27,7 +27,42 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                         <h2 className="mb-2 text-xl font-semibold">
                             Current status:
                         </h2>
+                        <ul>
+                            {connections.map(({ name, icon, status }, i) => {
+                                return (
+                                    <li
+                                        key={i}
+                                        className={`mb-3 flex rounded-xl border-2 border-green bg-white p-4 ${
+                                            status
+                                                ? 'border-green'
+                                                : 'border-red'
+                                        }`}
+                                    >
+                                        <div>
+                                            <div
+                                                className={`h-[32px] w-[32px] rounded-lg bg-[#000000]`}
+                                            ></div>
+                                            {/* <img
+                                                src={icon}
+                                                alt={`icon of ${name}`}
+                                                className="h-[32px] w-[32px]"
+                                            /> */}
+                                        </div>
 
+                                        <div className="flex items-center justify-between w-full ml-4">
+                                            <p>{name}</p>
+                                            <span
+                                                className={`h-[20px] w-[20px] ${
+                                                    status
+                                                        ? 'bg-green'
+                                                        : 'bg-red'
+                                                }`}
+                                            ></span>
+                                        </div>
+                                    </li>
+                                )
+                            })}
+                        </ul>
                         {/*  {!connections.length >= 1 ? (
                             <p>No connections on this platform</p>
                         ) : (

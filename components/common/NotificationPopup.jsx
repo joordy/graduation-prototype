@@ -11,8 +11,8 @@ const NotificationPopup = ({
         <Link href={`/${pathName}`}>
             <a>
                 <div className="text-['#000'] flex">
-                    <div className="mr-4 flex w-[32px] items-center justify-center ">
-                        <img src={icon} alt={`Error on ${projectName}`} />
+                    <div className="mr-4 flex h-[32px] w-[32px] items-center justify-center rounded-lg bg-[#000000]">
+                        {/* <img src={icon} alt={`Error on ${projectName}`} /> */}
                     </div>
                     <div className="flex flex-col">
                         <h1 className="mb-2 text-2xl font-bold">
