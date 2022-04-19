@@ -8,7 +8,7 @@ import {
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 
 import { useOpenSearch, useSetOpenSearch } from '_utils/atoms/openSearch'
-import { NOTIFICATION_DATA } from '_utils/siteData'
+import { NOTIFICATION_DATA } from '_utils/database/dataset'
 
 import Notification from '_components/blocks/Notification'
 

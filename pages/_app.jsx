@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import '_styles/globals.css'
 
 import { supabase } from '_utils/database/init'
-import { NOTIFICATION_DATA } from '_utils/siteData'
+import { NOTIFICATION_DATA } from '_utils/database/dataset'
 import { useToggleHeader } from '_utils/atoms/toggleHeader'
 import { useUser, useSetUser } from '_utils/atoms/user'
 import { useIsUserAuth, useSetIsUserAuth } from '_utils/atoms/isUserAuth'

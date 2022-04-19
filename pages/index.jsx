@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 import { supabase } from '_utils/database/init'
-import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/siteData'
+import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
 
 import Page from '_components/scopes/Page'
 import Notification from '_components/blocks/Notification'

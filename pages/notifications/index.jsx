@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-import { NOTIFICATION_DATA } from '_utils/siteData'
+import { NOTIFICATION_DATA } from '_utils/database/dataset'
 
 import Page from '_components/scopes/Page'
 import Notification from '_components/blocks/Notification'

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { supabase } from '_utils/database/init'
-import { PROJECT_DATA } from '_utils/siteData'
+import { PROJECT_DATA } from '_utils/database/dataset'
 import Page from '_components/scopes/Page'
 
 const Profile = ({ userData, projectData, ...props }) => {

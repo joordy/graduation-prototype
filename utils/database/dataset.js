@@ -8,7 +8,7 @@ export const PROJECT_DATA = [
             {
                 name: 'Contentful',
                 icon: '/icons/mammut.ico',
-                status: true,
+                status: false,
                 relatedTo: 'Mammut',
             },
             {
@@ -19,6 +19,12 @@ export const PROJECT_DATA = [
             },
             {
                 name: 'iShop',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'MammutIO',
+            },
+            {
+                name: 'MailChimp',
                 icon: '/icons/mammut.ico',
                 status: false,
                 relatedTo: 'MammutIO',
@@ -69,14 +75,14 @@ export const PROJECT_DATA = [
         projectName: 'Aubade',
         slug: 'aubade',
         status: true,
-        connections: [
-            {
-                name: 'Storyblok',
-                icon: '/icons/mammut.ico',
-                status: true,
-                relatedTo: 'Foam',
-            },
-        ],
+        // connections: [
+        //     {
+        //         name: 'Storyblok',
+        //         icon: '/icons/mammut.ico',
+        //         status: true,
+        //         relatedTo: 'Foam',
+        //     },
+        // ],
     },
 ]
 
@@ -85,10 +91,21 @@ export const NOTIFICATION_DATA = [
         projectName: 'Mammut',
         projectIcon: '/icons/mammut.ico',
         name: 'mammut',
-        slug: '12345',
-        shortDescription: 'Contentful stopped working',
-        errorMessage: '',
-        specificCodeFile: '_components/scopes/DummyComponent.jsx',
+        slug: '18_04_2022_0001',
+        shortDescription: 'Contentful could not fetch any data',
+        errorMessage: `
+            error - pages/products/[sku].jsx (33:44) @ Products
+
+            TypeError: Cannot read property 'map' of undefined
+            
+            31 |    {
+            32 |        {product && (
+            33 |            product.slug.map(({ name, icon, status }, i) => {
+                                   ^
+            34 |                return (
+            35 |                    <li
+            36 |                        key={i}`,
+        specificCodeFile: 'pages/products/[sku].jsx',
         codeFunction: '',
         codeLine: '',
         priorityLevel: '',
