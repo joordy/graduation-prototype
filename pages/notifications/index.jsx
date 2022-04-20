@@ -9,15 +9,24 @@ import NotificationElement from '_components/blocks/NotificationElement'
 const NotificationCenter = ({ notifications, ...props }) => {
     return (
         <Page topNav={true}>
-            <h1 className="mb-8 text-3xl font-bold">New notifications</h1>
+            <h1 className="mb-8 text-3xl font-bold">Notification center</h1>
 
             <section className="grid grid-cols-2 gap-3">
-                <ul className="flex flex-col gap-y-4">
-                    {notifications &&
-                        notifications.map((data, i) => {
-                            return <NotificationElement key={i} hit={data} />
-                        })}
-                </ul>
+                <section>
+                    <h2 className="mb-2 text-xl font-semibold">New</h2>
+                    <ul className="flex flex-col gap-y-4">
+                        {notifications &&
+                            notifications.map((data, i) => {
+                                return (
+                                    <NotificationElement key={i} hit={data} />
+                                )
+                            })}
+                    </ul>
+                </section>
+                <section>
+                    <h2 className="mb-2 text-xl font-semibold">Solved</h2>
+                    <ul>Nothing solved yet..</ul>
+                </section>
             </section>
         </Page>
     )

@@ -98,7 +98,7 @@ const App = ({ Component, pageProps }) => {
             />,
             { toastId: 1234567 },
         )
-    }, 750000)
+    }, 7500000)
 
     if (router.pathname === '/sign-in') {
         return (
