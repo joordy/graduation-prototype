@@ -5,7 +5,7 @@ import { supabase } from '_utils/database/init'
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
 
 import Page from '_components/scopes/Page'
-import Notification from '_components/blocks/Notification'
+import NotificationElement from '_components/blocks/NotificationElement'
 
 const Home = ({ userData, notificationData, ...props }) => {
     return (
@@ -16,26 +16,9 @@ const Home = ({ userData, notificationData, ...props }) => {
 
             <section className="grid gap-12 xl:grid-cols-2">
                 <ul className="flex flex-col gap-y-4">
-                    {notificationData.map(
-                        (
-                            {
-                                projectName,
-                                projectIcon,
-                                shortDescription,
-                                slug,
-                            },
-                            i,
-                        ) => {
-                            return (
-                                <Notification
-                                    slug={slug}
-                                    projectName={projectName}
-                                    projectIcon={projectIcon}
-                                    shortDescription={shortDescription}
-                                />
-                            )
-                        },
-                    )}
+                    {notificationData.map((data, i) => {
+                        return <NotificationElement key={i} hit={data} />
+                    })}
                 </ul>
             </section>
         </Page>

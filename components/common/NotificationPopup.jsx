@@ -3,22 +3,22 @@ import Link from 'next/link'
 const NotificationPopup = ({
     projectName,
     pathName,
-    shortDescription,
+    intro,
     icon,
     ...props
 }) => {
     return (
         <Link href={`/${pathName}`}>
             <a>
-                <div className="text-['#000'] flex">
-                    <div className="mr-4 flex h-[32px] w-[32px] items-center justify-center rounded-lg bg-[#000000]">
+                <div className="flex text-grey-900">
+                    <div className="mr-4 flex h-[32px] w-[32px] items-center justify-center rounded-lg bg-grey-900">
                         {/* <img src={icon} alt={`Error on ${projectName}`} /> */}
                     </div>
                     <div className="flex flex-col">
                         <h1 className="mb-2 text-2xl font-bold">
                             {projectName}
                         </h1>
-                        <p>{shortDescription}</p>
+                        <p>{intro}</p>
                     </div>
                 </div>
             </a>

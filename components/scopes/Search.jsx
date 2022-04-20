@@ -10,7 +10,7 @@ import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 import { useOpenSearch, useSetOpenSearch } from '_utils/atoms/openSearch'
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
 
-import Notification from '_components/blocks/Notification'
+import NotificationElement from '_components/blocks/NotificationElement'
 
 const searchClient = instantMeiliSearch(
     'https://integration-demos.meilisearch.com',
@@ -29,7 +29,7 @@ const Search = ({ data, onClick }) => {
 
         return NOTIFICATION_DATA.filter((obj) => {
             const nameStr = obj.projectName.toLowerCase()
-            const descStr = obj.shortDescription.toLowerCase()
+            const descStr = obj.intro.toLowerCase()
 
             const resultsName = nameStr.includes(searchStr)
             const resultsDesc = descStr.includes(searchStr)
@@ -45,13 +45,13 @@ const Search = ({ data, onClick }) => {
     const validSearch = value.length >= 1
 
     return (
-        <main className="mt-60 flex h-full flex-col items-center">
+        <main className="flex flex-col items-center h-full mt-60">
             <form className="min-w-[40vw] max-w-[1000px]">
-                <fieldset className="flex bg-white p-4 ">
+                <fieldset className="flex p-4 bg-white ">
                     <label className="flex items-center justify-center pr-4">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
+                            className="w-6 h-6"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -76,7 +76,7 @@ const Search = ({ data, onClick }) => {
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
+                            className="w-6 h-6"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -104,12 +104,12 @@ const Search = ({ data, onClick }) => {
                         results.length >= 1 ? (
                             results.map((hit, i) => {
                                 return (
-                                    <Notification
+                                    <NotificationElement
                                         key={i}
                                         slug={hit.slug}
                                         projectName={hit.projectName}
                                         projectIcon={hit.projectIcon}
-                                        shortDescription={hit.shortDescription}
+                                        intro={hit.intro}
                                     />
                                 )
                             })
@@ -128,7 +128,7 @@ const Search = ({ data, onClick }) => {
                                     slug={hit.slug}
                                     projectName={hit.projectName}
                                     projectIcon={hit.projectIcon}
-                                    shortDescription={hit.shortDescription}
+                                    intro={hit.intro}
                                 />
                             )
                         })
@@ -153,16 +153,8 @@ const NoValidSearch = () => {
 const Results = ({ results = [] }) => {
     console.log(results)
     // return <p>ab</p>
-    return results.map((hit, i) => {
-        return (
-            <Notification
-                key={i}
-                slug={hit.slug}
-                projectName={hit.projectName}
-                projectIcon={hit.projectIcon}
-                shortDescription={hit.shortDescription}
-            />
-        )
+    return results.map((data, i) => {
+        return <NotificationElement key={i} hit={hit} />
     })
 }
 

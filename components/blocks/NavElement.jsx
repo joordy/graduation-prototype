@@ -10,7 +10,7 @@ const NavElement = ({ name, icon, slug }) => {
             <a className="flex flex-row items-center">
                 {icon && (
                     <div
-                        className={`h-[32px] w-[32px] rounded-lg bg-[#000000]`}
+                        className={`h-[32px] w-[32px] rounded-lg bg-grey-900`}
                     ></div>
                     // <img
                     //     src={icon}

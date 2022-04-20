@@ -54,7 +54,7 @@ const STATUS = [
 
 const Notification = ({
     projectName,
-    shortDescription,
+    intro,
     projectIcon,
     slug,
     specificCodeFile,
@@ -66,7 +66,7 @@ const Notification = ({
     return (
         <Page topNav={true}>
             <h1 className="mt-8 text-3xl font-bold">
-                {projectName} ✗ {shortDescription}
+                {projectName} ✗ {intro}
             </h1>
 
             <article className="mt-8 grid gap-12  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-2 xl:grid-rows-6">
@@ -108,7 +108,7 @@ const Notification = ({
                         href="#"
                         className="block p-2 my-2 text-center bg-white border-2 rounded-md border-grey-900 text-grey-900"
                     >
-                        Ticket naar jira bord
+                        Ticket to Jira / GitLab board
                     </a>
                 </div>
             </article>

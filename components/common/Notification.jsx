@@ -1,13 +1,13 @@
 const Notification = (
     props,
-    { projectName = '', shortDescription = '', pathName = '#', closeToast },
+    { projectName = '', intro = '', pathName = '#', closeToast },
 ) => {
     // console.log(props)
     return (
         <>
             <a href={pathName}>
                 <h1>{projectName}</h1>
-                <p>{shortDescription}</p>
+                <p>{intro}</p>
             </a>
             <p className="mb-2 text-2xl font-bold">hello?</p>
             <div className="flex justify-between">

@@ -6,6 +6,12 @@ export const PROJECT_DATA = [
         status: true,
         connections: [
             {
+                name: 'Vercel',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Mammut',
+            },
+            {
                 name: 'Contentful',
                 icon: '/icons/mammut.ico',
                 status: false,
@@ -43,6 +49,12 @@ export const PROJECT_DATA = [
         status: true,
         connections: [
             {
+                name: 'Vercel',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Mammut',
+            },
+            {
                 name: 'Storyblok',
                 icon: '/icons/mammut.ico',
                 status: true,
@@ -63,6 +75,12 @@ export const PROJECT_DATA = [
         status: true,
         connections: [
             {
+                name: 'Vercel',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Mammut',
+            },
+            {
                 name: 'Storyblok',
                 icon: '/icons/mammut.ico',
                 status: true,
@@ -75,14 +93,20 @@ export const PROJECT_DATA = [
         projectName: 'Aubade',
         slug: 'aubade',
         status: true,
-        // connections: [
-        //     {
-        //         name: 'Storyblok',
-        //         icon: '/icons/mammut.ico',
-        //         status: true,
-        //         relatedTo: 'Foam',
-        //     },
-        // ],
+        connections: [
+            {
+                name: 'Vercel',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Mammut',
+            },
+            {
+                name: 'Storyblok',
+                icon: '/icons/mammut.ico',
+                status: true,
+                relatedTo: 'Foam',
+            },
+        ],
     },
 ]
 
@@ -92,7 +116,7 @@ export const NOTIFICATION_DATA = [
         projectIcon: '/icons/mammut.ico',
         name: 'mammut',
         slug: '18_04_2022_0001',
-        shortDescription: 'Contentful could not fetch any data',
+        intro: 'Contentful could not fetch any data',
         errorMessage: `
             error - pages/products/[sku].jsx (33:44) @ Products
 
@@ -113,21 +137,24 @@ export const NOTIFICATION_DATA = [
     {
         projectName: 'Aubade',
         projectIcon: '/icons/aubade_icon.png',
+        name: 'aubade',
         slug: '23-456',
-        shortDescription: 'Storyblok stopped working',
+        intro: 'Storyblok stopped working',
     },
     {
         // projectName: 'Foam',
         // projectIcon: '/icons/foam_icon.png',
         projectName: 'Mammut',
         projectIcon: '/icons/mammut.ico',
+        name: 'mammut',
         slug: '34-567',
-        shortDescription: 'MailChimp stopped working',
+        intro: 'MailChimp stopped working',
     },
     {
         projectName: 'Land of Ride',
         projectIcon: '/icons/landofride.ico',
+        name: 'land-of-ride',
         slug: '45-678',
-        shortDescription: 'Storyblok stopped working',
+        intro: 'Storyblok stopped working',
     },
 ]

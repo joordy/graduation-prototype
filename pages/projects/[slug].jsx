@@ -4,10 +4,24 @@ import Head from 'next/head'
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
 
 import Page from '_components/scopes/Page'
-import Notification from '_components/blocks/Notification'
+import NotificationElement from '_components/blocks/NotificationElement'
+
+const TEST_DATA = {
+    projectName: 'Mammut',
+    projectIcon: '/icons/mammut.ico',
+    name: 'mammut',
+    slug: '01_04_2022_0002',
+    intro: 'Vercel can`t reach the website',
+    errorMessage: `
+        StatusCode 500 - Internal server Error`,
+    specificCodeFile: '—',
+    codeFunction: '',
+    codeLine: '',
+    priorityLevel: '',
+}
 
 const Project = ({ notificationData = [], projectData = {}, ...props }) => {
-    const { connections = [] } = projectData
+    const { connections = [], projectName } = projectData
 
     return (
         <>
@@ -22,8 +36,8 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                     </h1>
                 </header>
 
-                <section className="grid grid-cols-2 gap-3">
-                    <article>
+                <section className="grid gap-3 overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-2 xl:grid-rows-6">
+                    <article className="xl:col-start-1 xl:col-end-2 xl:row-start-1 xl:row-end-7">
                         <h2 className="mb-2 text-xl font-semibold">
                             Current status:
                         </h2>
@@ -42,7 +56,7 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                         >
                                             <div>
                                                 <div
-                                                    className={`h-[32px] w-[32px] rounded-lg bg-[#000000]`}
+                                                    className={`h-[32px] w-[32px] rounded-lg bg-grey-900`}
                                                 ></div>
                                                 {/* <img
                                                 src={icon}
@@ -115,7 +129,7 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                 )}*/}
                     </article>
 
-                    <article>
+                    <article className="xl:col-start-2 xl:col-end-3 xl:row-start-1 xl:row-end-3">
                         <h2 className="mb-2 text-xl font-semibold">
                             Recent Notifications:
                         </h2>
@@ -123,29 +137,29 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                             <p>No current notifications..</p>
                         ) : (
                             <ul className="flex flex-col gap-y-4">
-                                {notificationData.map(
-                                    (
-                                        {
-                                            projectName,
-                                            projectIcon,
-                                            shortDescription,
-                                            slug,
-                                        },
-                                        i,
-                                    ) => {
-                                        return (
-                                            <Notification
-                                                slug={slug}
-                                                projectName={projectName}
-                                                projectIcon={projectIcon}
-                                                shortDescription={
-                                                    shortDescription
-                                                }
-                                            />
-                                        )
-                                    },
-                                )}
+                                {notificationData.map((data, i) => {
+                                    return (
+                                        <NotificationElement
+                                            key={i}
+                                            hit={data}
+                                        />
+                                    )
+                                })}
                             </ul>
+                        )}
+                    </article>
+
+                    <article className="xl:row-start-4 xl:row-end-7">
+                        <h2 className="mb-2 text-xl font-semibold">
+                            Solved problems
+                        </h2>
+
+                        {projectName === 'Mammut' ? (
+                            <ul>
+                                <NotificationElement hit={TEST_DATA} />
+                            </ul>
+                        ) : (
+                            <p>No solved notifications yet.</p>
                         )}
                     </article>
                 </section>

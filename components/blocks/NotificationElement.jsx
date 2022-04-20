@@ -1,20 +1,18 @@
 import Link from 'next/link'
 
-const Notification = ({
-    slug,
-    projectIcon,
-    projectName,
-    shortDescription,
-    ...props
-}) => {
+const Notification = ({ hit }) => {
+    console.log(hit)
+
+    const { name, projectName, projectIcon, slug, intro } = hit
+
     return (
-        <li className="rounded-xl bg-white p-4">
+        <li className="p-4 bg-white rounded-xl">
             <Link href={`/notifications/${slug}`}>
                 <a>
                     <div className="flex">
                         <div className="flex items-center justify-center">
                             <div
-                                className={`h-[32px] w-[32px] rounded-lg bg-[#000000]`}
+                                className={`h-[32px] w-[32px] rounded-lg bg-grey-900`}
                             ></div>
                             {/* <img
                                 src={projectIcon}
@@ -24,7 +22,7 @@ const Notification = ({
                         </div>
                         <div className="ml-4">
                             <p className="text-xl font-bold">{projectName}</p>
-                            <p>{shortDescription}</p>
+                            <p>{intro}</p>
                         </div>
                     </div>
                 </a>

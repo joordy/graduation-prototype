@@ -81,7 +81,7 @@ const App = ({ Component, pageProps }) => {
             projectIcon: '/icons/mammut.ico',
             name: 'mammut',
             slug: '12345',
-            shortDescription: 'Contentful stopped working',
+            intro: 'Contentful stopped working',
             errorMessage: '',
             codeFile: '',
             codeFunction: '',
@@ -92,7 +92,7 @@ const App = ({ Component, pageProps }) => {
             <NotificationPopup
                 id={1234567}
                 projectName={dummy.projectName}
-                shortDescription={dummy.shortDescription}
+                intro={dummy.intro}
                 pathName={`notifications/${dummy.slug}`}
                 icon={dummy.projectIcon}
             />,
@@ -107,6 +107,7 @@ const App = ({ Component, pageProps }) => {
             </main>
         )
     }
+
     return (
         <div className="flex w-full">
             <ToastContainer
@@ -123,12 +124,12 @@ const App = ({ Component, pageProps }) => {
 
             <Component {...pageProps} />
 
-            <dialog
+            {/* <dialog
                 open={openSearch}
                 className="absolute top-0 left-0 right-0 bottom-0 z-20 h-full w-full bg-grey-800/75 backdrop-blur-[2px]"
             >
                 <Search data={NOTIFICATION_DATA} />
-            </dialog>
+            </dialog> */}
         </div>
     )
 }
