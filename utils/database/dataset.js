@@ -117,18 +117,19 @@ export const NOTIFICATION_DATA = [
         name: 'mammut',
         slug: '18_04_2022_0001',
         intro: 'Contentful could not fetch any data',
-        errorMessage: `
-            error - pages/products/[sku].jsx (33:44) @ Products
-
-            TypeError: Cannot read property 'map' of undefined
-            
-            31 |    {
-            32 |        {product && (
-            33 |            product.slug.map(({ name, icon, status }, i) => {
-                                   ^
-            34 |                return (
-            35 |                    <li
-            36 |                        key={i}`,
+        errorMessage: [
+            `error - pages/products/[sku].jsx (33:44) @ Products`,
+            ``,
+            `TypeError: Cannot read property 'map' of undefined`,
+            ``,
+            `31 |    {`,
+            `32 |        {product && (`,
+            `33 |            product.slug.map(({ name, icon, status }, i) => {`,
+            `                            ^`,
+            `34 |                return (`,
+            `35 |                    <li`,
+            `36 |                        key={i}`,
+        ],
         specificCodeFile: 'pages/products/[sku].jsx',
         codeFunction: '',
         codeLine: '',
