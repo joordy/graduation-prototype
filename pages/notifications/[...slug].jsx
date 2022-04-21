@@ -100,8 +100,19 @@ const Notification = ({
                     </ul>
                 </div>
                 <div className="xl:row-start-1 xl:row-end-7 xl:grid-cols-2">
-                    <pre>Codefile: {specificCodeFile}</pre>
-                    <pre className="mt-4 text-xs ">{errorMessage}</pre>
+                    <pre className="mb-8">Codefile: {specificCodeFile}</pre>
+
+                    {errorMessage?.length >= 1 ? (
+                        errorMessage.map((line, i) => {
+                            return (
+                                <pre className="text-xs" key={i}>
+                                    {line}
+                                </pre>
+                            )
+                        })
+                    ) : (
+                        <pre className="text-xs">no error message</pre>
+                    )}
                 </div>
                 <div className="xl:row-start-6 xl:row-end-7 xl:grid-cols-1">
                     <a
