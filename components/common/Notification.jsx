@@ -2,7 +2,6 @@ const Notification = (
     props,
     { projectName = '', intro = '', pathName = '#', closeToast },
 ) => {
-    // console.log(props)
     return (
         <>
             <a href={pathName}>

@@ -120,7 +120,10 @@ const App = ({ Component, pageProps }) => {
                 pauseOnHover
             />
 
-            <Sidebar userData={userData} />
+            <Sidebar
+                userData={userData}
+                notificationCounter={NOTIFICATION_DATA}
+            />
 
             <Component {...pageProps} />
 

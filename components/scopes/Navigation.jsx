@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -8,16 +8,30 @@ import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 
 import NavElement from '_components/blocks/NavElement'
 
-const Sidebar = ({ userData, projectData, ...props }) => {
+const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
     const { query } = useRouter()
+    const navigationRef = useRef()
 
     const toggledHeader = useToggleHeader()
     const setToggledHeader = useSetToggleHeader()
 
+    const [navWidth, setNavWidth] = useState(0)
     const toggle = () => {
         setToggledHeader(!toggledHeader)
     }
 
+    const elementsCount = (data, selected) => {
+        return data.filter((item) => {
+            return item.projectName === selected
+        })
+    }
+
+    useEffect(() => {
+        console.log(navigationRef.current?.getBoundingClientRect())
+        setNavWidth(navigationRef.current?.getBoundingClientRect().width)
+    }, [navigationRef?.current?.getBoundingClientRect().width])
+
+    console.log(navWidth)
     return (
         <nav
             className={`z-100 md-py-16 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto rounded-r-2xl bg-white px-8 py-16 shadow-[0_0_40px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 ${
@@ -32,7 +46,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="block h-6 w-6 md:hidden"
+                    className="block w-6 h-6 md:hidden"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -46,7 +60,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                 </svg>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="hidden h-6 w-6 md:block"
+                    className="hidden w-6 h-6 md:block"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -65,12 +79,19 @@ const Sidebar = ({ userData, projectData, ...props }) => {
             </Link>
 
             <ul
+                ref={navigationRef}
                 className={`block max-h-[75%] ${
                     toggledHeader ? 'w-[32px] pl-0' : 'w-full pl-[36px]'
                 } overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
             >
                 {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
                     const activePath = query.slug === slug
+
+                    const counter = elementsCount(
+                        notificationCounter,
+                        projectName,
+                    )
+
                     return (
                         <li
                             key={i}
@@ -79,7 +100,7 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                             <div
                                 className={`static z-10 flex ${
                                     activePath
-                                        ? `after:absolute after:left-[-10px] after:top-[16.25%] after:bottom-[16.25%]  after:z-[-1] after:h-[67.5%] after:w-full after:rounded-lg after:bg-grey-100/50 after:p-1 after:content-['']`
+                                        ? `after:absolute after:left-[-10px] after:top-[16.25%] after:bottom-[16.25%]  after:z-[-1] after:h-[67.5%] after:w-[10px] after:rounded-lg after:bg-grey-100/50 after:p-1 after:content-['']`
                                         : ''
                                 }`}
                             >
@@ -89,6 +110,13 @@ const Sidebar = ({ userData, projectData, ...props }) => {
                                     icon={icon}
                                 />
                             </div>
+                            {counter.length >= 1 && (
+                                <span
+                                    className={`absolute top-[50%] -right-7 flex h-[16px] w-[16px] -translate-y-[50%] items-center justify-center rounded-full bg-[#d1261a] text-[8px] text-white`}
+                                >
+                                    {counter.length}
+                                </span>
+                            )}
                         </li>
                     )
                 })}

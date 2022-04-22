@@ -61,8 +61,6 @@ const Notification = ({
     errorMessage,
     ...props
 }) => {
-    console.log('props', props)
-
     return (
         <Page topNav={true}>
             <h1 className="mt-8 text-3xl font-bold">
@@ -70,7 +68,22 @@ const Notification = ({
             </h1>
 
             <article className="mt-8 grid gap-12  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-2 xl:grid-rows-6">
-                <div className=" xl:row-start-1 xl:row-end-6">
+                <div className="xl:row-start-1 xl:row-end-7 xl:grid-cols-2">
+                    <pre className="mb-8">Codefile: {specificCodeFile}</pre>
+
+                    {errorMessage?.length >= 1 ? (
+                        errorMessage.map((line, i) => {
+                            return (
+                                <pre className="text-xs" key={i}>
+                                    {line}
+                                </pre>
+                            )
+                        })
+                    ) : (
+                        <pre className="text-xs">no error message</pre>
+                    )}
+                </div>
+                <div className=" xl:row-start-1 xl:row-end-6 xl:grid-cols-2">
                     <h2 className="mb-4 text-xl font-semibold">
                         Current status
                     </h2>
@@ -99,22 +112,8 @@ const Notification = ({
                         })}
                     </ul>
                 </div>
-                <div className="xl:row-start-1 xl:row-end-7 xl:grid-cols-2">
-                    <pre className="mb-8">Codefile: {specificCodeFile}</pre>
 
-                    {errorMessage?.length >= 1 ? (
-                        errorMessage.map((line, i) => {
-                            return (
-                                <pre className="text-xs" key={i}>
-                                    {line}
-                                </pre>
-                            )
-                        })
-                    ) : (
-                        <pre className="text-xs">no error message</pre>
-                    )}
-                </div>
-                <div className="xl:row-start-6 xl:row-end-7 xl:grid-cols-1">
+                <div className="xl:row-start-6 xl:row-end-7 xl:grid-cols-2">
                     <a
                         href="#"
                         className="block p-2 my-2 text-center bg-white border-2 rounded-md border-grey-900 text-grey-900"

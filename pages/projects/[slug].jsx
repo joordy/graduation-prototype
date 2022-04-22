@@ -55,14 +55,11 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                                             }`}
                                         >
                                             <div>
-                                                <div
-                                                    className={`h-[32px] w-[32px] rounded-lg bg-grey-900`}
-                                                ></div>
-                                                {/* <img
-                                                src={icon}
-                                                alt={`icon of ${name}`}
-                                                className="h-[32px] w-[32px]"
-                                            /> */}
+                                                <img
+                                                    src={icon}
+                                                    alt={`icon of ${name}`}
+                                                    className="h-[32px] w-[32px]"
+                                                />
                                             </div>
 
                                             <div className="flex items-center justify-between w-full ml-4">

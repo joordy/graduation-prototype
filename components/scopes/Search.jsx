@@ -151,8 +151,6 @@ const NoValidSearch = () => {
 }
 
 const Results = ({ results = [] }) => {
-    console.log(results)
-    // return <p>ab</p>
     return results.map((data, i) => {
         return <NotificationElement key={i} hit={hit} />
     })
