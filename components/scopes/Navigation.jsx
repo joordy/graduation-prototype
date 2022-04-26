@@ -27,14 +27,12 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
     }
 
     useEffect(() => {
-        console.log(navigationRef.current?.getBoundingClientRect())
         setNavWidth(navigationRef.current?.getBoundingClientRect().width)
     }, [navigationRef?.current?.getBoundingClientRect().width])
 
-    console.log(navWidth)
     return (
         <nav
-            className={`z-100 md-py-16 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto rounded-r-2xl bg-white px-8 py-16 shadow-[0_0_40px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 ${
+            className={`z-100 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto bg-[#F1F3F4] px-8  py-16 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 md:pt-8 md:pb-16 ${
                 toggledHeader ? 'md:w-[100px]' : 'md:w-[300px]'
             } fixed -left-[100vw] top-0 bottom-0 md:overflow-visible ${
                 toggledHeader && 'left-[0]'
@@ -42,7 +40,7 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
         >
             <button
                 onClick={toggle}
-                className="absolute left-4 top-8 z-10 md:right-[-2rem] md:left-[unset] md:h-[2rem] md:w-[2rem] md:bg-white"
+                className="absolute left-4 top-8 z-10 md:right-[-1.5rem] md:left-[unset] md:h-[2rem] md:w-[1.5rem] md:rounded-r-lg md:bg-[#F1F3F4] md:shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)]"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +58,9 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
                 </svg>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="hidden w-6 h-6 md:block"
+                    className={`hidden h-6 w-6 duration-150 md:block ${
+                        toggledHeader ? 'md:rotate-180' : ''
+                    }`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -74,64 +74,87 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
                 </svg>
             </button>
 
-            <Link href="/">
-                <a className="flex font-extrabold">404</a>
-            </Link>
+            <div className="w-full">
+                <Link href="/">
+                    <a className="mb-6 flex h-[32px] w-[32px] p-2 font-extrabold">
+                        404
+                    </a>
+                </Link>
 
-            <ul
-                ref={navigationRef}
-                className={`block max-h-[75%] ${
-                    toggledHeader ? 'w-[32px] pl-0' : 'w-full pl-[36px]'
-                } overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
-            >
-                {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
-                    const activePath = query.slug === slug
+                <ul
+                    ref={navigationRef}
+                    className={`flex max-h-[100%] flex-col gap-4 ${
+                        toggledHeader ? 'w-[48px] pl-0' : 'w-full pl-[0]'
+                    } overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
+                >
+                    {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
+                        const activePath = query.project === slug
 
-                    const counter = elementsCount(
-                        notificationCounter,
-                        projectName,
-                    )
+                        const counter = elementsCount(
+                            notificationCounter,
+                            projectName,
+                        )
 
-                    return (
-                        <li
-                            key={i}
-                            className={`relative flex w-max py-4  text-sm  font-medium `}
-                        >
-                            <div
-                                className={`static z-10 flex ${
-                                    activePath
-                                        ? `after:absolute after:left-[-10px] after:top-[16.25%] after:bottom-[16.25%]  after:z-[-1] after:h-[67.5%] after:w-[10px] after:rounded-lg after:bg-grey-100/50 after:p-1 after:content-['']`
-                                        : ''
+                        return (
+                            <li
+                                key={i}
+                                className={`relative flex w-['inherit'] rounded-lg p-2 text-sm font-medium ${
+                                    activePath && 'bg-white'
                                 }`}
                             >
-                                <NavElement
-                                    name={projectName}
-                                    slug={`/projects/${slug}`}
-                                    icon={icon}
-                                />
-                            </div>
-                            {counter.length >= 1 && (
-                                <span
-                                    className={`absolute top-[50%] -right-7 flex h-[16px] w-[16px] -translate-y-[50%] items-center justify-center rounded-full bg-[#d1261a] text-[8px] text-white`}
-                                >
-                                    {counter.length}
-                                </span>
-                            )}
-                        </li>
-                    )
-                })}
-            </ul>
+                                <Link href={`/projects/${slug}`}>
+                                    <a>
+                                        <div
+                                            className={`flex flex-row items-center`}
+                                        >
+                                            {icon && (
+                                                <img
+                                                    src={icon}
+                                                    alt={`icon of ${projectName}`}
+                                                    className="h-[32px] w-[32px] "
+                                                />
+                                            )}
+
+                                            <span className="ml-2 w-max min-w-[100px] overflow-hidden">
+                                                {projectName}
+                                            </span>
+                                        </div>
+
+                                        {counter.length >= 1 && (
+                                            <span
+                                                className={`absolute top-[50%] right-3 flex h-[16px] w-[16px] -translate-y-[50%] items-center justify-center rounded-full text-[10px]`}
+                                            >
+                                                {counter.length}
+                                            </span>
+                                        )}
+                                    </a>
+                                </Link>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </div>
 
             <div
-                className={`${
-                    toggledHeader ? 'ml-0 w-[32px]' : 'ml-[36px] w-full'
-                }  overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
+                className={`w-full`}
+                // className={`${
+                //     toggledHeader ? 'ml-0 w-[32px]' : 'ml-[36px] w-full'
+                // }  overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
             >
                 {userData && (
                     <Link href="/profile">
-                        <a className={`block w-max `}>
-                            <div className="flex items-center justify-center">
-                                <span>
+                        <a
+                            // className={`block w-max overflow-y-auto overflow-x-hidden ${
+                            //     toggledHeader ? 'w-[48px]' : 'w-full'
+                            // }`}
+                            className={`flex max-h-[100%] flex-col ${
+                                toggledHeader
+                                    ? 'w-[48px] pl-0'
+                                    : 'w-full pl-[0]'
+                            } m-0 overflow-hidden duration-[250ms] ease-in`}
+                        >
+                            <div className="flex items-center ml-4">
+                                <span className="h-[32px] w-[32px]">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-[32px] w-[32px]"
@@ -148,7 +171,7 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
                                     </svg>
                                 </span>
 
-                                <p className="ml-2">
+                                <p className="ml-2 w-max min-w-[125px] overflow-hidden">
                                     Hi, {userData.user_metadata.name}!
                                 </p>
                             </div>

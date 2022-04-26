@@ -35,7 +35,7 @@ const Breadcrumbs = () => {
     }
 
     return (
-        <nav aria-label="breadcrumbs" className="text-xs font-light ">
+        <nav aria-label="breadcrumbs" className="text-[13px] font-light ">
             <ol className="flex">
                 <li>
                     <a href="/">Overview</a>

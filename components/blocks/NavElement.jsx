@@ -17,8 +17,6 @@ const NavElement = ({ name, icon, slug }) => {
                 )}
 
                 <span className="ml-2">{name}</span>
-                {/* {!toggledHeader &&
-                // }  */}
             </a>
         </Link>
     )

@@ -4,8 +4,8 @@ import { supabase } from '_utils/database/init'
 import { useUser, useSetUser } from '_utils/atoms/user'
 
 const SignIn = () => {
-    const userData = useUser()
-    const setUserData = useSetUser()
+    // const userData = useUser()
+    // const setUserData = useSetUser()
 
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
@@ -16,11 +16,8 @@ const SignIn = () => {
         const { user, session, error } = await supabase.auth.signIn({
             provider: 'google',
         })
-
         if (error) console.log(error)
-
         setUserData(user)
-
         return { user, session, error }
     }
 
@@ -28,9 +25,7 @@ const SignIn = () => {
         const { user, error } = await supabase.auth.signIn({
             email: email,
         })
-
         if (error) console.log(error)
-
         //         const { data, error } = await supabase
         //   .from('cities')
         //   .insert([
