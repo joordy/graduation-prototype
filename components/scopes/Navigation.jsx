@@ -1,16 +1,26 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 import { PROJECT_DATA } from '_utils/database/dataset'
 
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
+import { useUserData } from '_utils/atoms/userData'
 
-import NavElement from '_components/blocks/NavElement'
-
-const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
+const Sidebar = ({ notificationCounter, ...props }) => {
     const { query } = useRouter()
+    const { data: session } = useSession()
+
     const navigationRef = useRef()
+
+    const userData = useUserData()
+
+    const projectData = useMemo(() => {
+        return PROJECT_DATA.filter((element, i) => {
+            return element?.projectName === userData?.projects[i]
+        })
+    }, [userData, PROJECT_DATA])
 
     const toggledHeader = useToggleHeader()
     const setToggledHeader = useSetToggleHeader()
@@ -87,7 +97,7 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
                         toggledHeader ? 'w-[48px] pl-0' : 'w-full pl-[0]'
                     } overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
                 >
-                    {PROJECT_DATA.map(({ icon, projectName, slug }, i) => {
+                    {projectData.map(({ icon, projectName, slug }, i) => {
                         const activePath = query.project === slug
 
                         const counter = elementsCount(
@@ -141,7 +151,7 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
                 //     toggledHeader ? 'ml-0 w-[32px]' : 'ml-[36px] w-full'
                 // }  overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
             >
-                {userData && (
+                {session && (
                     <Link href="/profile">
                         <a
                             // className={`block w-max overflow-y-auto overflow-x-hidden ${
@@ -172,7 +182,7 @@ const Sidebar = ({ userData, notificationCounter, projectData, ...props }) => {
                                 </span>
 
                                 <p className="ml-2 w-max min-w-[125px] overflow-hidden">
-                                    Hi, {userData.user_metadata.name}!
+                                    Hi, {session.user.name}!
                                 </p>
                             </div>
                         </a>
