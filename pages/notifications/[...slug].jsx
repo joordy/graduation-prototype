@@ -46,6 +46,7 @@ const Notification = ({
     errorMessage,
     ...props
 }) => {
+    console.log(projectName, props)
     return (
         <Page topNav={true}>
             <h1 className="mt-8 text-3xl font-bold">
@@ -67,7 +68,7 @@ const Notification = ({
 
 export const getStaticPaths = async () => {
     const paths = [
-        { params: { slug: ['12-345'] } },
+        { params: { slug: ['18_04_2022_0001'] } },
         { params: { slug: ['23-456'] } },
         { params: { slug: ['34-567'] } },
         { params: { slug: ['45-678'] } },
@@ -80,8 +81,10 @@ export const getStaticPaths = async () => {
 }
 
 export async function getStaticProps({ params: { slug } }) {
+    console.log(slug)
     const data = NOTIFICATION_DATA.find((item) => item.slug === slug[0])
 
+    console.log(NOTIFICATION_DATA)
     return {
         props: { ...data },
     }

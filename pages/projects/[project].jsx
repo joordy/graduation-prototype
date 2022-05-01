@@ -66,7 +66,10 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
 
                         {projectName === 'Mammut' ? (
                             <ul>
-                                <NotificationElement hit={TEST_DATA} />
+                                <NotificationElement
+                                    type="fixed"
+                                    hit={TEST_DATA}
+                                />
                             </ul>
                         ) : (
                             <p>No solved notifications yet.</p>
