@@ -8,12 +8,12 @@ import { PROJECT_DATA } from '_utils/database/dataset'
 import Page from '_components/scopes/Page'
 
 const Profile = ({ sessionData = {}, ...props }) => {
-    console.log('page props: ', props)
+    // console.log('page props: ', props)
 
     const { data: session } = useSession()
 
     return (
-        <div className="flex h-screen w-full flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full h-screen">
             Signed in as {session.user.email} <br />
             <button onClick={() => signOut()}>Sign out</button>
             <pre className="text-xs ">

@@ -1,10 +1,6 @@
 import { getProviders, getSession, signIn } from 'next-auth/react'
 
-// browser side,
 export default function SignInPage({ providers }) {
-    // log the providers to see for yourself
-    console.log('Providers: ', providers)
-
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2 text-2xl font-bold">
             <p>This is the signin page!</p>

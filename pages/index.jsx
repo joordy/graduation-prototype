@@ -11,7 +11,7 @@ import NotificationElement from '_components/blocks/NotificationElement'
 import { useEffect } from 'react'
 
 const Home = ({ data, userData, notificationData, ...props }) => {
-    console.log('page props: ', props)
+    // console.log('page props: ', props)
     const setUserData = useSetUserData()
 
     useEffect(() => {
@@ -39,6 +39,10 @@ const Home = ({ data, userData, notificationData, ...props }) => {
 export async function getServerSideProps(ctx) {
     const user = await getSession(ctx)
 
+    if (!user) {
+        return { props: {}, redirect: { destination: '/auth/sign-in' } }
+    }
+
     const docRef = doc(db, 'users', user.user.uid)
     const docSnap = await getDoc(docRef)
 
@@ -47,12 +51,13 @@ export async function getServerSideProps(ctx) {
     })
 
     const data = docSnap.exists() && docSnap.data()
-
+    // console.log(typeof data === 'object')
+    // if (typeof data === 'object' && user)
     checkData(data, user, selectedProjects)
-
-    if (!user) {
-        return { props: {}, redirect: { destination: '/auth/sign-in' } }
-    }
+    // if (typeof data == )
+    // if ((!!data, user)) {
+    // checkData(data, user, selectedProjects)
+    // }
 
     return {
         props: {
@@ -67,6 +72,11 @@ export async function getServerSideProps(ctx) {
 export default Home
 
 const checkData = async (data, user, selectedProjects) => {
+    const userObj = user?.user
+    // const { user } = user
+    // console.log('data', data)
+    // console.log('user', user)
+
     // const userData = useUser()
     // const openSearch = useOpenSearch()
     // const toggledHeader = useToggleHeader()
@@ -75,18 +85,41 @@ const checkData = async (data, user, selectedProjects) => {
 
     if (data.uid && data.projects.length != 0) {
         console.log('hi')
+        console.log('user & data', userObj, data)
+
         return data
     } else {
-        console.log('bye')
-        await setDoc(
-            doc(db, 'users', user.user.uid),
-            {
-                uid: user.user.uid,
-                username: user.user.username,
-                projects: selectedProjects,
-            },
-            { merge: true },
-        )
-        return userData
+        const docRef = doc(db, 'users', userObj.uid)
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+            console.log('bye')
+            console.log('user', userObj)
+            console.log('data', data)
+            console.log('docSnap.data()', docSnap.data())
+        }
+        // const newData = await setDoc(
+        //     doc(db, 'users', user.uid),
+        //     {
+        //         uid: user.uid,
+        //         username: user.username,
+        //         // projects: selectedProjects,
+        //     },
+        //     { merge: true },
+        // )
+
+        // console.log('bew data', newData)
+
+        return
+        // await setDoc(
+        //     doc(db, 'users', user.user.uid),
+        //     {
+        //         uid: user.user.uid,
+        //         username: user.user.username,
+        //         projects: selectedProjects,
+        //     },
+        //     { merge: true },
+        // )
+        // return data
     }
 }
