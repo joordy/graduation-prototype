@@ -87,7 +87,7 @@ const Sidebar = ({ notificationCounter, ...props }) => {
             <div className="w-full">
                 <Link href="/">
                     <a className="mb-6 flex h-[32px] w-[32px] p-2 font-extrabold">
-                        404
+                        Loggly
                     </a>
                 </Link>
 
