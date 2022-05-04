@@ -37,7 +37,7 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                     </h1>
                 </header>
 
-                <section className="grid gap-3 overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-2 xl:grid-rows-6">
+                <section className="grid gap-3 overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-3 xl:grid-rows-6">
                     <article className="xl:row-start-1 xl:row-end-4">
                         <h2 className="mb-2 text-xl font-semibold">Issues:</h2>
                         {!notificationData.length >= 1 ? (
@@ -58,6 +58,23 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                     </article>
 
                     <article className="xl:col-start-2 xl:row-start-1 xl:row-end-4">
+                        <h2 className="mb-2 text-xl font-semibold">
+                            In progress
+                        </h2>
+
+                        {projectName === 'Mammut' ? (
+                            <ul>
+                                <NotificationElement
+                                    type="fixed"
+                                    hit={TEST_DATA}
+                                />
+                            </ul>
+                        ) : (
+                            <p>No solved notifications yet.</p>
+                        )}
+                    </article>
+
+                    <article className="xl:col-start-3 xl:row-start-1 xl:row-end-4">
                         <h2 className="mb-2 text-xl font-semibold">
                             Solved issues
                         </h2>
