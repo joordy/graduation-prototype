@@ -75,7 +75,7 @@ const checkData = async (data, user, selectedProjects) => {
 
     if (data.uid && data.projects.length != 0) {
         console.log('hi')
-        return userData
+        return data
     } else {
         console.log('bye')
         await setDoc(

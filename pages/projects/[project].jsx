@@ -24,8 +24,6 @@ const TEST_DATA = {
 const Project = ({ notificationData = [], projectData = {}, ...props }) => {
     const { connections = [], projectName } = projectData
 
-    console.log(notificationData)
-    console.log(`projects/${projectName.toLowerCase()}/notification/test`)
     return (
         <>
             <Head>
