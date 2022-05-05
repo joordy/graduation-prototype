@@ -8,8 +8,6 @@ import Page from '_components/scopes/Page'
 import NotificationElement from '_components/blocks/NotificationElement'
 
 const Home = ({ notificationData, projectData, user, ...props }) => {
-    const { user, view, signOut } = useAuth()
-    console.log('user, view, signOut', user, view, signOut)
     return (
         <Page topNav={true}>
             {user && (
