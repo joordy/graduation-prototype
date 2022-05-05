@@ -1,31 +1,35 @@
 import Link from 'next/link'
-import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { getSession } from 'next-auth/react'
 
-import { db } from '_utils/database/firebase'
+import { useAuth } from '_utils/context/auth'
+import { supabase } from '_utils/database/init'
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
-import { useUserData, useSetUserData } from '_utils/atoms/userData'
 
 import Page from '_components/scopes/Page'
 import NotificationElement from '_components/blocks/NotificationElement'
-import { useEffect } from 'react'
 
-const Home = ({ data, userData, notificationData, ...props }) => {
-    // console.log('page props: ', props)
-    const setUserData = useSetUserData()
-
-    useEffect(() => {
-        setUserData(data)
-    }, [])
-
+const Home = ({ notificationData, projectData, user, ...props }) => {
+    const { user, view, signOut } = useAuth()
+    console.log('user, view, signOut', user, view, signOut)
     return (
         <Page topNav={true}>
+            {user && (
+                <>
+                    <h2>Welcome!</h2>
+                    <code className="highlight">{user.role}</code>
+                    <Link href="/profile">
+                        <a className="button">Go to Profile</a>
+                    </Link>
+                    <button type="button" className="button" onClick={signOut}>
+                        Sign Out
+                    </button>
+                </>
+            )}
+
             <header>
                 <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
             </header>
 
             <section className="grid gap-12 xl:grid-cols-2">
-                <p>notifications</p>
                 <ul className="flex flex-col gap-y-4">
                     {notificationData.map((data, i) => {
                         return <NotificationElement key={i} hit={data} />
@@ -36,33 +40,21 @@ const Home = ({ data, userData, notificationData, ...props }) => {
     )
 }
 
-export async function getServerSideProps(ctx) {
-    const user = await getSession(ctx)
+export async function getServerSideProps({ req, res }) {
+    const { user } = await supabase.auth.api.getUserByCookie(req)
 
+    console.log('user home', user)
     if (!user) {
-        return { props: {}, redirect: { destination: '/auth/sign-in' } }
+        console.log('Please login.')
+        return {
+            props: {},
+            redirect: { destination: '/sign-in', permanent: false },
+        }
     }
-
-    const docRef = doc(db, 'users', user.user.uid)
-    const docSnap = await getDoc(docRef)
-
-    const selectedProjects = PROJECT_DATA.map((elem) => {
-        return elem.projectName
-    })
-
-    const data = docSnap.exists() && docSnap.data()
-    // console.log(typeof data === 'object')
-    // if (typeof data === 'object' && user)
-    checkData(data, user, selectedProjects)
-    // if (typeof data == )
-    // if ((!!data, user)) {
-    // checkData(data, user, selectedProjects)
-    // }
 
     return {
         props: {
-            data: data,
-            userData: user,
+            user,
             projectData: PROJECT_DATA,
             notificationData: NOTIFICATION_DATA,
         },
@@ -70,56 +62,3 @@ export async function getServerSideProps(ctx) {
 }
 
 export default Home
-
-const checkData = async (data, user, selectedProjects) => {
-    const userObj = user?.user
-    // const { user } = user
-    // console.log('data', data)
-    // console.log('user', user)
-
-    // const userData = useUser()
-    // const openSearch = useOpenSearch()
-    // const toggledHeader = useToggleHeader()
-
-    // const setAuthState = useSetIsUserAuth()
-
-    if (data.uid && data.projects.length != 0) {
-        console.log('hi')
-        console.log('user & data', userObj, data)
-
-        return data
-    } else {
-        const docRef = doc(db, 'users', userObj.uid)
-        const docSnap = await getDoc(docRef)
-
-        if (docSnap.exists()) {
-            console.log('bye')
-            console.log('user', userObj)
-            console.log('data', data)
-            console.log('docSnap.data()', docSnap.data())
-        }
-        // const newData = await setDoc(
-        //     doc(db, 'users', user.uid),
-        //     {
-        //         uid: user.uid,
-        //         username: user.username,
-        //         // projects: selectedProjects,
-        //     },
-        //     { merge: true },
-        // )
-
-        // console.log('bew data', newData)
-
-        return
-        // await setDoc(
-        //     doc(db, 'users', user.user.uid),
-        //     {
-        //         uid: user.user.uid,
-        //         username: user.user.username,
-        //         projects: selectedProjects,
-        //     },
-        //     { merge: true },
-        // )
-        // return data
-    }
-}

@@ -1,37 +1,46 @@
-import { useSession, getSession, signIn, signOut } from 'next-auth/react'
-
-import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import { supabase } from '_utils/database/init'
-import { PROJECT_DATA } from '_utils/database/dataset'
 import Page from '_components/scopes/Page'
 
-const Profile = ({ sessionData = {}, ...props }) => {
-    // console.log('page props: ', props)
+import { supabase } from '_utils/database/init'
 
-    const { data: session } = useSession()
+const Profile = ({ user }) => {
+    const router = useRouter()
+    console.log('🚀 ~ file: profile.jsx ~ line 11 ~ Profile ~ router', router)
+    const onHandleSignOut = async (e) => {
+        const { error } = await supabase.auth.signOut()
 
+        router.push('/sign-in')
+    }
     return (
-        <div className="flex flex-col items-center justify-center w-full h-screen">
-            Signed in as {session.user.email} <br />
-            <button onClick={() => signOut()}>Sign out</button>
-            <pre className="text-xs ">
-                {JSON.stringify(sessionData, null, 2)}
-            </pre>
-        </div>
+        <Page>
+            <div className="flex flex-col">
+                <h2>User Profile</h2>
+                <code className="highlight">{user.email}</code>
+                <div className="heading">Last Signed In:</div>
+                <code className="highlight">
+                    {new Date(user.last_sign_in_at).toLocaleString()}
+                </code>
+                <button onClick={onHandleSignOut}>Sign out</button>
+                <Link href="/">
+                    <a className="button">Go Home</a>
+                </Link>
+            </div>
+        </Page>
     )
 }
 
-export async function getServerSideProps(ctx) {
-    const user = await getSession(ctx)
-    console.log(user)
+export async function getServerSideProps({ req, res }) {
+    const { user } = await supabase.auth.api.getUserByCookie(req)
 
     if (!user) {
-        return { props: {}, redirect: { destination: '/auth/sign-in' } }
+        console.log('Please login.')
+        return { props: {}, redirect: { destination: '/', permanent: false } }
     }
 
-    return { props: { session: user } }
+    return { props: { user } }
 }
 
 export default Profile

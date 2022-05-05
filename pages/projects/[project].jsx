@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Head from 'next/head'
 
+import { useAuth } from '_utils/context/auth'
+
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
 
 import Page from '_components/scopes/Page'
@@ -22,6 +24,8 @@ const TEST_DATA = {
 }
 
 const Project = ({ notificationData = [], projectData = {}, ...props }) => {
+    const { user } = useAuth()
+    console.log('useer', user)
     const { connections = [], projectName } = projectData
 
     return (
@@ -96,12 +100,12 @@ const Project = ({ notificationData = [], projectData = {}, ...props }) => {
                             <h2 className="mb-2 text-xl font-semibold">
                                 Current status:
                             </h2>
-                            <span className="px-10 py-2 rounded-lg bg-grey-500">
+                            <span className="rounded-lg bg-grey-500 px-10 py-2">
                                 Filters
                             </span>
                         </div>
                         <div>
-                            <div className="grid grid-cols-4 mt-12 mb-6 font-bold gap-x-6 ">
+                            <div className="mt-12 mb-6 grid grid-cols-4 gap-x-6 font-bold ">
                                 <span>Service</span>
                                 <span>Type</span>
                                 <span>Status</span>

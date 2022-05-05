@@ -4,9 +4,10 @@
         "jsx": "react",
         "paths": {
             "_components/*": ["components/*"],
-            "_pages/*": ["pages/*"],
+            "_pages/*": ["pages2/*"],
             "_utils/*": ["utils/*"],
-            "_styles/*": ["styles/*"]
+            "_styles/*": ["styles/*"],
+            "_models/*": ["models/*"]
         }
     }
 }

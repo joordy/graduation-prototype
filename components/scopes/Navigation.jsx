@@ -1,31 +1,38 @@
 import { useEffect, useState, useRef, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
+// import { useSession } from 'next-auth/react'
 
 import { PROJECT_DATA } from '_utils/database/dataset'
+import { useAuth } from '_utils/context/auth'
 
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 import { useUserData } from '_utils/atoms/userData'
 
 const Sidebar = ({ notificationCounter, ...props }) => {
     const { query } = useRouter()
-    const { data: session } = useSession()
-
+    const { user } = useAuth()
     const navigationRef = useRef()
 
-    const userData = useUserData()
+    // console.log('userrrrrr', user)
+
+    // const userData = useUserData()
 
     const projectData = useMemo(() => {
-        return PROJECT_DATA.filter((element, i) => {
-            return element?.projectName === userData?.projects[i]
-        })
-    }, [userData, PROJECT_DATA])
+        return PROJECT_DATA
+        // return PROJECT_DATA.filter((element, i) => {
+        //     if (userData?.projects) {
+        //         return element?.projectName === userData?.projects[i]
+        //     } else {
+        //         return element?.projectName
+        //     }
+        // })
+    }, [PROJECT_DATA])
 
     const toggledHeader = useToggleHeader()
     const setToggledHeader = useSetToggleHeader()
 
-    const [navWidth, setNavWidth] = useState(0)
+    // const [navWidth, setNavWidth] = useState(0)
     const toggle = () => {
         setToggledHeader(!toggledHeader)
     }
@@ -36,9 +43,9 @@ const Sidebar = ({ notificationCounter, ...props }) => {
         })
     }
 
-    useEffect(() => {
-        setNavWidth(navigationRef.current?.getBoundingClientRect().width)
-    }, [navigationRef?.current?.getBoundingClientRect().width])
+    // useEffect(() => {
+    //     setNavWidth(navigationRef.current?.getBoundingClientRect().width)
+    // }, [navigationRef?.current?.getBoundingClientRect().width])
 
     return (
         <nav
@@ -54,7 +61,7 @@ const Sidebar = ({ notificationCounter, ...props }) => {
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="block w-6 h-6 md:hidden"
+                    className="block h-6 w-6 md:hidden"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -151,7 +158,7 @@ const Sidebar = ({ notificationCounter, ...props }) => {
                 //     toggledHeader ? 'ml-0 w-[32px]' : 'ml-[36px] w-full'
                 // }  overflow-y-auto overflow-x-hidden duration-[250ms] ease-in`}
             >
-                {session && (
+                {user && (
                     <Link href="/profile">
                         <a
                             // className={`block w-max overflow-y-auto overflow-x-hidden ${
@@ -163,7 +170,7 @@ const Sidebar = ({ notificationCounter, ...props }) => {
                                     : 'w-full pl-[0]'
                             } m-0 overflow-hidden duration-[250ms] ease-in`}
                         >
-                            <div className="flex items-center ml-4">
+                            <div className="ml-4 flex items-center">
                                 <span className="h-[32px] w-[32px]">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +189,7 @@ const Sidebar = ({ notificationCounter, ...props }) => {
                                 </span>
 
                                 <p className="ml-2 w-max min-w-[125px] overflow-hidden">
-                                    Hi, {session.user.name}!
+                                    Hi, {user.email}!
                                 </p>
                             </div>
                         </a>
