@@ -3,31 +3,46 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import Page from '_components/scopes/Page'
+import { useAuth } from '_utils/context/auth'
 
 import { supabase } from '_utils/database/init'
 
 const Profile = ({ user }) => {
     const router = useRouter()
-    console.log('🚀 ~ file: profile.jsx ~ line 11 ~ Profile ~ router', router)
-    const onHandleSignOut = async (e) => {
-        const { error } = await supabase.auth.signOut()
+    const data = useAuth()
 
-        router.push('/sign-in')
+    const onHandleSignOut = async (e) => {
+        const { error: err } = await supabase.auth.signOut()
+
+        if (err) console.error(err)
+        return router.push('/sign-in')
     }
+
     return (
-        <Page>
-            <div className="flex flex-col">
-                <h2>User Profile</h2>
-                <code className="highlight">{user.email}</code>
-                <div className="heading">Last Signed In:</div>
-                <code className="highlight">
-                    {new Date(user.last_sign_in_at).toLocaleString()}
-                </code>
-                <button onClick={onHandleSignOut}>Sign out</button>
-                <Link href="/">
-                    <a className="button">Go Home</a>
-                </Link>
-            </div>
+        <Page topNav={true}>
+            <section className="flex flex-col">
+                <header>
+                    <h1 className="mb-8 text-3xl font-bold">User Profile</h1>
+                    <nav class>
+                        <ul className="flex gap-2 m-0">
+                            <li className="">User info</li>
+                            <li>Settings</li>
+                        </ul>
+                    </nav>
+                </header>
+
+                <main className="flex flex-col mt-4">
+                    <code className="highlight">{user.email}</code>
+                    <div className="heading">Last Signed In:</div>
+                    <code className="highlight">
+                        {new Date(user.last_sign_in_at).toLocaleString()}
+                    </code>
+                    <button onClick={onHandleSignOut}>Sign out</button>
+                    <Link href="/">
+                        <a className="button">Go Home</a>
+                    </Link>
+                </main>
+            </section>
         </Page>
     )
 }
@@ -36,7 +51,6 @@ export async function getServerSideProps({ req, res }) {
     const { user } = await supabase.auth.api.getUserByCookie(req)
 
     if (!user) {
-        console.log('Please login.')
         return { props: {}, redirect: { destination: '/', permanent: false } }
     }
 

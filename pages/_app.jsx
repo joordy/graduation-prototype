@@ -42,7 +42,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
 
     return (
         <AuthProvider supabase={supabase}>
-            <div className="flex w-full justify-center">
+            <div className="flex justify-center w-full">
                 {router.pathname !== '/sign-in' && (
                     <>
                         <ToastContainer

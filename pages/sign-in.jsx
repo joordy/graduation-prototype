@@ -5,10 +5,10 @@ import { supabase } from '_utils/database/init'
 
 export default function SignInPage({}) {
     const router = useRouter()
-    console.log('🚀 ~ file: profile.jsx ~ line 11 ~ Profile ~ router', router)
 
     const [formState, setFormState] = useState(false)
-    const [name, setName] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -20,20 +20,50 @@ export default function SignInPage({}) {
             password: password,
         })
 
-        console.log({ user, session, error })
-
         router.push('/')
+    }
+
+    const toggleClick = () => {
+        setFormState(!formState)
     }
 
     const onHandleRegister = async (e) => {
         e.preventDefault()
 
+        const { data: userWithUsername } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single()
+
+        if (userWithUsername) {
+            throw new Error('User with email exists')
+        }
+
         const { user, session, error } = await supabase.auth.signUp({
             email: email,
             password: password,
+            data: {
+                projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
+                name: name,
+                user_role: 'developer',
+            },
         })
 
-        console.log({ user, session, error })
+        const {
+            data: dataObj,
+            session: sess,
+            error: err,
+        } = await supabase.from('users').insert([
+            {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                user_role: 'developer',
+                uid: user.id,
+                projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
+            },
+        ])
     }
 
     return (
@@ -69,11 +99,19 @@ export default function SignInPage({}) {
                 className={`mt-4 ${formState ? 'flex' : 'hidden'} flex-col`}
             >
                 <fieldset className="flex flex-col">
-                    <label>Name</label>
+                    <label>First name:</label>
                     <input
                         type="text"
                         className="border rounded-md"
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </fieldset>
+                <fieldset className="flex flex-col">
+                    <label>Last name:</label>
+                    <input
+                        type="text"
+                        className="border rounded-md"
+                        onChange={(e) => setLastName(e.target.value)}
                     />
                 </fieldset>
                 <fieldset className="flex flex-col">
@@ -96,11 +134,9 @@ export default function SignInPage({}) {
                     <input type="submit" className="mt-4 border rounded-md" />
                 </fieldset>
             </form>
-            <button
-                onClick={(e) => setSignUpForm(!signUpForm)}
-                className="mt-4 text-sm"
-            >
-                {setFormState ? 'Sign in' : 'Sign up'}
+
+            <button onClick={toggleClick} className="mt-4 text-sm">
+                {formState ? 'Sign in' : 'Sign up'}
             </button>
         </div>
     )

@@ -44,46 +44,46 @@ const Notification = ({
     slug,
     specificCodeFile,
     errorMessage,
+    notificationNotFound = false,
     ...props
 }) => {
     return (
         <Page topNav={true}>
-            <h1 className="mt-8 text-3xl font-bold">
-                {projectName} ✗ {intro}
-            </h1>
+            {notificationNotFound ? (
+                <p>No notification can be found</p>
+            ) : (
+                <>
+                    <h1 className="mt-8 text-3xl font-bold">
+                        {projectName} ✗ {intro}
+                    </h1>
 
-            <NotificationDetails
-                STATUS={STATUS}
-                projectName={projectName}
-                intro={intro}
-                projectIcon={projectIcon}
-                slug={slug}
-                specificCodeFile={specificCodeFile}
-                errorMessage={errorMessage}
-            />
+                    <NotificationDetails
+                        STATUS={STATUS}
+                        projectName={projectName}
+                        intro={intro}
+                        projectIcon={projectIcon}
+                        slug={slug}
+                        specificCodeFile={specificCodeFile}
+                        errorMessage={errorMessage}
+                    />
+                </>
+            )}
         </Page>
     )
 }
 
-export const getStaticPaths = async () => {
-    const paths = [
-        { params: { slug: ['18_04_2022_0001'] } },
-        { params: { slug: ['23-456'] } },
-        { params: { slug: ['34-567'] } },
-        { params: { slug: ['45-678'] } },
-    ]
+export async function getServerSideProps({ params }) {
+    const data = NOTIFICATION_DATA.find((item) => {
+        return item.slug === params.slug[2]
+    }) // Must always be like ['project', notification, 'notification id']
 
-    return {
-        paths,
-        fallback: true,
+    if (!data) {
+        return {
+            props: { notificationNotFound: true },
+        }
     }
-}
-
-export async function getStaticProps({ params: { slug } }) {
-    const data = NOTIFICATION_DATA.find((item) => item.slug === slug[0])
-
     return {
-        props: { ...data },
+        props: { notificationNotFound: false, ...data },
     }
 }
 
