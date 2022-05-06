@@ -20,6 +20,8 @@ export default function SignInPage({}) {
             password: password,
         })
 
+        console.log({ user, session, error })
+
         router.push('/')
     }
 
@@ -39,7 +41,6 @@ export default function SignInPage({}) {
         if (userWithUsername) {
             throw new Error('User with email exists')
         }
-
         const { user, session, error } = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -64,6 +65,9 @@ export default function SignInPage({}) {
                 projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
             },
         ])
+
+        console.log({ user, session, error })
+        console.log({ dataObj, sess, err })
     }
 
     return (
