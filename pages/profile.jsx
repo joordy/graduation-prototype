@@ -15,12 +15,12 @@ const Profile = ({ user }) => {
         const { error: err } = await supabase.auth.signOut()
 
         if (err) console.error(err)
-        return router.push('/sign-in')
+        router.push('/sign-in')
     }
 
     return (
         <Page topNav={true}>
-            <section className="flex flex-col">
+            <section className="flex flex-col ">
                 <header>
                     <h1 className="mb-8 text-3xl font-bold">User Profile</h1>
                     <nav class>
