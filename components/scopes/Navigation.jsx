@@ -34,7 +34,7 @@ const Sidebar = ({ notificationCounter, ...props }) => {
     return (
         <nav
             className={`z-100 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto bg-[#F1F3F4] px-8  py-16 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 md:pt-8 md:pb-16 ${
-                toggledHeader ? 'md:w-[100px]' : 'md:w-[300px]'
+                toggledHeader ? 'md:w-[80px]' : 'md:w-[300px]'
             } fixed -left-[100vw] top-0 bottom-0 md:overflow-visible ${
                 toggledHeader && 'left-[0]'
             }`}
@@ -183,7 +183,7 @@ const UserProfile = ({ userData, toggledHeader }) => {
                     toggledHeader ? 'w-[48px] pl-0' : 'w-full pl-[0]'
                 } m-0 overflow-hidden duration-[250ms] ease-in`}
             >
-                <div className="flex items-center ml-4">
+                <div className="flex items-center ml-2">
                     <span className="h-[32px] w-[32px] rounded-full bg-grey-200 p-4">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

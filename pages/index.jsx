@@ -42,18 +42,22 @@ const Home = ({ notifications, projects, user, ...props }) => {
                                 return (
                                     <li
                                         key={i}
-                                        className="w-full h-48 p-4 rounded-md bg-grey-50"
+                                        className="flex flex-col justify-between w-full h-32 p-4 rounded-md shadow-md bg-grey-50"
                                     >
-                                        <h3 className="text-2xl font-bold">
+                                        <h3 className="font-bold text-md ">
                                             {project.projectName}
                                         </h3>
+
+                                        <p className="text-xs">
+                                            Current notifications: 1
+                                        </p>
                                     </li>
                                 )
                             })}
                         </ul>
                     </article>
 
-                    <article className="xl:grid xl:grid-cols-2 xl:gap-4">
+                    <article className="flex flex-col gap-4 xl:grid xl:grid-cols-2">
                         <section>
                             <header>
                                 <h2 className="mb-4 text-xl font-medium">
@@ -64,10 +68,28 @@ const Home = ({ notifications, projects, user, ...props }) => {
                                 <ul className="flex flex-col gap-y-4">
                                     {notifications.map((data, i) => {
                                         return (
-                                            <NotificationElement
+                                            <li
                                                 key={i}
-                                                hit={data}
-                                            />
+                                                className="px-4 py-2 shadow-md rounded-xl bg-grey-50"
+                                            >
+                                                <div className="relative flex">
+                                                    <div className="flex items-center justify-center">
+                                                        <img
+                                                            src={
+                                                                data.projectIcon
+                                                            }
+                                                            alt={`icon of ${data.projectName}`}
+                                                            className="h-[24px] w-[24px]"
+                                                        />
+                                                    </div>
+                                                    <div className="flex items-center justify-center ml-4">
+                                                        <p>{data.intro}</p>
+                                                    </div>
+                                                    <p className="absolute top-0 right-0 text-xs text-grey-300">
+                                                        {data.status}
+                                                    </p>
+                                                </div>
+                                            </li>
                                         )
                                     })}
                                 </ul>

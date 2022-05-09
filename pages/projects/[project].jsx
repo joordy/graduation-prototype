@@ -45,7 +45,7 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                     <h1 className="mb-8 text-3xl font-bold">{projectName}</h1>
                 </header>
 
-                <section className="grid gap-3 overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-3 xl:grid-rows-6">
+                <section className="grid gap-3  xl:h-[calc(100%-12rem)] xl:grid-cols-3 xl:grid-rows-6">
                     <article className="xl:row-start-1 xl:row-end-4">
                         <h2 className="mb-2 text-xl font-semibold">Issues:</h2>
                         {!notifications.length >= 1 ? (
@@ -55,7 +55,7 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                 {notifications.map((data, i) => {
                                     return (
                                         <li
-                                            className="px-4 py-2 rounded-xl bg-grey-50"
+                                            className="px-4 py-2 shadow-md rounded-xl bg-grey-50"
                                             key={i}
                                         >
                                             <Link
@@ -105,10 +105,23 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
 
                         {projectName === 'Mammut' ? (
                             <ul>
-                                <NotificationElement
-                                    type="fixed"
-                                    hit={TEST_DATA}
-                                />
+                                <li className="px-4 py-2 shadow-md rounded-xl bg-grey-50">
+                                    <div className="relative flex items-center">
+                                        <div className="flex items-center justify-center">
+                                            <img
+                                                src={TEST_DATA.projectIcon}
+                                                alt={`icon of ${TEST_DATA.projectName}`}
+                                                className="h-[24px] w-[24px]"
+                                            />
+                                        </div>
+                                        <div className="flex items-center justify-center ml-4">
+                                            <p>{TEST_DATA.intro}</p>
+                                        </div>
+                                        <p className="absolute top-[50%] right-0 -translate-y-[50%] text-xs text-grey-300">
+                                            {TEST_DATA.status}
+                                        </p>
+                                    </div>
+                                </li>
                             </ul>
                         ) : (
                             <p>No solved notifications yet.</p>
@@ -122,10 +135,23 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
 
                         {projectName === 'Mammut' ? (
                             <ul>
-                                <NotificationElement
-                                    type="fixed"
-                                    hit={TEST_DATA}
-                                />
+                                <li className="px-4 py-2 shadow-md rounded-xl bg-grey-50">
+                                    <div className="relative flex items-center">
+                                        <div className="flex items-center justify-center">
+                                            <img
+                                                src={TEST_DATA.projectIcon}
+                                                alt={`icon of ${TEST_DATA.projectName}`}
+                                                className="h-[24px] w-[24px]"
+                                            />
+                                        </div>
+                                        <div className="flex items-center justify-center ml-4">
+                                            <p>{TEST_DATA.intro}</p>
+                                        </div>
+                                        <p className="absolute top-[50%] right-0 -translate-y-[50%] text-xs text-grey-300">
+                                            {TEST_DATA.status}
+                                        </p>
+                                    </div>
+                                </li>
                             </ul>
                         ) : (
                             <p>No solved notifications yet.</p>

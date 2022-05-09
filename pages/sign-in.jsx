@@ -33,12 +33,10 @@ export default function SignInPage({}) {
 
         if (error) {
             setErrorState(true)
-            console.log(error)
             if (error.message) {
                 setErrorMsg(error.message)
             }
         }
-        // console.log({ user, session, error })
 
         router.push('/')
     }

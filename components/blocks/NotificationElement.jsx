@@ -6,8 +6,6 @@ const Notification = ({ type = '', hit, onClick = () => {}, projectSlug }) => {
     return (
         <li className="rounded-xl bg-grey-50">
             <button className="w-full p-4 text-left" onClick={onClick}>
-                {/* <Link href={`/notifications/${slug}`}>
-                <a> */}
                 {type === 'fixed' ? (
                     <div className="relative flex">
                         <div className="flex items-center justify-center">
@@ -42,8 +40,6 @@ const Notification = ({ type = '', hit, onClick = () => {}, projectSlug }) => {
                         </p>
                     </div>
                 )}
-                {/* </a>
-            </Link> */}
             </button>
         </li>
     )
