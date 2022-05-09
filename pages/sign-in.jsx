@@ -44,10 +44,14 @@ export default function SignInPage({}) {
         const { user, session, error } = await supabase.auth.signUp({
             email: email,
             password: password,
+        })
+
+        const { user: userObj, error: errorMsg } = await supabase.auth.update({
             data: {
                 projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
-                name: name,
-                user_role: 'developer',
+                firstName: firstName,
+                lastName: lastName,
+                role: 'developer',
             },
         })
 
@@ -71,77 +75,104 @@ export default function SignInPage({}) {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2 text-2xl font-bold">
-            <p>This is the signin page!</p>
+        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#ECEFF2] py-2 text-2xl font-bold">
+            <section className="px-4 py-8 bg-white rounded-lg">
+                <header className="text-center">
+                    <h1>Loggly</h1>
+                </header>
 
-            <form
-                onSubmit={onHandleSignIn}
-                className={`mt-4 ${formState ? 'hidden' : 'flex'} flex-col`}
-            >
-                <fieldset className="flex flex-col">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="border rounded-md"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset className="flex flex-col">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        className="border rounded-md"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset className="flex flex-col">
-                    <input type="submit" className="mt-4 border rounded-md" />
-                </fieldset>
-            </form>
-            <form
-                onSubmit={onHandleRegister}
-                className={`mt-4 ${formState ? 'flex' : 'hidden'} flex-col`}
-            >
-                <fieldset className="flex flex-col">
-                    <label>First name:</label>
-                    <input
-                        type="text"
-                        className="border rounded-md"
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset className="flex flex-col">
-                    <label>Last name:</label>
-                    <input
-                        type="text"
-                        className="border rounded-md"
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset className="flex flex-col">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="border rounded-md"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset className="flex flex-col">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        className="border rounded-md"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset className="flex flex-col">
-                    <input type="submit" className="mt-4 border rounded-md" />
-                </fieldset>
-            </form>
+                <main className="flex flex-col">
+                    <form
+                        onSubmit={onHandleSignIn}
+                        className={`mt-4 ${
+                            formState ? 'hidden' : 'flex'
+                        } flex-col `}
+                    >
+                        <fieldset className="flex flex-col mb-4">
+                            <label className="text-sm font-medium">Email</label>
+                            <input
+                                name="email"
+                                type="email"
+                                className="border rounded-md"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="flex flex-col mb-4">
+                            <label className="text-sm font-medium">
+                                Password
+                            </label>
+                            <input
+                                name="password"
+                                type="password"
+                                className="border rounded-md"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="flex flex-col">
+                            <input
+                                type="submit"
+                                className="py-2 mt-4 text-sm text-white border rounded-md border-b-grey-900 bg-grey-900"
+                            />
+                        </fieldset>
+                    </form>
 
-            <button onClick={toggleClick} className="mt-4 text-sm">
-                {formState ? 'Sign in' : 'Sign up'}
-            </button>
+                    <form
+                        onSubmit={onHandleRegister}
+                        className={`mt-4 ${
+                            formState ? 'flex' : 'hidden'
+                        } flex-col`}
+                    >
+                        <fieldset className="flex flex-col mb-4">
+                            <label className="text-sm font-medium">
+                                First name:
+                            </label>
+                            <input
+                                type="text"
+                                className="border rounded-md"
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="flex flex-col mb-4">
+                            <label className="text-sm font-medium">
+                                Last name:
+                            </label>
+                            <input
+                                type="text"
+                                className="border rounded-md"
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="flex flex-col mb-4">
+                            <label className="text-sm font-medium">Email</label>
+                            <input
+                                type="email"
+                                className="border rounded-md"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="flex flex-col mb-4">
+                            <label className="text-sm font-medium">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                className="border rounded-md"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </fieldset>
+                        <fieldset className="flex flex-col">
+                            <input
+                                type="submit"
+                                className="py-2 mt-4 text-sm text-white border rounded-md border-b-grey-900 bg-grey-900"
+                            />
+                        </fieldset>
+                    </form>
+
+                    <button onClick={toggleClick} className="mt-4 text-sm">
+                        {formState ? 'Sign in' : 'Sign up'}
+                    </button>
+                </main>
+            </section>
         </div>
     )
 }
