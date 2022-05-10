@@ -73,7 +73,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
                         Notification center
                     </h1>
                 </header>
-                <main className="grid h-[inherit] grid-cols-2 gap-3">
+                <main className="grid h-[inherit] grid-cols-[2fr,3fr] gap-3">
                     <section>
                         <h2 className="mb-2 text-xl font-semibold">
                             Open notifications
@@ -134,23 +134,28 @@ const NotificationCenter = ({ notifications, ...props }) => {
 }
 
 const Notification = ({ data }) => {
+    console.log(data)
     return (
         <section className="w-full p-1 border rounded-lg shadow-md border-grey-100">
             <header className="mb-2 flex w-[inherit] flex-col justify-between text-sm">
-                <article className="">
+                <article>
                     <h3 className="text-xl font-bold">Status</h3>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4 mb-1">
+                        <p className="text-grey-500">Detected on</p>
+                        <p>{data.projectName}</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mb-1">
                         <p className="text-grey-500">Assigned to</p>
                         <p>Maarten B</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4 mb-1">
                         <p className="text-grey-500">Last updated</p>
-                        <p>14:14 — 20-04-2022</p>
+                        <p>17:14 - 09-05-2022</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4 mb-1">
                         <p className="text-grey-500">Priority level</p>
-                        <p>High</p>
+                        <PriorityElement />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <p className="text-grey-500">Status</p>
@@ -163,12 +168,7 @@ const Notification = ({ data }) => {
                 <article className="text-sm">
                     <h3 className="text-xl font-bold">Description</h3>
 
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Officia corrupti id sunt, enim ut earum reiciendis
-                        tempora placeat odit dolorem quod ducimus ipsam
-                        pariatur. Ipsum quo voluptatum sed distinctio dolorem!
-                    </p>
+                    <p>{data.intro}</p>
                 </article>
 
                 <article className="w-full mt-2">
@@ -209,6 +209,15 @@ const Notification = ({ data }) => {
         </section>
     )
 }
+
+const PriorityElement = ({ priority = 'Urgent' }) => {
+    return (
+        <span className="flex h-[20px] w-fit flex-col items-center justify-center rounded-md bg-red px-2 text-xs text-white">
+            {priority}
+        </span>
+    )
+}
+
 export async function getStaticProps() {
     const data = NOTIFICATION_DATA
 

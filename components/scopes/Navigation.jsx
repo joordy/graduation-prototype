@@ -10,6 +10,7 @@ import { useUserData } from '_utils/atoms/userData'
 
 const Sidebar = ({ notificationCounter, ...props }) => {
     const { user } = useAuth()
+    console.log('sidebar user', user?.user_metadata?.projects)
     const userData = useUserData()
     const toggledHeader = useToggleHeader()
 
@@ -28,8 +29,12 @@ const Sidebar = ({ notificationCounter, ...props }) => {
     const projectData = useMemo(() => {
         return PROJECT_DATA.filter((projects) => {
             return userData?.projects?.indexOf(projects.projectName) > -1
+            // console.log(
+            //     user?.user_metadata?.projects?.indexOf(projects.projectName),
+            // )
+            // return user?.user_metadata?.projects?.indexOf(projects.projectName)
         })
-    }, [PROJECT_DATA, userData])
+    }, [PROJECT_DATA, user, userData])
 
     return (
         <nav

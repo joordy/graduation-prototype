@@ -8,6 +8,14 @@ import { useAuth } from '_utils/context/auth'
 import { supabase } from '_utils/database/init'
 
 const Profile = ({ user }) => {
+    const onHandleClick = async () => {
+        const { user, error } = await supabase.auth.update({
+            data: { projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'] },
+        })
+
+        console.log(user, error)
+    }
+
     const router = useRouter()
     const data = useAuth()
 
@@ -32,6 +40,8 @@ const Profile = ({ user }) => {
                 </header>
 
                 <main className="flex flex-col mt-4">
+                    <button onClick={onHandleClick}>Update profile</button>
+
                     <code className="highlight">{user.email}</code>
                     <div className="heading">Last Signed In:</div>
                     <code className="highlight">

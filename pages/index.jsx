@@ -10,6 +10,7 @@ import Page from '_components/scopes/Page'
 import NotificationElement from '_components/blocks/NotificationElement'
 
 const Home = ({ notifications, projects, user, ...props }) => {
+    console.log('userrr', user)
     const userData = useUserData()
     const setUserData = useSetUserData()
 
@@ -102,7 +103,7 @@ const Home = ({ notifications, projects, user, ...props }) => {
                                 </h2>
                             </header>
                             <main>
-                                <p>hi</p>
+                                <p>Statistics coming soon here.</p>
                             </main>
                         </section>
                     </article>
