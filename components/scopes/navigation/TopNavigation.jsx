@@ -15,7 +15,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
 
     return (
         <header
-            className={`mb-8 flex  items-center bg-white p-4 md:bg-transparent md:p-0 ${
+            className={`mb-4 flex h-8 items-center bg-white p-4 md:bg-transparent md:p-0 ${
                 breadCrumbs ? 'justify-between' : 'justify-end'
             }`}
         >
@@ -50,7 +50,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
             )}
 
             <div className="flex items-center justify-center ">
-                <HeaderButton href={'/notifications'}>
+                {/* <HeaderButton href={'/notifications'}>
                     <div className="relative">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +92,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                         />
                     </svg>
-                </HeaderButton>
+                </HeaderButton> */}
             </div>
         </header>
     )

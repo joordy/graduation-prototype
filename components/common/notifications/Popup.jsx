@@ -1,12 +1,6 @@
 import Link from 'next/link'
 
-const NotificationPopup = ({
-    projectName,
-    pathName,
-    intro,
-    icon,
-    ...props
-}) => {
+const Popup = ({ projectName, pathName, intro, icon, ...props }) => {
     return (
         <Link href={`/${pathName}`}>
             <a>
@@ -26,4 +20,4 @@ const NotificationPopup = ({
     )
 }
 
-export default NotificationPopup
+export default Popup

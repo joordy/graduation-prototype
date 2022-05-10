@@ -3,7 +3,7 @@ import React from 'react'
 import { useToggleHeader } from '_utils/atoms/toggleHeader'
 
 import Breadcrumbs from '_components/blocks/Breadcrumbs'
-import TopNavigation from '_components/scopes/TopNavigation'
+import TopNavigation from '_components/scopes/navigation/TopNavigation'
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
 
 export default function Page({ topNav = false, breadCrumbs = true, children }) {
@@ -14,10 +14,10 @@ export default function Page({ topNav = false, breadCrumbs = true, children }) {
             <main
                 className={` w-full   ${
                     toggledHeader
-                        ? 'close overflow-hidden'
-                        : 'open overflow-auto'
+                        ? 'close overflow-hidden md:ml-[0]'
+                        : 'open overflow-auto md:ml-[0]'
                 } h-screen md:top-0 md:bottom-0 md:right-0  ${
-                    toggledHeader ? 'md:ml-[0]' : 'md:ml-[0]'
+                    topNav ? '' : 'mt-12'
                 }  md:p-8 md:pl-12`}
             >
                 {topNav && (

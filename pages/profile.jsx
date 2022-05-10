@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import Page from '_components/scopes/Page'
+import Page from '_components/scopes/global/Page'
 import { useAuth } from '_utils/context/auth'
 
 import { supabase } from '_utils/database/init'

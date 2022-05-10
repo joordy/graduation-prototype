@@ -1,6 +1,6 @@
 import Breadcrumbs from '_components/blocks/Breadcrumbs'
 import NotificationDetails from '_components/scopes/NotificationDetails'
-import Page from '_components/scopes/Page'
+import Page from '_components/scopes/global/Page'
 
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
 

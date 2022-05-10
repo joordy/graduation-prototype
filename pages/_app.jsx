@@ -5,9 +5,9 @@ import { NOTIFICATION_DATA } from '_utils/database/dataset'
 import { AuthProvider } from '_utils/context/auth'
 import { supabase } from 'utils/database/init'
 
-import Sidebar from '_components/scopes/Navigation'
-import NotificationPopup from '_components/common/NotificationPopup'
-import Search from '_components/scopes/Search'
+import Sidebar from '_components/scopes/navigation/Navigation'
+import Popup from '_components/common/notifications/Popup'
+import Search from '_components/scopes/global/Search'
 
 import 'react-toastify/dist/ReactToastify.css'
 import '_styles/globals.css'
@@ -29,7 +29,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
     //         priorityLevel: '',
     //     }
     //     toast(
-    //         <NotificationPopup
+    //         <Popup
     //             id={1234567}
     //             projectName={dummy.projectName}
     //             intro={dummy.intro}

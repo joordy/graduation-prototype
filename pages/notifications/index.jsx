@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
 
-import Page from '_components/scopes/Page'
+import Page from '_components/scopes/global/Page'
 import NotificationElement from '_components/blocks/NotificationElement'
 import NotificationDetails from '_components/scopes/NotificationDetails'
 
