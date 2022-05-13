@@ -1,52 +1,124 @@
+import { uuid } from 'uuidv4'
+import moment from 'moment'
+
 import Breadcrumbs from '_components/blocks/Breadcrumbs'
-import NotificationDetails from '_components/scopes/NotificationDetails'
+import NotificationDetails from '_components/scopes/notifications/Details'
 import Page from '_components/scopes/global/Page'
 
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
+import { supabase } from '_utils/database/init'
+import { capitalizeFirstLetter } from '_utils/helpers/stringHelpers'
 
+var m1 = moment().subtract(5, 'h')
+var m2 = moment().subtract(55, 'h')
+var m3 = moment().subtract(1, 'd')
+var m4 = moment().subtract(1, 'm')
+
+const YESTERDAY = new Date(new Date().setDate(new Date().getDate() - 3))
+const TODAY = new Date()
 const STATUS = [
     {
         index: 6,
         state: 'Moved to BiA QA',
-        date: '01-04-2022 — 10:22',
+        date: moment([
+            TODAY.getFullYear(),
+            TODAY.getMonth(),
+            TODAY.getDate(),
+            TODAY.getHours(),
+            TODAY.getMinutes() <= 1 ? 0 : 1,
+            10,
+        ]).fromNow(),
     },
     {
         index: 5,
         state: 'Moved to Mammut QA',
-        date: '01-04-2022 — 10:22',
+        date: moment([
+            TODAY.getFullYear(),
+            TODAY.getMonth(),
+            TODAY.getDate(),
+            TODAY.getHours() - 1,
+            TODAY.getMinutes() <= 1 ? 0 : 1,
+            10,
+        ]).fromNow(),
     },
     {
         index: 4,
         state: 'Moved to Ready for release',
-        date: '01-04-2022 — 10:22',
+        date: moment([
+            TODAY.getFullYear(),
+            TODAY.getMonth(),
+            TODAY.getDate(),
+            8,
+            10,
+            30,
+        ]).fromNow(),
     },
     {
         index: 3,
         state: 'Moved to Production',
-        date: '01-04-2022 — 10:22',
+        date: moment([
+            TODAY.getFullYear(),
+            TODAY.getMonth(),
+            TODAY.getDate() - 1,
+            18,
+            9,
+            30,
+        ]).fromNow(),
     },
     {
         index: 2,
         state: 'Currently in Progress',
-        date: '02-04-2022 — 9:32',
+        date: moment([
+            TODAY.getFullYear(),
+            TODAY.getMonth(),
+            TODAY.getDate() - 1,
+            18,
+            10,
+            30,
+        ]).fromNow(),
     },
     {
         index: 1,
         state: 'Reported on backlog',
-        date: '01-04-2022 — 10:22',
+        date: moment([
+            TODAY.getFullYear(),
+            TODAY.getMonth(),
+            TODAY.getDate() - 1,
+            18,
+            8,
+            30,
+        ]).fromNow(),
     },
 ]
 
 const Notification = ({
-    projectName,
-    intro,
-    projectIcon,
-    slug,
-    specificCodeFile,
-    errorMessage,
+    notification = {},
     notificationNotFound = false,
     ...props
 }) => {
+    const {
+        name,
+        service,
+        message,
+        projectIcon,
+        slug,
+        specificCodeFile,
+        errorMessage,
+        time,
+        ...data
+    } = notification
+    // console.log(data)
+
+    console.log({ YESTERDAY: typeof YESTERDAY, TODAY: typeof TODAY.getHours() })
+    // Default results
+    console.log(m1.fromNow())
+    console.log(m2.fromNow())
+    console.log(m3.fromNow())
+    console.log(m4.fromNow())
+
+    console.log(new Date(new Date().setDate(new Date().getDate() - 3)))
+    console.log(new Date(new Date().setDate(new Date().getDate() - 1)))
+
     return (
         <Page topNav={true}>
             {notificationNotFound ? (
@@ -54,17 +126,13 @@ const Notification = ({
             ) : (
                 <>
                     <h1 className="mt-8 text-3xl font-bold">
-                        {projectName} ✗ {intro}
+                        {capitalizeFirstLetter(name)} ✗{' '}
+                        {capitalizeFirstLetter(service)} {message}
                     </h1>
 
                     <NotificationDetails
                         STATUS={STATUS}
-                        projectName={projectName}
-                        intro={intro}
-                        projectIcon={projectIcon}
-                        slug={slug}
-                        specificCodeFile={specificCodeFile}
-                        errorMessage={errorMessage}
+                        notification={notification}
                     />
                 </>
             )}
@@ -73,17 +141,59 @@ const Notification = ({
 }
 
 export async function getServerSideProps({ params }) {
-    const data = NOTIFICATION_DATA.find((item) => {
-        return item.slug === params.slug[2]
-    }) // Must always be like ['project', notification, 'notification id']
+    // const id = uuid()
 
+    // const { data: injectedData, error: injectedError } = await supabase.from('notifications').insert([
+    //     {
+    //         projectIcon: '/icons/mammut.ico',
+    //         service: 'algolia',
+    //         name: 'mammut',
+    //         notification_id: id,
+    //         slug: id,
+    //         slug1: 'abc_weg_eer_mee',
+    //         message: `can't validate API keys inside your project`,
+    //         status: 'Reported',
+    //         errorMessage: [
+    //             `{`,
+    //             `   "status": 4xx,`,
+    //             `   "message": "The error message"`,
+    //             `}`,
+    //         ],
+    //         codeFile: 'components/base/InstantSearchWrapper.jsx',
+    //         codeFunction: 'InstantSearchWrapper',
+    //         codeLine: '16',
+    //         priorityLevel: '',
+    //     },
+    // ])
+
+    // const { data, error } = await supabase
+    //     .from('notifications')
+    //     .update({ time: [2022, 4, 10, 18, 2, 10] })
+    //     .match({ name: params?.slug[0], notification_id: params?.slug[2] })
+
+    // console.log('insert data', injectedData, injectedError)
+    const { data, error } = await supabase
+        .from('notifications')
+        .select()
+        .match({ name: params?.slug[0], notification_id: params?.slug[2] })
+        .single()
+
+    // console.log('data is here bby', data)
+    // console.log(params)
+    // const notiData = NOTIFICATION_DATA.find((item) => {
+    //     // console.log(item)
+    //     return item?.slug === params?.slug[2]
+    // }) // Must always be like ['project', notification, 'notification id']
+
+    // console.log(data)
+    // console.log(notiData)
     if (!data) {
         return {
             props: { notificationNotFound: true },
         }
     }
     return {
-        props: { notificationNotFound: false, ...data },
+        props: { notificationNotFound: false, notification: data },
     }
 }
 

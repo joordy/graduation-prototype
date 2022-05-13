@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 
@@ -15,6 +16,7 @@ import '_styles/globals.css'
 const App = ({ Component, pageProps: { session, ...pageProps } }) => {
     const router = useRouter()
 
+    useEffect(() => {}, [])
     // setTimeout(() => {
     //     const dummy = {
     //         projectName: 'Mammut',

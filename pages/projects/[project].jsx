@@ -14,7 +14,7 @@ const TEST_DATA = {
     projectName: 'Mammut',
     projectIcon: '/icons/mammut.ico',
     name: 'mammut',
-    slug: '01_04_2022_0002',
+    slug: '18_04_2022_0001',
     intro: 'Vercel can`t reach the website',
     status: 'Solved problem',
     errorMessage: `
@@ -43,9 +43,10 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
     ]
 
     const handleChange = (e) => {
-        console.log(e.value)
         setSelectedValue(e.value)
     }
+
+    var fiveMinuteAgo = new Date(Date.now() - 1000 * (60 * 5))
 
     return (
         <>
@@ -88,7 +89,7 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                         {notifications.map((data, i) => {
                                             return (
                                                 <Notification
-                                                    data={TEST_DATA}
+                                                    data={data}
                                                     key={i}
                                                 />
                                             )
@@ -99,7 +100,6 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
 
                             <aside className="lg:col-start-2 lg:row-start-2 lg:row-end-3">
                                 <h2 className="mb-2 font-normal">
-                                    {' '}
                                     In progress
                                 </h2>
 
@@ -210,6 +210,12 @@ export async function getServerSideProps({ req, params }) {
         .eq('uid', user?.id)
         .single()
 
+    const { data: notificationData, error: notificationError } = await supabase
+        .from('notifications')
+        .select()
+        .match({ name: 'mammut' })
+
+    // console.log(notificationData, notificationError)
     if (!user) {
         return {
             props: {},
@@ -221,9 +227,9 @@ export async function getServerSideProps({ req, params }) {
         (item) => item.slug === params.project,
     )
 
-    const notifications = NOTIFICATION_DATA.filter((item) => {
-        return item?.projectName === projectData?.projectName
-    })
+    // const notifications = NOTIFICATION_DATA.filter((item) => {
+    //     return item?.projectName === projectData?.projectName
+    // })
 
     return {
         props: {
@@ -232,7 +238,7 @@ export async function getServerSideProps({ req, params }) {
                 data: data,
             },
             projects: projectData,
-            notifications: notifications || undefined,
+            notifications: notificationData || undefined,
         },
     }
 }

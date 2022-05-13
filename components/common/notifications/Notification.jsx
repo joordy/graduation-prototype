@@ -20,7 +20,7 @@ const NewNotification = ({ data, ...props }) => {
     return (
         <li className="px-4 py-2 shadow-md rounded-xl bg-grey-50">
             <Link
-                href={`/projects/${data?.projectName.toLocaleLowerCase()}/notifications/${
+                href={`/projects/${data?.name.toLocaleLowerCase()}/notifications/${
                     data?.slug
                 }`}
             >
@@ -34,8 +34,11 @@ const NewNotification = ({ data, ...props }) => {
                             />
                         </div>
                         <div className="col-start-2 grid grid-cols-[auto_60px] grid-rows-[auto_20px] gap-2 ">
-                            <IssueTitle title={data?.intro} />
+                            {/* <IssueTitle title={{data?.message}} /> */}
 
+                            <p className="h-6 col-start-1 row-start-1 overflow-hidden font-bold">
+                                {data?.service} {data?.message}
+                            </p>
                             <PriorityElement priority="High" />
                             <CalculatedTimeAgo date="Thu May 05 2022 13:01:39 GMT+0200 (CEST)" />
 

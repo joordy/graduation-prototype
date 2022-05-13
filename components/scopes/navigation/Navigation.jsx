@@ -7,6 +7,7 @@ import { useAuth } from '_utils/context/auth'
 
 import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 import { useUserData } from '_utils/atoms/userData'
+import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
 
 const Sidebar = ({ notificationCounter, ...props }) => {
     const { user } = useAuth()
@@ -262,7 +263,7 @@ const ProjectName = ({ name }) => {
 }
 
 const UserProfile = ({ userData, toggledHeader }) => {
-    console.log(userData)
+    // console.log(userData)
     return (
         <Link href="/profile">
             <a
@@ -281,8 +282,7 @@ const UserProfile = ({ userData, toggledHeader }) => {
                             {userData?.firstName}
                         </p>
                         <p className="ml-2 w-max min-w-[125px] overflow-hidden text-xs text-grey-700">
-                            {userData?.user_role?.charAt(0).toUpperCase() +
-                                userData?.user_role?.slice(1)}
+                            {capitalizeFirstLetter(userData.user_role)}
                         </p>
                     </div>
                 </div>
