@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify'
 
-import { NOTIFICATION_DATA } from '_utils/database/dataset'
 import { AuthProvider } from '_utils/context/auth'
 import { supabase } from 'utils/database/init'
 
@@ -10,13 +9,26 @@ import Sidebar from '_components/scopes/navigation/Navigation'
 import Popup from '_components/common/notifications/Popup'
 import Search from '_components/scopes/global/Search'
 
+import { useSetNotifications } from '_utils/atoms/notifications'
+
 import 'react-toastify/dist/ReactToastify.css'
 import '_styles/globals.css'
 
 const App = ({ Component, pageProps: { session, ...pageProps } }) => {
     const router = useRouter()
+    const setNotifications = useSetNotifications()
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const getData = async () => {
+        const { data, error } = await supabase.from('notifications').select()
+
+        if (error) throw error
+        setNotifications(data)
+    }
+
     // setTimeout(() => {
     //     const dummy = {
     //         projectName: 'Mammut',
@@ -57,7 +69,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
                             pauseOnHover
                         />
 
-                        <Sidebar notificationCounter={NOTIFICATION_DATA} />
+                        <Sidebar />
 
                         {/* 
                             <dialog 

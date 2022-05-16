@@ -14,7 +14,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
     const toggle = () => setToggledHeader(!toggledHeader)
 
     return (
-        <header
+        <section
             className={`mb-4 flex h-8 items-center bg-white p-4 md:bg-transparent md:p-0 ${
                 breadCrumbs ? 'justify-between' : 'justify-end'
             }`}
@@ -94,7 +94,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
                     </svg>
                 </HeaderButton> */}
             </div>
-        </header>
+        </section>
     )
 }
 export default TopNavigation

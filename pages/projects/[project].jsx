@@ -34,7 +34,7 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
         setUserData(user?.data)
     }, [user?.data])
 
-    const [selectedValue, setSelectedValue] = useState(3)
+    const [selectedValue, setSelectedValue] = useState(null)
 
     const filterOptions = [
         { value: 'week', label: 'Week' },
@@ -45,8 +45,6 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
     const handleChange = (e) => {
         setSelectedValue(e.value)
     }
-
-    var fiveMinuteAgo = new Date(Date.now() - 1000 * (60 * 5))
 
     return (
         <>
@@ -68,10 +66,15 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                 <form action="">
                                     <Select
                                         options={filterOptions}
-                                        value={filterOptions.find(
-                                            (obj) =>
-                                                obj.value === selectedValue,
-                                        )}
+                                        value={
+                                            selectedValue
+                                                ? filterOptions.find(
+                                                      (obj) =>
+                                                          obj.value ===
+                                                          selectedValue,
+                                                  )
+                                                : filterOptions[2]
+                                        }
                                         onChange={handleChange}
                                         className="text-xs"
                                     />
@@ -79,62 +82,77 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                             </aside>
 
                             <aside className="lg:row-start-2 lg:row-end-3">
-                                <h2 className="mb-2 font-normal">Recent:</h2>
-                                {!notifications.length >= 1 ? (
-                                    <p className="text-xs">
-                                        No current notifications..
-                                    </p>
-                                ) : (
-                                    <ul className="flex flex-col gap-y-4">
-                                        {notifications.map((data, i) => {
-                                            return (
-                                                <Notification
-                                                    data={data}
-                                                    key={i}
-                                                />
-                                            )
-                                        })}
-                                    </ul>
-                                )}
+                                <h2 className="mb-2 font-[500]">Recent:</h2>
+
+                                <ul className="flex flex-col gap-y-4">
+                                    {notifications.length >= 1 ? (
+                                        notifications.map((data, i) => {
+                                            if (data.status === 'Reported')
+                                                return (
+                                                    <Notification
+                                                        data={data}
+                                                        key={i}
+                                                    />
+                                                )
+                                        })
+                                    ) : (
+                                        <li className="text-xs">
+                                            No notifications in progress yet.
+                                        </li>
+                                    )}
+                                </ul>
                             </aside>
 
                             <aside className="lg:col-start-2 lg:row-start-2 lg:row-end-3">
-                                <h2 className="mb-2 font-normal">
-                                    In progress
-                                </h2>
+                                <h2 className="mb-2 font-[500]">In progress</h2>
 
-                                {projectName === 'Mammut' ? (
-                                    <ul>
-                                        <Notification
-                                            data={TEST_DATA}
-                                            type="inProgress"
-                                        />
-                                    </ul>
-                                ) : (
-                                    <p className="text-xs">
-                                        No solved notifications yet.
-                                    </p>
-                                )}
+                                <ul className="flex flex-col gap-y-4">
+                                    {notifications.includes(
+                                        notifications.status === 'In progress',
+                                    ) ? (
+                                        notifications.map((data, i) => {
+                                            if (data.status === 'In progress')
+                                                return (
+                                                    <Notification
+                                                        data={data}
+                                                        type="inProgress"
+                                                        key={i}
+                                                    />
+                                                )
+                                        })
+                                    ) : (
+                                        <li className="text-xs">
+                                            No notifications in progress yet.
+                                        </li>
+                                    )}
+                                </ul>
                             </aside>
 
                             <aside className="lg:row-start-2 lg:row-end-3">
-                                <h2 className="mb-2 font-normal">
-                                    {' '}
+                                <h2 className="mb-2 font-[500]">
                                     Solved issues
                                 </h2>
 
-                                {projectName === 'Mammut' ? (
-                                    <ul>
-                                        <Notification
-                                            data={TEST_DATA}
-                                            type="solved"
-                                        />
-                                    </ul>
-                                ) : (
-                                    <p className="text-xs">
-                                        No solved notifications yet.
-                                    </p>
-                                )}
+                                <ul className="flex flex-col gap-y-4">
+                                    {notifications.includes(
+                                        notifications.status === 'Solved',
+                                    ) ? (
+                                        notifications.map((data, i) => {
+                                            if (data.status === 'Solved')
+                                                return (
+                                                    <Notification
+                                                        data={data}
+                                                        type="solved"
+                                                        key={i}
+                                                    />
+                                                )
+                                        })
+                                    ) : (
+                                        <li className="text-xs">
+                                            No solved notifications yet.
+                                        </li>
+                                    )}
+                                </ul>
                             </aside>
                         </aside>
 
@@ -213,9 +231,8 @@ export async function getServerSideProps({ req, params }) {
     const { data: notificationData, error: notificationError } = await supabase
         .from('notifications')
         .select()
-        .match({ name: 'mammut' })
+        .match({ name: params.project })
 
-    // console.log(notificationData, notificationError)
     if (!user) {
         return {
             props: {},
@@ -226,10 +243,6 @@ export async function getServerSideProps({ req, params }) {
     const projectData = PROJECT_DATA.find(
         (item) => item.slug === params.project,
     )
-
-    // const notifications = NOTIFICATION_DATA.filter((item) => {
-    //     return item?.projectName === projectData?.projectName
-    // })
 
     return {
         props: {

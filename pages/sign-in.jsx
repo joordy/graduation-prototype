@@ -93,15 +93,15 @@ export default function SignInPage({}) {
             },
         ])
 
-        console.log({ user, session, error })
-        console.log({ dataObj, sess, err })
+        // console.log({ user, session, error })
+        // console.log({ dataObj, sess, err })
     }
 
     return (
         <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#ECEFF2] py-2  font-bold">
             <section className="px-4 py-8 bg-white rounded-lg shadow-lg">
                 <header className="text-center">
-                    <h1 className="text-2xl">Loggly</h1>
+                    <h1 className="text-2xl">Quickly</h1>
                 </header>
 
                 <main className="flex flex-col">

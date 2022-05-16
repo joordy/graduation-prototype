@@ -2,17 +2,23 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { PROJECT_DATA } from '_utils/database/dataset'
-import { useAuth } from '_utils/context/auth'
-
-import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
 import { useUserData } from '_utils/atoms/userData'
+import { useNotifications } from '_utils/atoms/notifications'
+import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
+import { useAuth } from '_utils/context/auth'
+import { PROJECT_DATA } from '_utils/database/dataset'
 import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
 
-const Sidebar = ({ notificationCounter, ...props }) => {
+const Sidebar = ({ ...props }) => {
     const { user } = useAuth()
+    const { query, pathname } = useRouter()
     const userData = useUserData()
     const toggledHeader = useToggleHeader()
+    const getNotifications = useNotifications()
+    console.log(
+        '🚀 ~ file: Navigation.jsx ~ line 18 ~ Sidebar ~ getNotifications',
+        getNotifications,
+    )
 
     const setToggledHeader = useSetToggleHeader()
 
@@ -22,19 +28,20 @@ const Sidebar = ({ notificationCounter, ...props }) => {
 
     const elementsCount = (data, selected) => {
         return data.filter((item) => {
-            return item.projectName === selected
+            return item.name === selected
         })
     }
 
-    const projectData = useMemo(() => {
+    const projects = useMemo(() => {
         return PROJECT_DATA.filter((projects) => {
-            return userData?.projects?.indexOf(projects.projectName) > -1
-            // return user?.user_metadata?.projects?.indexOf(projects.projectName)
+            return user?.user_metadata?.projects?.indexOf(
+                projects.projectName > -1,
+            )
         })
-    }, [PROJECT_DATA, user, userData])
+    }, [PROJECT_DATA, user?.user_metadata, userData])
 
     return (
-        <aside
+        <header
             className={`z-100 fixed -left-[100vw] top-0 bottom-0  w-5/6   overflow-y-auto bg-[#F1F3F4] shadow-2xl duration-[250ms] ease-in md:relative md:left-0  md:h-screen md:overflow-visible  ${
                 toggledHeader ? 'left-[0] md:w-[80px]' : 'md:w-[300px]'
             }`}
@@ -42,99 +49,39 @@ const Sidebar = ({ notificationCounter, ...props }) => {
             <CollapseButton onClick={toggle} toggledHeader={toggledHeader} />
 
             <nav className="flex flex-col justify-between w-full h-full px-8 py-16 overflow-hidden md:px-4 md:pt-8 md:pb-8">
-                <div className="">
-                    <ProjectName name="Loggly" toggledHeader={toggledHeader} />
-                    <hr className="mx-2 mb-4 border-grey-300" />
+                <div className="flex flex-col gap-y-4">
+                    <ProjectName name="Quickly" toggledHeader={toggledHeader} />
+                    {/* <hr className="mx-2 mb-4 border-grey-300" /> */}
                     <ProjectList
                         toggledHeader={toggledHeader}
-                        projectData={projectData}
+                        projectData={projects}
                         elementsCount={elementsCount}
-                        notificationCounter={notificationCounter}
+                        getNotifications={getNotifications}
+                        query={query}
+                    />
+
+                    <hr className="mx-2 border-grey-100" />
+
+                    <NotificationCenter
+                        query={pathname === '/notifications'}
+                        toggledHeader={toggledHeader}
+                        elementsCount={getNotifications.length}
                     />
                 </div>
 
                 <div className="w-full overflow-hidden">
-                    <hr className="mx-2 my-4 border-grey-300" />
-
-                    <Link href="/">
-                        <a
-                            className={`m-0 mb-4 ml-2 flex max-h-[100%] items-center overflow-hidden ${
-                                toggledHeader
-                                    ? 'w-[48px] pl-0'
-                                    : 'w-full pl-[0]'
-                            } duration-[250ms] ease-in`}
-                        >
-                            <span className="flex h-[32px] w-[32px] flex-col items-center justify-center rounded-full  stroke-grey-800 p-1 ">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                                    />
-                                </svg>
-                            </span>
-                            <p className="ml-2 w-max min-w-[125px] overflow-hidden text-sm">
-                                Notification Center
-                            </p>
-                        </a>
-                    </Link>
-
-                    <hr className="mx-2 my-4 border-grey-300" />
+                    {/* <hr className="mx-2 my-4 border-grey-300" /> */}
 
                     {userData && (
                         <UserProfile
+                            user={user}
                             userData={userData}
                             toggledHeader={toggledHeader}
                         />
                     )}
                 </div>
-
-                {/* <CollapseButton onClick={toggle} toggledHeader={toggledHeader} />
-            <div className={`w-full`}>
-                <Link href="/">
-                    <a
-                        className="${ toggledHeader ? 'w-[48px] pl-0' : 'w-full
-                    pl-[0]' } m-0 ml-2 flex flex max-h-[100%]
-                 items-center overflow-hidden duration-[250ms] ease-in"
-                    >
-                        <span className="flex h-[32px] w-[32px] flex-col items-center justify-center rounded-full  stroke-grey-800 p-1 ">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-6 h-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                                />
-                            </svg>
-                        </span>
-                        <p className="ml-2 w-max min-w-[125px] overflow-hidden">
-                            Notification Center
-                        </p>
-                    </a>
-                </Link>
-
-                {userData && (
-                    <UserProfile
-                        userData={userData}
-                        toggledHeader={toggledHeader}
-                    />
-                )}
-            </div> */}
             </nav>
-        </aside>
+        </header>
     )
 }
 
@@ -182,10 +129,9 @@ const ProjectList = ({
     toggledHeader,
     projectData,
     elementsCount,
-    notificationCounter,
+    getNotifications,
+    query,
 }) => {
-    const { query } = useRouter()
-
     return (
         <ul
             className={`flex max-h-[100%] flex-col gap-4 ${
@@ -195,7 +141,7 @@ const ProjectList = ({
             {projectData.map(({ icon, projectName, slug }, i) => {
                 const activePath = query.project === slug
 
-                const counter = elementsCount(notificationCounter, projectName)
+                const counter = elementsCount(getNotifications, slug)
 
                 return (
                     <li
@@ -211,7 +157,7 @@ const ProjectList = ({
                                         <img
                                             src={icon}
                                             alt={`icon of ${projectName}`}
-                                            className="h-[32px] w-[32px] "
+                                            className="w-6 h-6 m-1"
                                         />
                                     )}
 
@@ -222,7 +168,11 @@ const ProjectList = ({
 
                                 {counter.length >= 1 && (
                                     <span
-                                        className={`absolute top-[50%] right-3 flex h-[16px] w-[16px] -translate-y-[50%] items-center justify-center rounded-full text-[10px]`}
+                                        className={`${
+                                            toggledHeader
+                                                ? 'delay-50 opacity-0'
+                                                : 'opacity-100 delay-200'
+                                        } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-grey-100 text-[10px]  duration-150 ease-in`}
                                     >
                                         {counter.length}
                                     </span>
@@ -262,8 +212,56 @@ const ProjectName = ({ name }) => {
     )
 }
 
-const UserProfile = ({ userData, toggledHeader }) => {
-    // console.log(userData)
+const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
+    return (
+        <Link href="/notifications">
+            <a
+                className={`m-0 flex max-h-[100%] items-center overflow-hidden ${
+                    toggledHeader ? 'w-[48px] pl-0' : 'w-full pl-[0]'
+                } duration-[250ms] ease-in`}
+            >
+                <div
+                    className={`relative flex w-full flex-row  items-center rounded-lg  p-2 text-sm  ${
+                        query && 'bg-white font-[700]'
+                    }`}
+                >
+                    <span className="flex flex-col items-center justify-center w-6 h-6 p-1 m-1 rounded-full stroke-grey-800 ">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                            />
+                        </svg>
+                    </span>
+                    <p className="ml-2 w-max min-w-[125px] overflow-hidden text-sm">
+                        Notification Center
+                    </p>
+                    {elementsCount >= 1 && (
+                        <span
+                            className={`${
+                                toggledHeader
+                                    ? 'delay-50 opacity-0'
+                                    : 'opacity-100 delay-200'
+                            } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-grey-100 text-[10px]  duration-150 ease-in`}
+                        >
+                            {elementsCount}
+                        </span>
+                    )}
+                </div>
+            </a>
+        </Link>
+    )
+}
+
+const UserProfile = ({ user, userData, toggledHeader }) => {
     return (
         <Link href="/profile">
             <a
@@ -272,17 +270,26 @@ const UserProfile = ({ userData, toggledHeader }) => {
                 } m-0 overflow-hidden duration-[250ms] ease-in`}
             >
                 <div className="flex items-center ml-2">
-                    <span className="flex h-[32px] w-[32px] flex-col items-center justify-center rounded-full bg-grey-900 stroke-grey-800 p-1 text-white ">
-                        {userData?.firstName?.charAt(0)}
-                        {userData?.lastName?.charAt(0)}
+                    <span className="flex flex-col items-center justify-center w-8 h-8 p-1 m-1 text-xs text-white rounded-full bg-grey-900 stroke-grey-800 ">
+                        {user?.user_metadata.firstName
+                            ? user?.user_metadata.firstName.charAt(0)
+                            : userData?.firstName?.charAt(0)}
+                        {user?.user_metadata.lastName
+                            ? user?.user_metadata.lastName.charAt(0)
+                            : userData?.lastName?.charAt(0)}
                     </span>
 
                     <div>
                         <p className="ml-2 w-max min-w-[125px] overflow-hidden">
-                            {userData?.firstName}
+                            {user?.user_metadata.firstName
+                                ? user?.user_metadata.firstName
+                                : userData?.firstName}
                         </p>
                         <p className="ml-2 w-max min-w-[125px] overflow-hidden text-xs text-grey-700">
-                            {capitalizeFirstLetter(userData.user_role)}
+                            {user?.user_metadata?.role &&
+                                capitalizeFirstLetter(
+                                    user?.user_metadata?.role,
+                                )}
                         </p>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Select from 'react-select'
 import moment from 'moment'
 
@@ -14,32 +14,71 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
         specificCodeFile,
         errorMessage,
         time,
+        tickets,
     } = notification
-    // console.log(typeof time)
-    // console.log(Date())
-    // Thu May 12 2022 18:03:22 GMT+0200 (CEST)
-    // console.log(moment([2022, 4, 12, 18, 2, 10]).fromNow())
+
+    const [ticketType, setTicketType] = useState(tickets)
+    const [selectedValue, setSelectedValue] = useState(null)
+
     const options = [
-        { value: 'jira', label: 'Connect with Jira' },
-        { value: 'gitlab', label: 'Connect with GitLab' },
-        { value: 'none', label: 'Don`t connect ticket' },
+        { value: 'none', label: 'Continue without ticket system' },
+        { value: 'jira', label: 'Continue with Jira' },
+        { value: 'gitlab', label: 'Continue with GitLab' },
     ]
 
-    // const [selectedType, setSelectedType] = useState(false)
-
-    const jira = false
-    const gitlab = true
-    const nothing = false
-    const undef = false
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(e)
+    const onHandleChange = (e) => {
+        setSelectedValue(e.value)
     }
+
+    const onHandleSubmit = (e) => {
+        e.preventDefault()
+    }
+
+    const TicketElement = ({ type }) => {
+        switch (type) {
+            case 'jira':
+                return <p>jira type</p>
+            case 'gitlab':
+                return <p>gitlab type</p>
+            case 'none':
+                return <p>intern type</p>
+            default:
+                return (
+                    <form
+                        onSubmit={onHandleSubmit}
+                        className="flex flex-col w-full gap-4 px-16"
+                    >
+                        <label className="font-bold">
+                            Connect ticket with this notification
+                        </label>
+                        <Select
+                            options={options}
+                            classNamePrefix="filter"
+                            onChange={onHandleChange}
+                            value={
+                                selectedValue
+                                    ? options.find(
+                                          (obj) => obj.value === selectedValue,
+                                      )
+                                    : options[2].label
+                            }
+                        />
+
+                        <input
+                            type="submit"
+                            value="Set ticket type"
+                            className="w-full py-2 rounded-md bg-grey-400"
+                        />
+                    </form>
+                )
+        }
+    }
+
     return (
         <article className="mt-8 grid gap-6  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-5">
             <div className="flex flex-col items-center justify-center p-4 border rounded-md border-grey-100 xl:col-start-1 xl:col-end-3">
-                {jira && <p>jira</p>}
+                <TicketElement type={selectedValue} />
+                {/* {jira && <p>jira</p>}
                 {gitlab && (
                     <div className="flex flex-col justify-between w-full h-full">
                         <article className="w-full">
@@ -77,7 +116,6 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
                             </h3>
                             <ul className="flex flex-col overflow-y-auto ">
                                 {STATUS.map(({ state, date, index }, i) => {
-                                    // console.log(i)
                                     return (
                                         <li
                                             key={i}
@@ -123,7 +161,7 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
                             className="w-full p-2 mt-4 rounded-md bg-grey-500"
                         />
                     </form>
-                )}
+                )} */}
             </div>
             <div className="p-4 border border-grey-100 xl:col-start-3 xl:col-end-6">
                 <pre className="mb-8">
@@ -194,5 +232,16 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
         // </article>
     )
 }
+
+// const SubmitType = ({}) => {
+//     return (
+//         <form>
+//             <fieldset>
+//                 <label>Test</label>
+//                 <input type="radio" name="value" id="" />
+//             </fieldset>
+//         </form>
+//     )
+// }
 
 export default NotificationDetails

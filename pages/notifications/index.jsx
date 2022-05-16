@@ -2,6 +2,8 @@ import { useCallback, useMemo, useState } from 'react'
 import Link from 'next/link'
 
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
+import { supabase } from 'utils/database/init'
+import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
 
 import Page from '_components/scopes/global/Page'
 import NotificationElement from '_components/blocks/NotificationElement'
@@ -45,25 +47,10 @@ const NotificationCenter = ({ notifications, ...props }) => {
     const [data, setData] = useState(null)
 
     const results = useMemo(() => {
-        // console.log(typeof currentIndex)
-        console.log(notifications[currentIndex])
-
         if (currentIndex == null) return
 
         return notifications[currentIndex]
     }, [currentIndex])
-
-    console.log('currentIndex', currentIndex == null)
-    console.log('results', results)
-    // const onHandleClick = useCallback((i) => {
-    //     // console.log(i)
-    //     // console.log(notifications)
-
-    //     console.log(notifications[i])
-    //     setData(notifications[i])
-    // }, [])
-
-    // console.log(results)
 
     return (
         <Page topNav={true}>
@@ -102,9 +89,15 @@ const NotificationCenter = ({ notifications, ...props }) => {
                                                     </div>
                                                     <div className="ml-4">
                                                         <p className="text-xl font-bold">
-                                                            {data.projectName}
+                                                            {capitalizeFirstLetter(
+                                                                data.name,
+                                                            )}
                                                         </p>
-                                                        <p>{data.intro}</p>
+                                                        <p>
+                                                            {`${capitalizeFirstLetter(
+                                                                data.service,
+                                                            )} ${data.message}`}
+                                                        </p>
                                                     </div>
                                                     <p className="absolute top-0 right-0 text-xs text-grey-300">
                                                         {data.status}
@@ -134,7 +127,6 @@ const NotificationCenter = ({ notifications, ...props }) => {
 }
 
 const Notification = ({ data }) => {
-    console.log(data)
     return (
         <section className="w-full p-1 border rounded-lg shadow-md border-grey-100">
             <header className="mb-2 flex w-[inherit] flex-col justify-between text-sm">
@@ -219,8 +211,12 @@ const PriorityElement = ({ priority = 'Urgent' }) => {
 }
 
 export async function getStaticProps() {
-    const data = NOTIFICATION_DATA
+    const { data, error } = await supabase.from('notifications').select()
 
+    if (error) {
+        console.log(error)
+        return { props: {} }
+    }
     return {
         props: { notifications: data },
     }

@@ -11,7 +11,6 @@ import Notification from '_components/common/notifications/Notification'
 
 const Home = ({ notifications, projects, user, ...props }) => {
     const abc = useAuth()
-    console.log('userrr', user, abc)
     const userData = useUserData()
     const setUserData = useSetUserData()
 
@@ -70,8 +69,11 @@ const Home = ({ notifications, projects, user, ...props }) => {
                         </div>
                         <div>
                             <ul className="flex flex-col gap-y-4">
-                                {notifications.map((data, i) => {
+                                {/* {notifications.map((data, i) => {
                                     return <Notification data={data} />
+                                })} */}
+                                {notifications.map((data, i) => {
+                                    return <Notification data={data} key={i} />
                                 })}
                             </ul>
                         </div>
@@ -113,6 +115,10 @@ export async function getServerSideProps({ req, res }) {
         .eq('uid', user?.id)
         .single()
 
+    const { data: notificationData, error: notificationError } = await supabase
+        .from('notifications')
+        .select()
+
     if (!user) {
         return {
             props: {},
@@ -127,7 +133,7 @@ export async function getServerSideProps({ req, res }) {
                 data: data,
             },
             projects: PROJECT_DATA,
-            notifications: NOTIFICATION_DATA,
+            notifications: notificationData || [],
         },
     }
 }

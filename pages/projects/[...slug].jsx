@@ -107,17 +107,6 @@ const Notification = ({
         time,
         ...data
     } = notification
-    // console.log(data)
-
-    console.log({ YESTERDAY: typeof YESTERDAY, TODAY: typeof TODAY.getHours() })
-    // Default results
-    console.log(m1.fromNow())
-    console.log(m2.fromNow())
-    console.log(m3.fromNow())
-    console.log(m4.fromNow())
-
-    console.log(new Date(new Date().setDate(new Date().getDate() - 3)))
-    console.log(new Date(new Date().setDate(new Date().getDate() - 1)))
 
     return (
         <Page topNav={true}>
@@ -143,50 +132,38 @@ const Notification = ({
 export async function getServerSideProps({ params }) {
     // const id = uuid()
 
-    // const { data: injectedData, error: injectedError } = await supabase.from('notifications').insert([
-    //     {
-    //         projectIcon: '/icons/mammut.ico',
-    //         service: 'algolia',
-    //         name: 'mammut',
-    //         notification_id: id,
-    //         slug: id,
-    //         slug1: 'abc_weg_eer_mee',
-    //         message: `can't validate API keys inside your project`,
-    //         status: 'Reported',
-    //         errorMessage: [
-    //             `{`,
-    //             `   "status": 4xx,`,
-    //             `   "message": "The error message"`,
-    //             `}`,
-    //         ],
-    //         codeFile: 'components/base/InstantSearchWrapper.jsx',
-    //         codeFunction: 'InstantSearchWrapper',
-    //         codeLine: '16',
-    //         priorityLevel: '',
-    //     },
-    // ])
-
-    // const { data, error } = await supabase
+    // const { data: injectedData, error: injectedError } = await supabase
     //     .from('notifications')
-    //     .update({ time: [2022, 4, 10, 18, 2, 10] })
-    //     .match({ name: params?.slug[0], notification_id: params?.slug[2] })
+    //     .insert([
+    //         {
+    //             projectIcon: '/icons/mammut.ico',
+    //             service: 'vercel',
+    //             name: 'mammut',
+    //             notification_id: id,
+    //             slug: id,
+    //             message: 'Vercel can`t reach the website',
+    //             status: 'inProgress',
+    //             errorMessage: [`StatusCode 500 - Internal server Error`],
+    //             codeFile: false,
+    //             codeFunction: false,
+    //             codeLine: false,
+    //             priorityLevel: 'High',
+    //         },
+    //     ])
+
+    // // // const { data, error } = await supabase
+    // // //     .from('notifications')
+    // // //     .update({ time: [2022, 4, 10, 18, 2, 10] })
+    // // //     .match({ name: params?.slug[0], notification_id: params?.slug[2] })
 
     // console.log('insert data', injectedData, injectedError)
+
     const { data, error } = await supabase
         .from('notifications')
         .select()
         .match({ name: params?.slug[0], notification_id: params?.slug[2] })
         .single()
 
-    // console.log('data is here bby', data)
-    // console.log(params)
-    // const notiData = NOTIFICATION_DATA.find((item) => {
-    //     // console.log(item)
-    //     return item?.slug === params?.slug[2]
-    // }) // Must always be like ['project', notification, 'notification id']
-
-    // console.log(data)
-    // console.log(notiData)
     if (!data) {
         return {
             props: { notificationNotFound: true },

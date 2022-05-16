@@ -26,7 +26,6 @@ const NotificationDetails = ({
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(e)
     }
     return (
         <article className="mt-8 grid gap-6  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-5">

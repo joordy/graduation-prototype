@@ -2,7 +2,7 @@ export const PROJECT_DATA = [
     {
         icon: '/icons/mammut.ico',
         projectName: 'Mammut',
-        domain: 'mammut.com',
+        // domain: 'mammut.com',
         slug: 'mammut',
         status: true,
         connections: [
@@ -57,7 +57,7 @@ export const PROJECT_DATA = [
         // ],
     },
     {
-        icon: '/icons/foam_icon.png',
+        icon: '/icons/foam.ico',
         projectName: 'Foam',
         slug: 'foam',
         status: true,
@@ -83,7 +83,7 @@ export const PROJECT_DATA = [
         ],
     },
     {
-        icon: '/icons/landofride.ico',
+        icon: '/icons/land-of-ride.ico',
         projectName: 'Land of Ride',
         slug: 'land-of-ride',
         status: true,
@@ -103,7 +103,7 @@ export const PROJECT_DATA = [
         ],
     },
     {
-        icon: '/icons/aubade_icon.png',
+        icon: '/icons/aubade.ico',
         projectName: 'Aubade',
         slug: 'aubade',
         status: true,
@@ -152,7 +152,7 @@ export const NOTIFICATION_DATA = [
     },
     {
         projectName: 'Aubade',
-        projectIcon: '/icons/aubade_icon.png',
+        projectIcon: '/icons/aubade.ico',
         name: 'aubade',
         status: 'recently reported',
         slug: '23-456',
@@ -170,7 +170,7 @@ export const NOTIFICATION_DATA = [
     },
     {
         projectName: 'Land of Ride',
-        projectIcon: '/icons/landofride.ico',
+        projectIcon: '/icons/land-of-ride.ico',
         name: 'land-of-ride',
         slug: '45-678',
         status: 'recently reported',
