@@ -65,21 +65,21 @@ const Notification = ({
     )
 }
 
-export const getStaticPaths = async () => {
-    const paths = [
-        { params: { slug: ['18_04_2022_0001'] } },
-        { params: { slug: ['23-456'] } },
-        { params: { slug: ['34-567'] } },
-        { params: { slug: ['45-678'] } },
-    ]
+// export const getStaticPaths = async () => {
+//     const paths = [
+//         { params: { slug: ['18_04_2022_0001'] } },
+//         { params: { slug: ['23-456'] } },
+//         { params: { slug: ['34-567'] } },
+//         { params: { slug: ['45-678'] } },
+//     ]
 
-    return {
-        paths,
-        fallback: true,
-    }
-}
+//     return {
+//         paths,
+//         fallback: true,
+//     }
+// }
 
-export async function getStaticProps({ params: { slug } }) {
+export async function getServerSideProps({ params: { slug } }) {
     const data = NOTIFICATION_DATA.find((item) => item.slug === slug[0])
 
     return {

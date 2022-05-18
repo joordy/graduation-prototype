@@ -136,8 +136,10 @@ export default function SignInPage({}) {
                         <fieldset className="flex flex-col">
                             <input
                                 type="submit"
-                                className={`${errorState ? '' : 'mt-4'}
-                                rounded-md border border-b-grey-900 bg-grey-900 py-2 text-sm text-white`}
+                                className={
+                                    'rounded-md border border-b-grey-900 bg-grey-900 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:bg-grey-700 ' +
+                                    (errorState ? '' : 'mt-4')
+                                }
                             />
                         </fieldset>
                     </form>
@@ -198,9 +200,10 @@ export default function SignInPage({}) {
                         <fieldset className="flex flex-col">
                             <input
                                 type="submit"
-                                className={`py-2 ${
-                                    errorState ? '' : 'mt-4'
-                                } rounded-md border border-b-grey-900 bg-grey-900 text-sm text-white`}
+                                className={
+                                    'rounded-md border border-b-grey-900 bg-grey-900 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:bg-grey-700 ' +
+                                    (errorState ? '' : 'mt-4')
+                                }
                             />
                         </fieldset>
                     </form>

@@ -69,7 +69,10 @@ const NotificationCenter = ({ notifications, ...props }) => {
                             {notifications &&
                                 notifications.map((data, i) => {
                                     return (
-                                        <li className="rounded-xl bg-grey-50">
+                                        <li
+                                            className="rounded-xl bg-grey-50"
+                                            key={i}
+                                        >
                                             <button
                                                 className="w-full p-4 text-left"
                                                 onClick={(e) =>

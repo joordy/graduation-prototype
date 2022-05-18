@@ -37,7 +37,6 @@ const Sidebar = ({ ...props }) => {
         })
     }, [PROJECT_DATA, user?.user_metadata.projects, userData])
 
-    console.log(projects)
     return (
         <header
             className={`z-100 fixed -left-[100vw] top-0 bottom-0  w-5/6   overflow-y-auto bg-[#F1F3F4] shadow-2xl duration-[250ms] ease-in md:relative md:left-0  md:h-screen md:overflow-visible  ${

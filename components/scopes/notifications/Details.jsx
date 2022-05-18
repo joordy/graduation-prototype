@@ -140,7 +140,6 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
 const JiraElement = () => {}
 const GitlabElement = ({ notification, STATUS, onClick, ticketUpdate }) => {
     const {
-        projectName,
         service,
         intro,
         projectIcon,
