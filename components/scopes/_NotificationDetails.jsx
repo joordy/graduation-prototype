@@ -11,6 +11,7 @@ const NotificationDetails = ({
     errorMessage,
     ...props
 }) => {
+    const [ticketType, setTicketType] = useState(null)
     const options = [
         { value: 'jira', label: 'Connect with Jira' },
         { value: 'gitlab', label: 'Connect with GitLab' },
@@ -24,14 +25,14 @@ const NotificationDetails = ({
     const nothing = false
     const undef = false
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleChange = (e) => {
+        setTicketType(e.value)
     }
     return (
         <article className="mt-8 grid gap-6  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-5">
             <div className="flex flex-col items-center justify-center p-4 border rounded-md border-grey-100 xl:col-start-1 xl:col-end-3">
-                {jira && <p>jira</p>}
-                {gitlab && (
+                {ticketType == 'jira' && <p>jira</p>}
+                {ticketType == 'gitlab' && (
                     <div className="flex flex-col justify-between w-full h-full">
                         <article className="w-full">
                             <h3 className="text-xl font-bold">Status</h3>
@@ -93,14 +94,14 @@ const NotificationDetails = ({
                         </div>
                     </div>
                 )}
-                {nothing && <p>nothing</p>}
+                {ticketType == 'nothing' && <p>nothing</p>}
                 {undef && (
                     <form className="flex flex-col" onSubmit={handleSubmit}>
                         <label className="mb-4 " for="tickets">
                             Select ticket method
                         </label>
 
-                        <Select options={options} />
+                        <Select options={options} onChange={handleChange} />
 
                         <input
                             type="submit"

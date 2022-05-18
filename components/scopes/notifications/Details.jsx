@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Select from 'react-select'
 import moment from 'moment'
 
 import { capitalizeFirstLetter } from '_utils/helpers/stringHelpers'
+import { supabase } from 'utils/database/init'
 
 const NotificationDetails = ({ STATUS, notification, ...props }) => {
     const {
@@ -20,6 +21,33 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
     const [ticketType, setTicketType] = useState(tickets)
     const [selectedValue, setSelectedValue] = useState(null)
 
+    const updateTickets = async () => {
+        console.log(slug)
+        const { data, error } = await supabase
+            .from('notifications')
+            .update({ tickets: selectedValue })
+            .match({ slug: slug })
+            .single()
+
+        console.log(data, error)
+    }
+
+    const getData = async () => {
+        console.log(slug)
+        const { data, error } = await supabase
+            .from('notifications')
+            .select()
+            .match({ slug: slug })
+            .single()
+
+        // console.log(data, error)
+        return data
+    }
+
+    useEffect(() => {
+        // getData()
+    }, [])
+
     const options = [
         { value: 'none', label: 'Continue without ticket system' },
         { value: 'jira', label: 'Continue with Jira' },
@@ -35,11 +63,20 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
     }
 
     const TicketElement = ({ type }) => {
+        const abc = getData()
+        // console.log(abc)
         switch (type) {
             case 'jira':
                 return <p>jira type</p>
             case 'gitlab':
-                return <p>gitlab type</p>
+                return (
+                    <GitlabElement
+                        notification={notification}
+                        STATUS={STATUS}
+                        onClick={(e) => setSelectedValue(null)}
+                        ticketUpdate={() => updateTickets()}
+                    />
+                )
             case 'none':
                 return <p>intern type</p>
             default:
@@ -78,92 +115,8 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
         <article className="mt-8 grid gap-6  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-5">
             <div className="flex flex-col items-center justify-center p-4 border rounded-md border-grey-100 xl:col-start-1 xl:col-end-3">
                 <TicketElement type={selectedValue} />
-                {/* {jira && <p>jira</p>}
-                {gitlab && (
-                    <div className="flex flex-col justify-between w-full h-full">
-                        <article className="w-full">
-                            <h3 className="text-xl font-bold">Status</h3>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                <p className="text-grey-500">Assigned to</p>
-                                <p>Maarten B</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <p className="text-grey-500">Last updated</p>
-                                <p>{moment(time).fromNow()}</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <p className="text-grey-500">Priority level</p>
-                                <p>High</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <p className="text-grey-500">Status</p>
-                                <p>In Progress</p>
-                            </div>
-                        </article>
-
-                        <article>
-                            <h3 className="text-xl font-bold">Description</h3>
-
-                            <p>
-                                {capitalizeFirstLetter(service)} {intro}
-                            </p>
-                        </article>
-
-                        <article className="w-full mt-8">
-                            <h3 className="mb-2 text-xl font-bold">
-                                Changelog
-                            </h3>
-                            <ul className="flex flex-col overflow-y-auto ">
-                                {STATUS.map(({ state, date, index }, i) => {
-                                    return (
-                                        <li
-                                            key={i}
-                                            className="flex justify-between mb-2"
-                                        >
-                                            <div className="flex items-center">
-                                                <span
-                                                    className={`mr-2 h-4 w-4 rounded-full border-2 border-grey-100 ${
-                                                        i == 0 &&
-                                                        'border-4 border-grey-900'
-                                                    }`}
-                                                ></span>
-                                                <p>{state}</p>
-                                            </div>
-                                            <p>{date}</p>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                        </article>
-
-                        <div className="w-full">
-                            <a
-                                href="#"
-                                className="block p-2 my-2 text-center bg-white border-2 rounded-md border-grey-900 text-grey-900"
-                            >
-                                Ticket to GitLab board
-                            </a>
-                        </div>
-                    </div>
-                )}
-                {nothing && <p>nothing</p>}
-                {undef && (
-                    <form className="flex flex-col" onSubmit={handleSubmit}>
-                        <label className="mb-4 " for="tickets">
-                            Select ticket method
-                        </label>
-
-                        <Select options={options} />
-
-                        <input
-                            type="submit"
-                            className="w-full p-2 mt-4 rounded-md bg-grey-500"
-                        />
-                    </form>
-                )} */}
             </div>
-            <div className="p-4 border border-grey-100 xl:col-start-3 xl:col-end-6">
+            <div className="flex flex-col justify-center p-4 border border-grey-100 xl:col-start-3 xl:col-end-6">
                 <pre className="mb-8">
                     Error appeared in: {specificCodeFile}
                 </pre>
@@ -181,67 +134,103 @@ const NotificationDetails = ({ STATUS, notification, ...props }) => {
                 )}
             </div>
         </article>
-        // <article className="mt-8 grid gap-12  overflow-hidden xl:h-[calc(100%-12rem)] xl:grid-cols-2 xl:grid-rows-6">
-        //     <div className="xl:row-start-1 xl:row-end-7 xl:grid-cols-2">
-        // <pre className="mb-8">Codefile: {specificCodeFile}</pre>
-
-        // {errorMessage?.length >= 1 ? (
-        //     errorMessage.map((line, i) => {
-        //         return (
-        //             <pre className="text-xs" key={i}>
-        //                 {line}
-        //             </pre>
-        //         )
-        //     })
-        // ) : (
-        //     <pre className="text-xs">no error message</pre>
-        // )}
-        //     </div>
-        //     <div className=" xl:row-start-1 xl:row-end-6 xl:grid-cols-2">
-        //         <h2 className="mb-4 text-xl font-semibold">Current status</h2>
-        // <ul className="flex flex-col  overflow-y-auto  xl:h-[calc(100%-45px)]">
-        //     {STATUS.map(({ state, date, index }, i) => {
-        //         return (
-        //             <li
-        //                 key={i}
-        //                 className="after:bg-pink-500 relative ml-12 inline-block rounded-lg p-4 before:absolute before:-left-6 before:top-[50%] before:block before:h-[12px] before:w-[12px] before:translate-y-[-50%] before:rounded-full before:bg-grey-900 after:absolute after:-left-6 after:z-[-1] after:block after:h-[40px] after:w-[4px]
-        //                     after:translate-x-[4px] after:bg-grey-900 first-of-type:m-0
-        //                     first-of-type:bg-grey-900 first-of-type:pl-16
-        //                     first-of-type:text-white first-of-type:before:left-6 first-of-type:before:bg-grey-50 first-of-type:after:left-6 after:last-of-type:hidden
-        //                     "
-        //             >
-        //                 {!i == 0 ? <p>abc</p> : <p>abc weg er mee</p>}
-        //                 <div className="flex justify-between">
-        //                     <p>{state}</p>
-        //                     <p>{date}</p>
-        //                 </div>
-        //             </li>
-        //         )
-        //     })}
-        // </ul>
-        //     </div>
-
-        //     <div className="xl:row-start-6 xl:row-end-7 xl:grid-cols-2">
-        //         <a
-        //             href="#"
-        //             className="block p-2 my-2 text-center bg-white border-2 rounded-md border-grey-900 text-grey-900"
-        //         >
-        //             Ticket to Jira / GitLab board
-        //         </a>
-        //     </div>
-        // </article>
     )
 }
 
-// const SubmitType = ({}) => {
-//     return (
-//         <form>
-//             <fieldset>
-//                 <label>Test</label>
-//                 <input type="radio" name="value" id="" />
-//             </fieldset>
-//         </form>
-//     )
-// }
+const JiraElement = () => {}
+const GitlabElement = ({ notification, STATUS, onClick, ticketUpdate }) => {
+    const {
+        projectName,
+        service,
+        intro,
+        projectIcon,
+        slug,
+        specificCodeFile,
+        errorMessage,
+        time,
+        tickets,
+        assignedTo,
+        message,
+        status,
+        priorityLevel,
+    } = notification
+    // console.log('🚀 ~', notification)
+
+    return (
+        <div className="flex flex-col justify-between w-full h-full">
+            <article>
+                <h3>Connected with: Gitlab</h3>
+                <button onClick={onClick}>Reset</button>
+                <button onClick={ticketUpdate}>ticketUpdate</button>
+            </article>
+            <article className="w-full">
+                <h3 className="text-xl font-bold">Status</h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <p className="text-grey-500">Assigned to</p>
+                    <p>{!!assignedTo ? assignedTo : 'Nobody'}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <p className="text-grey-500">Last updated</p>
+                    <p>{moment(time).fromNow()}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <p className="text-grey-500">Priority</p>
+                    <p>
+                        {priorityLevel == 1
+                            ? 'High'
+                            : priorityLevel == 2
+                            ? 'Medium'
+                            : 'Low'}
+                    </p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <p className="text-grey-500">Status</p>
+                    <p>{status}</p>
+                </div>
+            </article>
+
+            <article>
+                <h3 className="text-xl font-bold">Description</h3>
+
+                <p>
+                    {capitalizeFirstLetter(service)} {message}
+                </p>
+            </article>
+
+            <article className="w-full mt-8">
+                <h3 className="mb-2 text-xl font-bold">Changelog</h3>
+                <ul className="flex flex-col overflow-y-auto ">
+                    {STATUS.map(({ state, date, index }, i) => {
+                        return (
+                            <li key={i} className="flex justify-between mb-2">
+                                <div className="flex items-center">
+                                    <span
+                                        className={`mr-2 h-4 w-4 rounded-full border-2 border-grey-100 ${
+                                            i == 0 && 'border-4 border-grey-900'
+                                        }`}
+                                    ></span>
+                                    <p>{state}</p>
+                                </div>
+                                <p>{date}</p>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </article>
+
+            <div className="w-full">
+                <a
+                    href="#"
+                    target="_blank"
+                    className="block p-2 my-2 text-center bg-white border-2 rounded-md border-grey-900 text-grey-900"
+                >
+                    Ticket to GitLab board
+                </a>
+            </div>
+        </div>
+    )
+}
+const NormalElement = () => {}
 
 export default NotificationDetails

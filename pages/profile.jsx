@@ -8,7 +8,7 @@ import { useAuth } from '_utils/context/auth'
 
 import { supabase } from '_utils/database/init'
 
-const Profile = ({ user, userData }) => {
+const Profile = ({ user, userData, projects, ...props }) => {
     const [openTab, setOpenTab] = useState(1)
 
     const data = useAuth()
@@ -90,6 +90,7 @@ const Profile = ({ user, userData }) => {
                         openTab={openTab}
                         userData={userData}
                         user={user}
+                        projects={projects}
                     />
                 </main>
             </section>
@@ -97,7 +98,121 @@ const Profile = ({ user, userData }) => {
     )
 }
 
-const Tabs = ({ user, userData, openTab }) => {
+const Tabs = ({ user, userData, openTab, projects }) => {
+    // const router = useRouter()
+
+    // const onHandleClick = async () => {
+    //     const { user, error } = await supabase.auth.update({
+    //         data: {
+    //             projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
+    //             role: userData.user_role,
+    //             firstName: userData.firstName,
+    //             lastName: userData.lastName,
+    //         },
+    //     })
+
+    //     // console.log(user, error)
+    // }
+
+    // const onHandleSignOut = async (e) => {
+    //     const { error: err } = await supabase.auth.signOut()
+
+    //     if (err) console.error(err)
+    //     router.push('/sign-in')
+    // }
+
+    // console.log(user.user_metadata.projects)
+
+    const [allChecked, setAllChecked] = useState(false)
+
+    return (
+        <aside className="flex flex-wrap">
+            <div className="relative flex flex-col w-full min-w-0 mb-6 break-words">
+                <div
+                    className={
+                        'flex flex-col items-start gap-4 ' +
+                        (openTab === 1 ? 'block' : 'hidden')
+                    }
+                    id="link1"
+                >
+                    <section className="w-full py-4 border-b-2 border-b-grey-500">
+                        {/* <p>Profile</p> */}
+
+                        <article className="flex justify-between w-full ">
+                            <div>
+                                <h2 className="text-2xl font-bold ">
+                                    Your projects
+                                </h2>
+                                <p className="mt-2 w-[80%] text-grey-500">
+                                    Select the projects you want to see in the
+                                    navigation bar
+                                </p>
+                            </div>
+                            <form className="w-[50%] ">
+                                <fieldset className="flex flex-col">
+                                    {projects.map((project, i) => {
+                                        return (
+                                            <CheckboxElement
+                                                key={i}
+                                                isChecked={allChecked}
+                                                project={project}
+                                                user={user}
+                                            />
+                                        )
+                                    })}
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            onClick={(e) =>
+                                                setAllChecked(e.target.checked)
+                                            }
+                                        />{' '}
+                                        Select all
+                                    </label>
+                                </fieldset>
+                            </form>
+                        </article>
+                    </section>
+                </div>
+                <div className={openTab === 2 ? 'block' : 'hidden'} id="link2">
+                    <SettingsTab user={user} userData={userData} />
+                </div>
+                <div className={openTab === 3 ? 'block' : 'hidden'} id="link3">
+                    <SettingsTab user={user} userData={userData} />
+                </div>
+            </div>
+        </aside>
+    )
+}
+
+const CheckboxElement = ({ isChecked, project, user }) => {
+    const [checked, setChecked] = useState(isChecked)
+
+    console.log(user.user_metadata.projects.indexOf(project.projectName))
+    console.log(user.user_metadata.projects)
+    return (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <label className="flex items-center gap-2">
+                <input
+                    type="checkbox"
+                    checked={
+                        isChecked
+                            ? true
+                            : user.user_metadata.projects.indexOf(
+                                  project.projectName,
+                              ) !== -1
+                            ? true
+                            : checked
+                    }
+                    onChange={(e) => setChecked(e.target.checked)}
+                />
+                <span>{project.projectName}</span>
+            </label>
+        </div>
+    )
+}
+
+const SettingsTab = ({ user, userData }) => {
     const router = useRouter()
 
     const onHandleClick = async () => {
@@ -121,87 +236,29 @@ const Tabs = ({ user, userData, openTab }) => {
     }
 
     return (
-        <aside className="flex flex-wrap">
-            <div className="w-full">
-                <div className="relative flex flex-col w-full min-w-0 mb-6 break-words">
-                    <div className="flex-auto py-5">
-                        <div className="tab-content tab-space">
-                            <div
-                                className={
-                                    'flex flex-col items-start gap-4 ' +
-                                    (openTab === 1 ? 'block' : 'hidden')
-                                }
-                                id="link1"
-                            >
-                                <p>
-                                    Collaboratively administrate empowered
-                                    markets via plug-and-play networks.
-                                    Dynamically procrastinate B2C users after
-                                    installed base benefits.
-                                    <br />
-                                    <br /> Dramatically visualize customer
-                                    directed convergence without revolutionary
-                                    ROI.
-                                </p>
-                                <button onClick={onHandleClick}>
-                                    Update profile
-                                </button>
+        <div className="flex flex-col justify-start">
+            <p>
+                Collaboratively administrate empowered markets via plug-and-play
+                networks. Dynamically procrastinate B2C users after installed
+                base benefits.
+                <br />
+                <br /> Dramatically visualize customer directed convergence
+                without revolutionary ROI.
+            </p>
+            <button onClick={onHandleClick}>Update profile</button>
 
-                                <code className="highlight">
-                                    {JSON.stringify(
-                                        user.user_metadata,
-                                        null,
-                                        4,
-                                    )}
-                                </code>
-                                <div className="heading">Last Signed In:</div>
-                                <code className="highlight">
-                                    {new Date(
-                                        user.last_sign_in_at,
-                                    ).toLocaleString()}
-                                </code>
-                                <button onClick={onHandleSignOut}>
-                                    Sign out
-                                </button>
-                                <Link href="/">
-                                    <a className="button">Go Home</a>
-                                </Link>
-                            </div>
-                            <div
-                                className={openTab === 2 ? 'block' : 'hidden'}
-                                id="link2"
-                            >
-                                <p>
-                                    Completely synergize resource taxing
-                                    relationships via premier niche markets.
-                                    Professionally cultivate one-to-one customer
-                                    service with robust ideas.
-                                    <br />
-                                    <br />
-                                    Dynamically innovate resource-leveling
-                                    customer service for state of the art
-                                    customer service.
-                                </p>
-                            </div>
-                            <div
-                                className={openTab === 3 ? 'block' : 'hidden'}
-                                id="link3"
-                            >
-                                <p>
-                                    Efficiently unleash cross-media information
-                                    without cross-media value. Quickly maximize
-                                    timely deliverables for real-time schemas.
-                                    <br />
-                                    <br /> Dramatically maintain
-                                    clicks-and-mortar solutions without
-                                    functional solutions.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </aside>
+            <code className="highlight">
+                {JSON.stringify(user.user_metadata, null, 4)}
+            </code>
+            <div className="heading">Last Signed In:</div>
+            <code className="highlight">
+                {new Date(user.last_sign_in_at).toLocaleString()}
+            </code>
+            <button onClick={onHandleSignOut}>Sign out</button>
+            <Link href="/">
+                <a className="button">Go Home</a>
+            </Link>
+        </div>
     )
 }
 
@@ -214,11 +271,19 @@ export async function getServerSideProps({ req, res }) {
         .eq('uid', user?.id)
         .single()
 
-    if (!user) {
+    const { data: projectData, error: projectError } = await supabase
+        .from('projects')
+        .select()
+    console.log(
+        '🚀 ~ file: profile.jsx ~ line 222 ~ getServerSideProps ~ projectData',
+        projectData,
+    )
+
+    if (!user || !projectData) {
         return { props: {}, redirect: { destination: '/', permanent: false } }
     }
 
-    return { props: { user, userData: data } }
+    return { props: { user, userData: data, projects: projectData } }
 }
 
 export default Profile

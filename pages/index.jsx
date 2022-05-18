@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 import { useAuth } from '_utils/context/auth'
 import { supabase } from '_utils/database/init'
-import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
 import { useSetUserData, useUserData } from '_utils/atoms/userData'
 
+import Card from '_components/blocks/Card'
 import Page from '_components/scopes/global/Page'
 import Notification from '_components/common/notifications/Notification'
 
@@ -18,7 +18,7 @@ const Home = ({ notifications, projects, user, ...props }) => {
         return projects.filter((projects) => {
             return userData?.projects?.indexOf(projects.projectName) > -1
         })
-    }, [PROJECT_DATA, userData])
+    }, [projects, userData])
 
     useEffect(() => {
         setUserData(user?.data)
@@ -41,11 +41,15 @@ const Home = ({ notifications, projects, user, ...props }) => {
                         <ul className="flex justify-between gap-4">
                             {projectData.map((project, i) => {
                                 return (
-                                    <li key={i} className="w-full">
+                                    <Card
+                                        tag="li"
+                                        key={i}
+                                        className="w-full rounded-xl bg-grey-50 p-4 shadow-md duration-75 ease-in hover:bg-[rgb(228,228,228)]"
+                                    >
                                         <Link
                                             href={`/projects/${project?.slug?.toLocaleLowerCase()}`}
                                         >
-                                            <a className="flex flex-col justify-between p-4 rounded-md shadow-md bg-grey-50">
+                                            <a className="flex flex-col justify-between ">
                                                 <h3 className="font-bold text-md ">
                                                     {project.projectName}
                                                 </h3>
@@ -55,7 +59,7 @@ const Home = ({ notifications, projects, user, ...props }) => {
                                                 </p>
                                             </a>
                                         </Link>
-                                    </li>
+                                    </Card>
                                 )
                             })}
                         </ul>
@@ -115,6 +119,14 @@ export async function getServerSideProps({ req, res }) {
         .eq('uid', user?.id)
         .single()
 
+    // const { data: injectedData, error: injectedError } = await supabase
+    //     .from('projects')
+    //     .insert(PROJECT_DATA)
+
+    const { data: projectData, error: projectError } = await supabase
+        .from('projects')
+        .select()
+
     const { data: notificationData, error: notificationError } = await supabase
         .from('notifications')
         .select()
@@ -132,7 +144,7 @@ export async function getServerSideProps({ req, res }) {
                 session: user,
                 data: data,
             },
-            projects: PROJECT_DATA,
+            projects: projectData || [],
             notifications: notificationData || [],
         },
     }

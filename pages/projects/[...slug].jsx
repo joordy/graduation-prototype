@@ -115,8 +115,9 @@ const Notification = ({
             ) : (
                 <>
                     <h1 className="mt-8 text-3xl font-bold">
-                        {capitalizeFirstLetter(name)} ✗{' '}
-                        {capitalizeFirstLetter(service)} {message}
+                        {`${capitalizeFirstLetter(
+                            name,
+                        )} — ${capitalizeFirstLetter(service)} ${message}`}
                     </h1>
 
                     <NotificationDetails

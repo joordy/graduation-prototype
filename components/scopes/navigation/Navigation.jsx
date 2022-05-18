@@ -15,10 +15,6 @@ const Sidebar = ({ ...props }) => {
     const userData = useUserData()
     const toggledHeader = useToggleHeader()
     const getNotifications = useNotifications()
-    console.log(
-        '🚀 ~ file: Navigation.jsx ~ line 18 ~ Sidebar ~ getNotifications',
-        getNotifications,
-    )
 
     const setToggledHeader = useSetToggleHeader()
 
@@ -34,12 +30,14 @@ const Sidebar = ({ ...props }) => {
 
     const projects = useMemo(() => {
         return PROJECT_DATA.filter((projects) => {
-            return user?.user_metadata?.projects?.indexOf(
-                projects.projectName > -1,
+            return (
+                user?.user_metadata.projects.indexOf(projects.projectName) !==
+                -1
             )
         })
-    }, [PROJECT_DATA, user?.user_metadata, userData])
+    }, [PROJECT_DATA, user?.user_metadata.projects, userData])
 
+    console.log(projects)
     return (
         <header
             className={`z-100 fixed -left-[100vw] top-0 bottom-0  w-5/6   overflow-y-auto bg-[#F1F3F4] shadow-2xl duration-[250ms] ease-in md:relative md:left-0  md:h-screen md:overflow-visible  ${
@@ -69,7 +67,7 @@ const Sidebar = ({ ...props }) => {
                     />
                 </div>
 
-                <div className="w-full overflow-hidden">
+                <div className="flex max-h-[100%] w-full flex-col gap-4 overflow-y-auto overflow-x-hidden pl-[0] duration-[250ms] ease-in">
                     {/* <hr className="mx-2 my-4 border-grey-300" /> */}
 
                     {userData && (
@@ -146,9 +144,10 @@ const ProjectList = ({
                 return (
                     <li
                         key={i}
-                        className={`relative flex w-['inherit'] rounded-lg p-2 text-sm ${
-                            activePath && 'bg-white font-[700]'
-                        }`}
+                        className={
+                            `relative flex w-['inherit'] rounded-lg p-2 text-sm duration-100 ease-in hover:cursor-pointer hover:bg-[#fafafa] ` +
+                            (activePath && 'bg-white font-[700]')
+                        }
                     >
                         <Link href={`/projects/${slug}`}>
                             <a>
@@ -265,9 +264,8 @@ const UserProfile = ({ user, userData, toggledHeader }) => {
     return (
         <Link href="/profile">
             <a
-                className={`flex max-h-[100%] flex-col ${
-                    toggledHeader ? 'w-[48px]' : 'w-full'
-                } m-0 overflow-hidden duration-[250ms] ease-in`}
+                // 'm-0 flex max-h-[100%] flex-col overflow-hidden duration-[250ms] ease-in ' +
+                className={' ' + (toggledHeader ? 'w-[48px]' : 'w-[inherit]')}
             >
                 <div className="flex items-center ml-2">
                     <span className="flex flex-col items-center justify-center w-8 h-8 p-1 m-1 text-xs text-white rounded-full bg-grey-900 stroke-grey-800 ">

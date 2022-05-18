@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
 
 import Page from '_components/scopes/global/Page'
 import NotificationElement from '_components/blocks/NotificationElement'
-import NotificationDetails from '_components/scopes/NotificationDetails'
+import NotificationDetails from '_components/scopes/_NotificationDetails'
 
 const STATUS = [
     {

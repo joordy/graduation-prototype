@@ -1,60 +1,60 @@
+import { supabase } from 'utils/database/init'
+
+const { data, error } = await supabase.from('notifications').select()
+
+// console.log(data)
+
+// const checkStatus = (project, service) => {
+//     data.filter((item) => {
+//         return item.name === project && item.service === service
+//     })
+//     return 1
+// }
+
 export const PROJECT_DATA = [
     {
         icon: '/icons/mammut.ico',
         projectName: 'Mammut',
-        // domain: 'mammut.com',
+        domain: 'mammut.com',
         slug: 'mammut',
         status: true,
         connections: [
             {
                 name: 'Vercel',
-                type: 'hosting',
+                priority: 1,
+                type: 'Hosting',
+                icon: '/icons/vercel.ico',
+                status: true,
+            },
+            {
+                name: 'Contentful',
+                priority: 1,
+                type: 'Site content',
+                icon: '/icons/contentful.ico',
+                status: true,
+            },
+            {
+                name: 'Mammut IO',
+                priority: 1,
+                type: 'Products',
                 icon: '/icons/mammut.ico',
                 status: true,
             },
+            {
+                name: 'Algolia',
+                priority: 2,
+                type: 'Search engine',
+                icon: '/icons/algolia.ico',
+                status: true,
+            },
+            {
+                name: 'Yotpo',
+                priority: 3,
+                type: 'User reviews',
+                icon: '/icons/yotpo.ico',
+                status: true,
+            },
         ],
-
-        // connections: [
-        //     {
-        //         name: 'Mammut.com hosting',
-        //         icon: '/icons/mammut.ico',
-        //         status: true,
-        //         relatedTo: 'Mammut',
-        //         element: 'Mammut.com',
-        //         position: { x: 10, y: 100 },
-        //         width: '90%',
-        //     },
-        //     {
-        //         name: 'Contentful',
-        //         icon: '/icons/mammut.ico',
-        //         status: false,
-        //         relatedTo: 'Mammut',
-        //         element: 'Contentful',
-        //         position: { x: 10, y: 225 },
-        //     },
-        //     {
-        //         name: 'Auth0',
-        //         icon: '/icons/mammut.ico',
-        //         status: true,
-        //         element: 'Auth0',
-        //         position: { x: 185, y: 225 },
-        //     },
-        //     {
-        //         name: 'Algolia',
-        //         icon: '/icons/mammut.ico',
-        //         status: true,
-        //         element: 'Algolia',
-        //         position: { x: 360, y: 225 },
-        //     },
-        //     {
-        //         name: 'Mammut IO',
-        //         icon: '/icons/mammut.ico',
-        //         status: true,
-        //         element: 'Mammut IO',
-        //         position: { x: 10, y: 425 },
-        //         width: '90%',
-        //     },
-        // ],
     },
     {
         icon: '/icons/foam.ico',
@@ -62,24 +62,27 @@ export const PROJECT_DATA = [
         slug: 'foam',
         status: true,
         connections: [
-            // {
-            //     name: 'Vercel',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Mammut',
-            // },
-            // {
-            //     name: 'Storyblok',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Foam',
-            // },
-            // {
-            //     name: 'Mailchimp',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Foam',
-            // },
+            {
+                name: 'Vercel',
+                priority: 1,
+                type: 'Hosting',
+                icon: '/icons/vercel.ico',
+                status: true,
+            },
+            {
+                name: 'Storyblok',
+                icon: '/icons/storyblok.ico',
+                status: true,
+                priority: 1,
+                type: 'Site content',
+            },
+            {
+                name: 'Mailchimp',
+                icon: '/icons/mailchimp.ico',
+                status: true,
+                priority: 2,
+                type: 'Subscription',
+            },
         ],
     },
     {
@@ -88,18 +91,20 @@ export const PROJECT_DATA = [
         slug: 'land-of-ride',
         status: true,
         connections: [
-            // {
-            //     name: 'Vercel',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Mammut',
-            // },
-            // {
-            //     name: 'Storyblok',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Foam',
-            // },
+            {
+                name: 'Vercel',
+                priority: 1,
+                type: 'Hosting',
+                icon: '/icons/vercel.ico',
+                status: true,
+            },
+            {
+                name: 'Storyblok',
+                icon: '/icons/storyblok.ico',
+                status: true,
+                priority: 1,
+                type: 'Site content',
+            },
         ],
     },
     {
@@ -108,18 +113,20 @@ export const PROJECT_DATA = [
         slug: 'aubade',
         status: true,
         connections: [
-            // {
-            //     name: 'Vercel',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Mammut',
-            // },
-            // {
-            //     name: 'Storyblok',
-            //     icon: '/icons/mammut.ico',
-            //     status: true,
-            //     relatedTo: 'Foam',
-            // },
+            {
+                name: 'Vercel',
+                priority: 1,
+                type: 'Hosting',
+                icon: '/icons/vercel.ico',
+                status: true,
+            },
+            {
+                name: 'Storyblok',
+                icon: '/icons/storyblok.ico',
+                status: true,
+                priority: 1,
+                type: 'Site content',
+            },
         ],
     },
 ]

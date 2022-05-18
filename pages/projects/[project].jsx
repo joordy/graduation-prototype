@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Select from 'react-select'
 import Head from 'next/head'
 
@@ -6,7 +6,7 @@ import { useAuth } from '_utils/context/auth'
 import { supabase } from '_utils/database/init'
 import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
 import { useSetUserData, useUserData } from '_utils/atoms/userData'
-
+import { checkIfValueExist } from '_utils/helpers/arrayHelpers'
 import Page from '_components/scopes/global/Page'
 import Notification from '_components/common/notifications/Notification'
 
@@ -25,16 +25,12 @@ const TEST_DATA = {
     priorityLevel: '',
 }
 
-const Project = ({ notifications = [], projects = {}, user, ...props }) => {
-    const { connections = [], projectName } = projects
+const Project = ({ notifications = [], project = {}, user, ...props }) => {
+    const [selectedValue, setSelectedValue] = useState(null)
+    const [selectedFilter, setSelectedFilter] = useState(null)
     const userData = useUserData()
     const setUserData = useSetUserData()
-
-    useEffect(() => {
-        setUserData(user?.data)
-    }, [user?.data])
-
-    const [selectedValue, setSelectedValue] = useState(null)
+    const { projectName } = project
 
     const filterOptions = [
         { value: 'week', label: 'Week' },
@@ -42,9 +38,32 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
         { value: 'all', label: 'All' },
     ]
 
+    const statusFilters = [
+        { value: 'highToLow', label: 'Priority: High — Low' },
+        { value: 'lowToHigh', label: 'Priority: Low — High' },
+    ]
+
     const handleChange = (e) => {
         setSelectedValue(e.value)
     }
+
+    const handleFilterChange = (e) => {
+        setSelectedFilter(e.value)
+    }
+
+    useEffect(() => {
+        setUserData(user?.data)
+    }, [user?.data])
+
+    const connections = useMemo(() => {
+        return project?.connections.sort((a, b) => {
+            if (selectedFilter === 'highToLow') {
+                return a.priority - b.priority
+            } else if (selectedFilter === 'lowToHigh') {
+                return b.priority - a.priority
+            }
+        })
+    }, [project?.connections, selectedFilter])
 
     return (
         <>
@@ -76,7 +95,7 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                                 : filterOptions[2]
                                         }
                                         onChange={handleChange}
-                                        className="text-xs"
+                                        className="w-32 text-xs"
                                     />
                                 </form>
                             </aside>
@@ -85,7 +104,11 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                 <h2 className="mb-2 font-[500]">Recent:</h2>
 
                                 <ul className="flex flex-col gap-y-4">
-                                    {notifications.length >= 1 ? (
+                                    {checkIfValueExist(
+                                        notifications,
+                                        'status',
+                                        'Reported',
+                                    ) ? (
                                         notifications.map((data, i) => {
                                             if (data.status === 'Reported')
                                                 return (
@@ -107,8 +130,10 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                 <h2 className="mb-2 font-[500]">In progress</h2>
 
                                 <ul className="flex flex-col gap-y-4">
-                                    {notifications.includes(
-                                        notifications.status === 'In progress',
+                                    {checkIfValueExist(
+                                        notifications,
+                                        'status',
+                                        'In progress',
                                     ) ? (
                                         notifications.map((data, i) => {
                                             if (data.status === 'In progress')
@@ -134,8 +159,10 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                 </h2>
 
                                 <ul className="flex flex-col gap-y-4">
-                                    {notifications.includes(
-                                        notifications.status === 'Solved',
+                                    {checkIfValueExist(
+                                        notifications,
+                                        'status',
+                                        'Solved',
                                     ) ? (
                                         notifications.map((data, i) => {
                                             if (data.status === 'Solved')
@@ -161,56 +188,110 @@ const Project = ({ notifications = [], projects = {}, user, ...props }) => {
                                 <h2 className="mb-2 text-xl font-semibold">
                                     Current status:
                                 </h2>
+
+                                <form action="">
+                                    <Select
+                                        options={statusFilters}
+                                        onChange={handleFilterChange}
+                                        className="w-48 text-xs"
+                                        value={
+                                            selectedFilter
+                                                ? statusFilters.find(
+                                                      (obj) =>
+                                                          obj.value ===
+                                                          selectedFilter,
+                                                  )
+                                                : statusFilters[0]
+                                        }
+                                    />
+                                </form>
                             </div>
                             <div>
-                                <div className="grid grid-cols-4 pb-2 mt-12 mb-2 font-bold border-b-2 gap-x-6">
+                                <div className="grid grid-cols-5 pb-2 mt-12 mb-2 font-bold border-b-2 gap-x-6">
                                     <span>Service</span>
+                                    <span>Priority</span>
                                     <span>Type</span>
                                     <span>Status</span>
                                     <span>Latest check</span>
                                 </div>
+
                                 <ul className="flex flex-col gap-y-4">
-                                    <li className="grid grid-cols-4 py-2 border-b gap-x-6 border-grey-400">
+                                    {connections.map((project) => {
+                                        return (
+                                            <li className="grid grid-cols-5 pt-2 pb-4 border-b gap-x-6 border-grey-400">
+                                                <span className="flex">
+                                                    <img
+                                                        className="w-6 h-6 mr-2"
+                                                        src={project.icon}
+                                                        alt={project.name}
+                                                    />
+                                                    <p>{project.name}</p>
+                                                </span>
+                                                <span>
+                                                    {project.priority == 1
+                                                        ? 'High'
+                                                        : project.priority == 2
+                                                        ? 'Medium'
+                                                        : 'Low'}
+                                                </span>
+                                                <span>{project.type}</span>
+                                                <span className="rounded-full bg-[green] text-center text-white">
+                                                    {project.status
+                                                        ? 'Online'
+                                                        : 'Problem detected'}
+                                                </span>
+                                                <span>20-04-2022 — 14:45</span>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                                {/* <ul className="flex flex-col gap-y-4">
+                                    <li className="grid grid-cols-5 py-2 border-b gap-x-6 border-grey-400">
                                         <span>Mammut IO</span>
+                                        <span>High</span>
                                         <span>Products</span>
                                         <span className="rounded-full bg-[green] text-center text-white">
                                             Online
                                         </span>
                                         <span>20-04-2022 — 14:45</span>
                                     </li>
-                                    <li className="grid grid-cols-4 py-2 border-b gap-x-6 border-grey-400">
+                                    <li className="grid grid-cols-5 py-2 border-b gap-x-6 border-grey-400">
                                         <span>Contentful</span>
+                                        <span>High</span>
                                         <span>Content</span>
                                         <span className="rounded-full bg-[red] text-center text-white">
                                             Error detected
                                         </span>
                                         <span>20-04-2022 — 14:45</span>
                                     </li>
-                                    <li className="grid grid-cols-4 py-2 border-b gap-x-6 border-grey-400">
-                                        <span>Mailchimp</span>
-                                        <span>Subscription</span>
+                                    <li className="grid grid-cols-5 py-2 border-b gap-x-6 border-grey-400">
+                                        <span>Yotpo</span>
+                                        <span>Low</span>
+                                        <span>User ratings</span>
                                         <span className="rounded-full bg-[red] text-center text-white">
                                             Error detected
                                         </span>
                                         <span>20-04-2022 — 14:45</span>
                                     </li>
-                                    <li className="grid grid-cols-4 py-2 border-b gap-x-6 border-grey-400">
+                                    <li className="grid grid-cols-5 py-2 border-b gap-x-6 border-grey-400">
                                         <span>Algolia</span>
+                                        <span>Medium</span>
                                         <span>Searching</span>
                                         <span className="rounded-full bg-[green] text-center text-white">
                                             Online
                                         </span>
                                         <span>20-04-2022 — 14:45</span>
                                     </li>
-                                    <li className="grid grid-cols-4 py-2 border-b gap-x-6 border-grey-400">
+                                    <li className="grid grid-cols-5 py-2 border-b gap-x-6 border-grey-400">
                                         <span>Vercel</span>
+                                        <span>High</span>
                                         <span>Hosting</span>
                                         <span className="rounded-full bg-[green] text-center text-white">
                                             Online
                                         </span>
                                         <span>20-04-2022 — 14:45</span>
                                     </li>
-                                </ul>
+                                </ul> */}
                             </div>
                         </aside>
                     </main>
@@ -233,6 +314,12 @@ export async function getServerSideProps({ req, params }) {
         .select()
         .match({ name: params.project })
 
+    const { data: projectData, error: projectError } = await supabase
+        .from('projects')
+        .select()
+        .match({ slug: params.project })
+        .single()
+
     if (!user) {
         return {
             props: {},
@@ -240,9 +327,9 @@ export async function getServerSideProps({ req, params }) {
         }
     }
 
-    const projectData = PROJECT_DATA.find(
-        (item) => item.slug === params.project,
-    )
+    // const projectData = PROJECT_DATA.find(
+    //     (item) => item.slug === params.project,
+    // )
 
     return {
         props: {
@@ -250,7 +337,7 @@ export async function getServerSideProps({ req, params }) {
                 session: user,
                 data: data,
             },
-            projects: projectData,
+            project: projectData,
             notifications: notificationData || undefined,
         },
     }
