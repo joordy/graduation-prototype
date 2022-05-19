@@ -240,7 +240,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
                         </svg>
                     </span>
                     <p className="ml-2 w-max min-w-[125px] overflow-hidden text-sm">
-                        Notification Center
+                        Notification center
                     </p>
                     {elementsCount >= 1 && (
                         <span

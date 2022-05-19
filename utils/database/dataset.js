@@ -1,132 +1,115 @@
-import { supabase } from 'utils/database/init'
-
-const { data, error } = await supabase.from('notifications').select()
-
-// console.log(data)
-
-// const checkStatus = (project, service) => {
-//     data.filter((item) => {
-//         return item.name === project && item.service === service
-//     })
-//     return 1
-// }
-
 export const PROJECT_DATA = [
     {
         icon: '/icons/mammut.ico',
         projectName: 'Mammut',
-        domain: 'mammut.com',
         slug: 'mammut',
         status: true,
         connections: [
             {
-                name: 'Vercel',
-                priority: 1,
-                type: 'Hosting',
-                icon: '/icons/vercel.ico',
+                name: 'Mammut.com hosting',
+                icon: '/icons/mammut.ico',
                 status: true,
+                relatedTo: 'Mammut',
+                element: 'Mammut.com',
+                position: { x: 10, y: 100 },
+                width: '90%',
             },
             {
                 name: 'Contentful',
-                priority: 1,
-                type: 'Site content',
-                icon: '/icons/contentful.ico',
-                status: true,
+                icon: '/icons/mammut.ico',
+                status: false,
+                relatedTo: 'Mammut',
+                element: 'Contentful',
+                position: { x: 10, y: 225 },
             },
             {
-                name: 'Mammut IO',
-                priority: 1,
-                type: 'Products',
+                name: 'Auth0',
                 icon: '/icons/mammut.ico',
                 status: true,
+                element: 'Auth0',
+                position: { x: 185, y: 225 },
             },
             {
                 name: 'Algolia',
-                priority: 2,
-                type: 'Search engine',
-                icon: '/icons/algolia.ico',
+                icon: '/icons/mammut.ico',
                 status: true,
+                element: 'Algolia',
+                position: { x: 360, y: 225 },
             },
             {
-                name: 'Yotpo',
-                priority: 3,
-                type: 'User reviews',
-                icon: '/icons/yotpo.ico',
+                name: 'Mammut IO',
+                icon: '/icons/mammut.ico',
                 status: true,
+                element: 'Mammut IO',
+                position: { x: 10, y: 425 },
+                width: '90%',
             },
         ],
     },
     {
-        icon: '/icons/foam.ico',
+        icon: '/icons/foam_icon.png',
         projectName: 'Foam',
         slug: 'foam',
         status: true,
         connections: [
-            {
-                name: 'Vercel',
-                priority: 1,
-                type: 'Hosting',
-                icon: '/icons/vercel.ico',
-                status: true,
-            },
-            {
-                name: 'Storyblok',
-                icon: '/icons/storyblok.ico',
-                status: true,
-                priority: 1,
-                type: 'Site content',
-            },
-            {
-                name: 'Mailchimp',
-                icon: '/icons/mailchimp.ico',
-                status: true,
-                priority: 2,
-                type: 'Subscription',
-            },
+            // {
+            //     name: 'Vercel',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Mammut',
+            // },
+            // {
+            //     name: 'Storyblok',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Foam',
+            // },
+            // {
+            //     name: 'Mailchimp',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Foam',
+            // },
         ],
     },
     {
-        icon: '/icons/land-of-ride.ico',
+        icon: '/icons/landofride.ico',
         projectName: 'Land of Ride',
         slug: 'land-of-ride',
         status: true,
         connections: [
-            {
-                name: 'Vercel',
-                priority: 1,
-                type: 'Hosting',
-                icon: '/icons/vercel.ico',
-                status: true,
-            },
-            {
-                name: 'Storyblok',
-                icon: '/icons/storyblok.ico',
-                status: true,
-                priority: 1,
-                type: 'Site content',
-            },
+            // {
+            //     name: 'Vercel',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Mammut',
+            // },
+            // {
+            //     name: 'Storyblok',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Foam',
+            // },
         ],
     },
     {
-        icon: '/icons/aubade.ico',
+        icon: '/icons/aubade_icon.png',
         projectName: 'Aubade',
         slug: 'aubade',
         status: true,
         connections: [
-            {
-                name: 'Vercel',
-                priority: 1,
-                type: 'Hosting',
-                icon: '/icons/vercel.ico',
-                status: true,
-            },
-            {
-                name: 'Storyblok',
-                icon: '/icons/storyblok.ico',
-                status: true,
-                priority: 1,
-                type: 'Site content',
-            },
+            // {
+            //     name: 'Vercel',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Mammut',
+            // },
+            // {
+            //     name: 'Storyblok',
+            //     icon: '/icons/mammut.ico',
+            //     status: true,
+            //     relatedTo: 'Foam',
+            // },
         ],
     },
 ]
@@ -159,7 +142,7 @@ export const NOTIFICATION_DATA = [
     },
     {
         projectName: 'Aubade',
-        projectIcon: '/icons/aubade.ico',
+        projectIcon: '/icons/aubade_icon.png',
         name: 'aubade',
         status: 'recently reported',
         slug: '23-456',
@@ -177,7 +160,7 @@ export const NOTIFICATION_DATA = [
     },
     {
         projectName: 'Land of Ride',
-        projectIcon: '/icons/land-of-ride.ico',
+        projectIcon: '/icons/landofride.ico',
         name: 'land-of-ride',
         slug: '45-678',
         status: 'recently reported',

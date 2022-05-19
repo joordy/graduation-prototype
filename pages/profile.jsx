@@ -188,8 +188,8 @@ const Tabs = ({ user, userData, openTab, projects }) => {
 const CheckboxElement = ({ isChecked, project, user }) => {
     const [checked, setChecked] = useState(isChecked)
 
-    console.log(user.user_metadata.projects.indexOf(project.projectName))
-    console.log(user.user_metadata.projects)
+    // console.log(user?.user_metadata?.projects.indexOf(project.projectName))
+    // console.log(user?.user_metadata?.projects)
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label className="flex items-center gap-2">
@@ -198,8 +198,8 @@ const CheckboxElement = ({ isChecked, project, user }) => {
                     checked={
                         isChecked
                             ? true
-                            : user.user_metadata.projects.indexOf(
-                                  project.projectName,
+                            : user?.user_metadata?.projects?.indexOf(
+                                  project?.projectName,
                               ) !== -1
                             ? true
                             : checked
@@ -248,11 +248,11 @@ const SettingsTab = ({ user, userData }) => {
             <button onClick={onHandleClick}>Update profile</button>
 
             <code className="highlight">
-                {JSON.stringify(user.user_metadata, null, 4)}
+                {JSON.stringify(user?.user_metadata, null, 4)}
             </code>
             <div className="heading">Last Signed In:</div>
             <code className="highlight">
-                {new Date(user.last_sign_in_at).toLocaleString()}
+                {new Date(user?.last_sign_in_at).toLocaleString()}
             </code>
             <button onClick={onHandleSignOut}>Sign out</button>
             <Link href="/">
