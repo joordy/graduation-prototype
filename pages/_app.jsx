@@ -5,7 +5,9 @@ import { ToastContainer, toast } from 'react-toastify'
 import { AuthProvider } from '_utils/context/auth'
 import { supabase } from 'utils/database/init'
 
-import Sidebar from '_components/scopes/navigation/Navigation'
+// import Sidebar from '_components/scopes/navigation/Navigation'
+import Sidebar from '_components/scopes/sidebar/Sidebar'
+
 import Popup from '_components/common/notifications/Popup'
 import Search from '_components/scopes/global/Search'
 

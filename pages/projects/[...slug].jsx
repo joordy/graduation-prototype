@@ -136,20 +136,20 @@ export async function getServerSideProps({ params }) {
     // const { data: injectedData, error: injectedError } = await supabase
     //     .from('notifications')
     //     .insert([
-    //         {
-    //             projectIcon: '/icons/mammut.ico',
-    //             service: 'vercel',
-    //             name: 'mammut',
-    //             notification_id: id,
-    //             slug: id,
-    //             message: 'Vercel can`t reach the website',
-    //             status: 'inProgress',
-    //             errorMessage: [`StatusCode 500 - Internal server Error`],
-    //             codeFile: false,
-    //             codeFunction: false,
-    //             codeLine: false,
-    //             priorityLevel: 'High',
-    //         },
+    // {
+    //     projectIcon: '/icons/mammut.ico',
+    //     service: 'vercel',
+    //     name: 'mammut',
+    //     notification_id: id,
+    //     slug: id,
+    //     message: 'Vercel can`t reach the website',
+    //     status: 'inProgress',
+    //     errorMessage: [`StatusCode 500 - Internal server Error`],
+    //     codeFile: false,
+    //     codeFunction: false,
+    //     codeLine: false,
+    //     priorityLevel: 'High',
+    // },
     //     ])
 
     // // // const { data, error } = await supabase

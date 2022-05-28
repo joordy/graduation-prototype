@@ -46,19 +46,17 @@ const Sidebar = ({ notificationCounter, ...props }) => {
 
     return (
         <nav
-            className={`z-100 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto bg-[#F1F3F4] px-8  py-16 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in md:relative md:left-0 md:h-screen md:px-4 md:pt-8 md:pb-16 ${
-                toggledHeader ? 'md:w-[100px]' : 'md:w-[300px]'
-            } fixed -left-[100vw] top-0 bottom-0 md:overflow-visible ${
-                toggledHeader && 'left-[0]'
-            }`}
+            className={`z-100 fixed flex w-5/6 flex-col items-center justify-between overflow-y-auto bg-[#F1F3F4] px-8  py-16 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in tablet:relative tablet:left-0 tablet:h-screen tablet:px-4 tablet:pt-8 tablet:pb-16 ${
+                toggledHeader ? 'left-[0] tablet:w-[100px]' : 'tablet:w-[300px]'
+            } fixed -left-[100vw] top-0 bottom-0 tablet:overflow-visible`}
         >
             <button
                 onClick={toggle}
-                className="absolute left-4 top-8 z-10 md:right-[-1.5rem] md:left-[unset] md:h-[2rem] md:w-[1.5rem] md:rounded-r-lg md:bg-[#F1F3F4] md:shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)]"
+                className="absolute left-4 top-8 z-10 tablet:right-[-1.5rem] tablet:left-[unset] tablet:h-[2rem] tablet:w-[1.5rem] tablet:rounded-r-lg tablet:bg-[#F1F3F4] tablet:shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)]"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="block w-6 h-6 md:hidden"
+                    className="block w-6 h-6 tablet:hidden"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -72,8 +70,8 @@ const Sidebar = ({ notificationCounter, ...props }) => {
                 </svg>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`hidden h-6 w-6 duration-150 md:block ${
-                        toggledHeader ? 'md:rotate-180' : ''
+                    className={`hidden h-6 w-6 duration-150 tablet:block ${
+                        toggledHeader ? 'tablet:rotate-180' : ''
                     }`}
                     fill="none"
                     viewBox="0 0 24 24"

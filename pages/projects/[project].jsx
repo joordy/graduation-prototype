@@ -43,7 +43,7 @@ const Project = ({ notifications = [], project = {}, user, ...props }) => {
                         <h1 className="text-3xl font-bold ">{projectName}</h1>
                     </header>
 
-                    <main className="h-[inherit] lg:grid lg:grid-cols-1 lg:grid-rows-2 lg:gap-x-4">
+                    <main className="h-[inherit] desktop:grid desktop:grid-cols-1 desktop:grid-rows-2 desktop:gap-x-4">
                         <Board notifications={notifications} />
 
                         <StatusCheck

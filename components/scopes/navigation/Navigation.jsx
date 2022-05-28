@@ -31,21 +31,22 @@ const Sidebar = ({ ...props }) => {
     const projects = useMemo(() => {
         return PROJECT_DATA.filter((projects) => {
             return (
-                user?.user_metadata.projects.indexOf(projects.projectName) !==
-                -1
+                user?.user_metadata?.projects?.indexOf(
+                    projects?.projectName,
+                ) !== -1
             )
         })
-    }, [PROJECT_DATA, user?.user_metadata.projects, userData])
+    }, [PROJECT_DATA, user?.user_metadata?.projects, userData])
 
     return (
         <header
-            className={`z-100 fixed -left-[100vw] top-0 bottom-0  w-5/6   overflow-y-auto bg-[#F1F3F4] shadow-2xl duration-[250ms] ease-in md:relative md:left-0  md:h-screen md:overflow-visible  ${
-                toggledHeader ? 'left-[0] md:w-[80px]' : 'md:w-[300px]'
+            className={`z-100 fixed -left-[100vw] top-0  bottom-0   w-5/6 overflow-y-auto bg-offWhite shadow-2xl duration-[250ms] ease-in tablet:relative tablet:left-0  tablet:h-screen tablet:overflow-visible  ${
+                toggledHeader ? 'left-[0] tablet:w-[80px]' : 'tablet:w-[300px]'
             }`}
         >
             <CollapseButton onClick={toggle} toggledHeader={toggledHeader} />
 
-            <nav className="flex flex-col justify-between w-full h-full px-8 py-16 overflow-hidden md:px-4 md:pt-8 md:pb-8">
+            <nav className="flex flex-col justify-between w-full h-full px-8 py-16 overflow-hidden tablet:px-4 tablet:pt-8 tablet:pb-8">
                 <div className="flex flex-col gap-y-4">
                     <ProjectName name="Quickly" toggledHeader={toggledHeader} />
                     {/* <hr className="mx-2 mb-4 border-grey-300" /> */}
@@ -86,11 +87,11 @@ const CollapseButton = ({ onClick, toggledHeader }) => {
     return (
         <button
             onClick={onClick}
-            className="absolute left-4 top-8 z-10 md:right-[-1.5rem] md:left-[unset] md:h-[2rem] md:w-[1.5rem] md:rounded-r-lg md:bg-[#F1F3F4] md:shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)]"
+            className="absolute left-4 top-8 z-10 tablet:right-[-1.5rem] tablet:left-[unset] tablet:h-[2rem] tablet:w-[1.5rem] tablet:rounded-r-lg tablet:bg-[#F1F3F4] tablet:shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)]"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="block w-6 h-6 md:hidden"
+                className="block w-6 h-6 tablet:hidden"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -104,8 +105,8 @@ const CollapseButton = ({ onClick, toggledHeader }) => {
             </svg>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className={`hidden h-6 w-6 duration-150 md:block ${
-                    toggledHeader ? 'md:rotate-180' : ''
+                className={`hidden h-6 w-6 duration-150 tablet:block ${
+                    toggledHeader ? 'tablet:rotate-180' : ''
                 }`}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -170,7 +171,7 @@ const ProjectList = ({
                                             toggledHeader
                                                 ? 'delay-50 opacity-0'
                                                 : 'opacity-100 delay-200'
-                                        } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-grey-100 text-[10px]  duration-150 ease-in`}
+                                        } bg-grey-100 absolute top-[50%] right-3  flex h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md text-[10px]  duration-150 ease-in`}
                                     >
                                         {counter.length}
                                     </span>
@@ -248,7 +249,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
                                 toggledHeader
                                     ? 'delay-50 opacity-0'
                                     : 'opacity-100 delay-200'
-                            } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-grey-100 text-[10px]  duration-150 ease-in`}
+                            } bg-grey-100 absolute top-[50%] right-3  flex h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md text-[10px]  duration-150 ease-in`}
                         >
                             {elementsCount}
                         </span>
@@ -282,7 +283,7 @@ const UserProfile = ({ user, userData, toggledHeader }) => {
                                 ? user?.user_metadata.firstName
                                 : userData?.firstName}
                         </p>
-                        <p className="ml-2 w-max min-w-[125px] overflow-hidden text-xs text-grey-700">
+                        <p className="text-grey-700 ml-2 w-max min-w-[125px] overflow-hidden text-xs">
                             {user?.user_metadata?.role &&
                                 capitalizeFirstLetter(
                                     user?.user_metadata?.role,

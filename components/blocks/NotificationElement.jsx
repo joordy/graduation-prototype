@@ -4,7 +4,7 @@ const Notification = ({ type = '', hit, onClick = () => {}, projectSlug }) => {
     const { name, projectName, projectIcon, slug, intro, status } = hit
 
     return (
-        <li className="rounded-xl bg-grey-50">
+        <li className="bg-grey-50 rounded-xl">
             <button className="w-full p-4 text-left" onClick={onClick}>
                 {type === 'fixed' ? (
                     <div className="relative flex">

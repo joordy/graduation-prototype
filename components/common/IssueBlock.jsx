@@ -5,20 +5,28 @@ import {
 
 import Notification from '_components/common/notifications/Notification'
 
-const IssueBlock = ({ issueTitle, issueStatus, emptyText, notifications }) => {
+const IssueBlock = ({
+    showTitle,
+    issueTitle,
+    issueStatus,
+    emptyText,
+    notifications,
+}) => {
     return (
         <article>
-            <h2 className="mb-2 font-[500]">
-                {issueTitle}
-                <span className="text-sm">
-                    {` (${getValueInArrayCounter(
-                        notifications,
-                        'status',
-                        issueStatus,
-                    )})`}
-                </span>
-                :
-            </h2>
+            {showTitle && (
+                <h2 className="mb-2 font-[500]">
+                    {issueTitle}
+                    <span className="text-sm">
+                        {` (${getValueInArrayCounter(
+                            notifications,
+                            'status',
+                            issueStatus,
+                        )})`}
+                    </span>
+                    :
+                </h2>
+            )}
             {checkIfValueExist(notifications, 'status', issueStatus) ? (
                 <ul className="flex flex-col gap-y-4">
                     {notifications.map((data, i) => {

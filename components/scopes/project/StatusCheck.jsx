@@ -26,7 +26,7 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
     }, [project?.connections, selectedFilter])
 
     return (
-        <section className="lg:row-start-2 lg:row-end-3">
+        <section className="desktop:row-start-2 desktop:row-end-3">
             <div className="flex justify-between">
                 <h2 className="mb-2 text-xl font-semibold">Current status:</h2>
 
@@ -85,14 +85,14 @@ const ConnectionList = ({
     status,
 }) => {
     return (
-        <li className="grid grid-cols-5 pt-2 pb-4 border-b gap-x-6 border-grey-400">
+        <li className="grid grid-cols-5 pt-2 pb-4 border-b border-grey-400 gap-x-6">
             <div className="flex items-center justify-between">
                 <div className="flex">
                     <img className="w-6 h-6 mr-2" src={icon} alt={name} />
                     <p>{name}</p>
                 </div>
                 <span
-                    className={`flex h-5 w-5  items-center justify-center  rounded-md bg-grey-100 text-[10px]  duration-150 ease-in`}
+                    className={`bg-grey-100 flex h-5  w-5 items-center  justify-center rounded-md text-[10px]  duration-150 ease-in`}
                 >
                     {getValueInArrayCounter(
                         notifications,

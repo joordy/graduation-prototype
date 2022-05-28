@@ -17,8 +17,8 @@ const Board = ({ notifications }) => {
     ]
 
     return (
-        <section className="lg:grid lg:grid-cols-3 lg:grid-rows-[48px_auto] lg:gap-x-4">
-            <aside className="flex items-center justify-between lg:col-start-1 lg:col-end-5 lg:row-start-1">
+        <section className="desktop:grid desktop:grid-cols-3 desktop:grid-rows-[48px_auto] desktop:gap-x-4">
+            <aside className="flex items-center justify-between desktop:col-start-1 desktop:col-end-5 desktop:row-start-1">
                 <h2 className="text-xl font-bold">Issues</h2>
 
                 <form action="">

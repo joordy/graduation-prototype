@@ -15,7 +15,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
 
     return (
         <header
-            className={`mb-8 flex  items-center bg-white p-4 md:bg-transparent md:p-0 ${
+            className={`mb-8 flex  items-center bg-white p-4 tablet:bg-transparent tablet:p-0 ${
                 breadCrumbs ? 'justify-between' : 'justify-end'
             }`}
         >
@@ -23,7 +23,7 @@ const TopNavigation = ({ breadCrumbs = false, notificationCounter = 0 }) => {
                 onClick={toggle}
                 href="#"
                 className={`
-            md:hidden 
+            tablet:hidden 
             ${toggledHeader && 'left-[1.2rem] top-[5rem]'}
         `}
             >
