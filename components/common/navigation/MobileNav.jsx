@@ -1,29 +1,25 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { useUserData } from '_utils/atoms/userData'
 import { useNotifications } from '_utils/atoms/notifications'
-import { useToggleHeader, useSetToggleHeader } from '_utils/atoms/toggleHeader'
+import { useToggleHeader } from '_utils/atoms/toggleHeader'
 import { useAuth } from '_utils/context/auth'
 import { PROJECT_DATA } from '_utils/database/dataset'
 
 import User from '_components/blocks/icons/User'
 import Home from '_components/blocks/icons/Home'
 import Collection from '_components/blocks/icons/Collection'
+import ProjectList from '_components/blocks/ProjectList'
 
 const MobileNav = ({}) => {
+    const [toggleWrapper, setToggleWrapper] = useState(false)
     const { user } = useAuth()
     const { query, pathname } = useRouter()
     const userData = useUserData()
     const toggledHeader = useToggleHeader()
     const getNotifications = useNotifications()
-
-    const setToggledHeader = useSetToggleHeader()
-
-    const toggle = () => {
-        setToggledHeader(!toggledHeader)
-    }
 
     const elementsCount = (data, selected) => {
         return data.filter((item) => {
@@ -41,15 +37,20 @@ const MobileNav = ({}) => {
         })
     }, [PROJECT_DATA, user?.user_metadata?.projects, userData])
 
+    const handleClick = useCallback(() => {
+        console.log('toggleHeihgt', toggleWrapper)
+        setToggleWrapper(!toggleWrapper)
+    }, [toggleWrapper])
+
     return (
         <header
             className={
-                'desktop:hidden ' + 'fixed bottom-4 rounded-lg bg-white p-4'
+                'fixed bottom-4 z-10 rounded-lg bg-white p-4 shadow-lg desktop:hidden'
             }
         >
-            <nav>
+            <nav className="relative z-100">
                 <ul className={'flex justify-between gap-x-16'}>
-                    <li>
+                    <li className="flex flex-col items-center justify-center w-8">
                         <Link href="/">
                             <div
                                 className={
@@ -61,19 +62,23 @@ const MobileNav = ({}) => {
                             </div>
                         </Link>
                     </li>
-                    <li>
-                        <Link href="/">
-                            <div
-                                className={
-                                    'flex flex-col items-center justify-center '
-                                }
-                            >
-                                <Collection />
-                                <p className={'text-[0.675rem]'}>Projects</p>
-                            </div>
-                        </Link>
+                    <li className="flex flex-col items-center justify-center w-8">
+                        <button onClick={handleClick}>
+                            <Link href="#">
+                                <div
+                                    className={
+                                        'flex flex-col items-center justify-center '
+                                    }
+                                >
+                                    <Collection />
+                                    <p className={'text-[0.675rem]'}>
+                                        Projects
+                                    </p>
+                                </div>
+                            </Link>
+                        </button>
                     </li>
-                    <li>
+                    <li className="flex flex-col items-center justify-center w-8">
                         <Link href="/profile">
                             <div
                                 className={
@@ -87,6 +92,22 @@ const MobileNav = ({}) => {
                     </li>
                 </ul>
             </nav>
+            <div
+                className={
+                    'absolute left-[50%] w-[225px] -translate-x-[50%] rounded-lg bg-offWhite px-4 py-2 shadow-lg duration-200  ease-in ' +
+                    (toggleWrapper
+                        ? 'visible bottom-[5rem] h-auto'
+                        : 'invisible bottom-2 h-[20px]')
+                }
+            >
+                <ProjectList
+                    toggledHeader={toggledHeader}
+                    projectData={projects}
+                    elementsCount={elementsCount}
+                    getNotifications={getNotifications}
+                    query={query}
+                />
+            </div>
         </header>
     )
 }

@@ -4,8 +4,21 @@ import Link from 'next/link'
 import { NOTIFICATION_DATA } from '_utils/database/dataset'
 import { supabase } from 'utils/database/init'
 import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
+import {
+    checkIfValueExist,
+    getValueInArrayCounter,
+} from '_utils/helpers/arrayHelpers'
 
+import Card from '_components/blocks/Card'
 import Page from '_components/scopes/global/Page'
+import IssueBlock from '_components/common/IssueBlock'
+import Notification from '_components/common/notifications/Notification'
+
+import Priority from '_components/blocks/notificationElements/Priority'
+import Status from '_components/blocks/notificationElements/Status'
+import Title from '_components/blocks/notificationElements/Title'
+import Assigned from '_components/blocks/notificationElements/Assigned'
+
 import NotificationElement from '_components/blocks/NotificationElement'
 import NotificationDetails from '_components/scopes/_NotificationDetails'
 
@@ -43,6 +56,7 @@ const STATUS = [
 ]
 
 const NotificationCenter = ({ notifications, ...props }) => {
+    const [openTab, setOpenTab] = useState(1)
     const [currentIndex, setCurrentIndex] = useState(null)
     const [data, setData] = useState(null)
 
@@ -60,66 +74,136 @@ const NotificationCenter = ({ notifications, ...props }) => {
                         Notification center
                     </h1>
                 </header>
-                <main className="grid h-[inherit] grid-cols-[2fr,3fr] gap-3">
+                <main className="grid h-[inherit] grid-cols-[2fr,3fr] gap-x-8">
                     <section>
                         <h2 className="mb-2 text-xl font-semibold">
                             Open notifications
                         </h2>
-                        <ul className="flex flex-col gap-y-4">
-                            {notifications &&
-                                notifications.map((data, i) => {
-                                    return (
-                                        <li
-                                            className="rounded-xl bg-grey-50"
-                                            key={i}
-                                        >
-                                            <button
-                                                className="w-full p-4 text-left"
-                                                onClick={(e) =>
-                                                    setCurrentIndex(i)
-                                                }
-                                                aria-label={i}
-                                            >
-                                                <div className="relative flex">
-                                                    <div className="flex items-center justify-center">
-                                                        <img
-                                                            src={
-                                                                data.projectIcon
-                                                            }
-                                                            alt={`icon of ${data.projectName}`}
-                                                            className="h-[32px] w-[32px]"
-                                                        />
-                                                    </div>
-                                                    <div className="ml-4">
-                                                        <p className="text-xl font-bold">
-                                                            {capitalizeFirstLetter(
-                                                                data.name,
-                                                            )}
-                                                        </p>
-                                                        <p>
-                                                            {`${capitalizeFirstLetter(
-                                                                data.service,
-                                                            )} ${data.message}`}
-                                                        </p>
-                                                    </div>
-                                                    <p className="absolute top-0 right-0 text-xs text-grey-300">
-                                                        {data.status}
-                                                    </p>
-                                                </div>
-                                            </button>
-                                        </li>
-                                    )
-                                })}
+                        <ul className="flex gap-4 mb-4">
+                            <li>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setOpenTab(1)
+                                    }}
+                                >
+                                    <h3
+                                        className={
+                                            'text-xs ' +
+                                            (openTab === 1
+                                                ? ' border-b-2 font-bold'
+                                                : '')
+                                        }
+                                    >
+                                        Reported
+                                    </h3>
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setOpenTab(2)
+                                    }}
+                                >
+                                    <h3
+                                        className={
+                                            'text-xs ' +
+                                            (openTab === 2
+                                                ? ' border-b-2 font-bold'
+                                                : '')
+                                        }
+                                    >
+                                        In progress
+                                    </h3>
+                                </button>
+                            </li>
                         </ul>
+
+                        <div
+                            className={openTab === 1 ? 'block' : 'hidden'}
+                            id="link2"
+                        >
+                            {checkIfValueExist(
+                                notifications,
+                                'status',
+                                'Reported',
+                            ) ? (
+                                <ul className="flex flex-col gap-y-4">
+                                    {notifications.map((data, i) => {
+                                        console.log(data)
+                                        if (data.status === 'Reported')
+                                            return (
+                                                <Card
+                                                    tag="li"
+                                                    key={i}
+                                                    className={
+                                                        'shadow-md w-full rounded-xl  bg-offWhite p-4 duration-75 ease-in hover:bg-flashWhite'
+                                                    }
+                                                >
+                                                    <button
+                                                        onClick={(e) =>
+                                                            setCurrentIndex(i)
+                                                        }
+                                                        className={'w-full'}
+                                                    >
+                                                        <CardType data={data} />
+                                                    </button>
+                                                </Card>
+                                            )
+                                    })}
+                                </ul>
+                            ) : (
+                                <p className="text-xs">{'no notifications'}</p>
+                            )}
+                        </div>
+                        <div
+                            className={openTab === 2 ? 'block' : 'hidden'}
+                            id="link3"
+                        >
+                            {checkIfValueExist(
+                                notifications,
+                                'status',
+                                'In progress',
+                            ) ? (
+                                <ul className="flex flex-col gap-y-4">
+                                    {notifications.map((data, i) => {
+                                        console.log(data)
+
+                                        if (data.status === 'In progress')
+                                            return (
+                                                <Card
+                                                    tag="li"
+                                                    key={i}
+                                                    className={
+                                                        'shadow-md w-full rounded-xl  bg-offWhite p-4 duration-75 ease-in hover:bg-flashWhite'
+                                                    }
+                                                >
+                                                    <button
+                                                        onClick={(e) =>
+                                                            setCurrentIndex(i)
+                                                        }
+                                                        className={'w-full'}
+                                                    >
+                                                        <CardType data={data} />
+                                                    </button>
+                                                </Card>
+                                            )
+                                    })}
+                                </ul>
+                            ) : (
+                                <p className="text-xs">{'no notifications'}</p>
+                            )}
+                        </div>
                     </section>
                     <section className="overflow-hidden">
                         <article className="mt-9 flex h-[calc(100%-2.5em)]">
                             {currentIndex == null && !results ? (
-                                <section className="flex flex-col items-center justify-center w-full p-1 border rounded-lg shadow-md border-grey-100">
+                                <section className="flex flex-col items-center justify-center w-full p-4 mt-10 bg-white border rounded-lg shadow-md border-flashWhite">
                                     <p>Nothing selected yet...</p>
                                 </section>
                             ) : (
-                                <Notification data={results} />
+                                <SelectedNotification data={results} />
                             )}
                         </article>
                     </section>
@@ -129,9 +213,29 @@ const NotificationCenter = ({ notifications, ...props }) => {
     )
 }
 
-const Notification = ({ data }) => {
+const CardType = ({ data }) => {
     return (
-        <section className="w-full p-1 border rounded-lg shadow-md border-grey-100">
+        <div className="grid grid-cols-[32px_auto] gap-4">
+            <div className="flex items-center justify-center">
+                <img
+                    src={data?.projectIcon}
+                    alt={`icon of ${data?.service} on the ${data?.projectName} project`}
+                    className="h-[32px] w-[32px]"
+                />
+            </div>
+            <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">
+                <Title service={data.service} message={data.message} />
+                <Priority priority={data.priorityLevel} />
+                <Status status="1h ago" />
+                <Assigned assignedTo={data.assignedTo} />
+            </div>
+        </div>
+    )
+}
+
+const SelectedNotification = ({ data }) => {
+    return (
+        <section className="w-full p-4 mt-10 bg-white border rounded-lg shadow-md border-flashWhite">
             <header className="mb-2 flex w-[inherit] flex-col justify-between text-sm">
                 <article>
                     <h3 className="text-xl font-bold">Status</h3>
@@ -148,9 +252,9 @@ const Notification = ({ data }) => {
                         <p className="text-grey-500">Last updated</p>
                         <p>17:14 - 09-05-2022</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 mb-1">
+                    <div className="grid-cols-2 gap-4 mb-1">
                         <p className="text-grey-500">Priority level</p>
-                        <PriorityElement />
+                        <Priority />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <p className="text-grey-500">Status</p>
@@ -202,14 +306,6 @@ const Notification = ({ data }) => {
                 </div>
             </main>
         </section>
-    )
-}
-
-const PriorityElement = ({ priority = 'Urgent' }) => {
-    return (
-        <span className="flex h-[20px] w-fit flex-col items-center justify-center rounded-md bg-red px-2 text-xs text-white">
-            {priority}
-        </span>
     )
 }
 

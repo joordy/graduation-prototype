@@ -45,8 +45,8 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                     />
                 </form>
             </div>
-            <div>
-                <div className="grid grid-cols-5 pb-2 mt-12 mb-2 font-bold border-b-2 gap-x-6">
+            <div className="w-full overflow-x-auto">
+                <div className="mt-12 mb-2 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 pb-2 font-bold desktop:w-full">
                     <span>Service</span>
                     <span>Priority</span>
                     <span>Type</span>
@@ -54,7 +54,7 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                     <span>Latest check</span>
                 </div>
 
-                <ul className="flex flex-col gap-y-4">
+                <ul className="flex flex-col pb-4 gap-y-4">
                     {connections.map(
                         ({ icon, name, priority, type, status }, i) => {
                             return (
@@ -85,13 +85,13 @@ const ConnectionList = ({
     status,
 }) => {
     return (
-        <li className="grid grid-cols-5 pt-2 pb-4 border-b border-grey-400 gap-x-6">
+        <li className="border-grey-400 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b pt-2 pb-4 text-xs desktop:w-full desktop:text-base">
             <div className="flex items-center justify-between">
                 <div className="flex">
                     <img className="w-6 h-6 mr-2" src={icon} alt={name} />
                     <p>{name}</p>
                 </div>
-                <span
+                {/* <span
                     className={`bg-grey-100 flex h-5  w-5 items-center  justify-center rounded-md text-[10px]  duration-150 ease-in`}
                 >
                     {getValueInArrayCounter(
@@ -100,16 +100,16 @@ const ConnectionList = ({
                         name,
                         true,
                     )}
-                </span>
+                </span> */}
             </div>
-            <div>
+            <div className="flex items-center">
                 {priority == 1 ? 'High' : priority == 2 ? 'Medium' : 'Low'}
             </div>
-            <div>{type}</div>
-            <div className="rounded-full bg-[green] text-center text-white">
+            <div className="flex items-center">{type}</div>
+            <div className="flex h-8 flex-col items-center justify-center rounded-full bg-[green] text-center text-white">
                 {status ? 'Online' : 'Problem detected'}
             </div>
-            <div>
+            <div className="flex items-center">
                 <p>20-04-2022 — 14:45</p>
             </div>
         </li>

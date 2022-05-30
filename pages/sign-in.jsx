@@ -13,14 +13,17 @@ export default function SignInPage({}) {
 
     return (
         <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#ECEFF2] py-2  font-bold">
-            <section className="px-4 py-8 bg-white rounded-lg shadow-lg">
+            <section className="px-4 py-8 bg-white rounded-lg shadow-xl">
                 <header className="text-center">
                     <h1 className="text-2xl">Quickly</h1>
                 </header>
 
                 <main className="flex flex-col">
                     <Form formState={formState} />
-                    <button onClick={toggleClick} className="mt-4 text-sm">
+                    <button
+                        onClick={toggleClick}
+                        className="mt-4 text-sm underline"
+                    >
                         {formState ? 'Sign in' : 'Sign up'}
                     </button>
                 </main>

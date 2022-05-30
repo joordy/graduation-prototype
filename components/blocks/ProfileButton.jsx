@@ -1,6 +1,9 @@
 import Link from 'next/link'
 
+import { capitalizeFirstLetter } from '_utils/helpers/stringHelpers'
+
 const ProfileButton = ({ user, userData, toggledHeader }) => {
+    console.log(user, userData)
     return (
         <Link href="/profile">
             <a
@@ -8,7 +11,7 @@ const ProfileButton = ({ user, userData, toggledHeader }) => {
                 className={' ' + (toggledHeader ? 'w-[48px]' : 'w-[inherit]')}
             >
                 <div className="flex items-center ml-2">
-                    <span className="flex flex-col items-center justify-center w-8 h-8 p-1 m-1 text-xs text-white rounded-full bg-grey-900 stroke-grey-800 ">
+                    <span className="flex flex-col items-center justify-center w-8 h-8 p-1 m-1 text-xs text-white rounded-full stroke-grey-800 bg-raisinBlack ">
                         {user?.user_metadata.firstName
                             ? user?.user_metadata.firstName.charAt(0)
                             : userData?.firstName?.charAt(0)}

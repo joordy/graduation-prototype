@@ -118,7 +118,7 @@ const Form = ({ formState }) => {
                     <input
                         type="submit"
                         className={
-                            'rounded-md border border-b-grey-900 bg-grey-900 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:bg-grey-700 ' +
+                            'border-b-grey-900 hover:bg-grey-700 rounded-md border bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer ' +
                             (errorState ? '' : 'mt-4')
                         }
                     />
@@ -174,7 +174,7 @@ const Form = ({ formState }) => {
                     <input
                         type="submit"
                         className={
-                            'rounded-md border border-b-grey-900 bg-grey-900 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:bg-grey-700 ' +
+                            'border-b-grey-900 bg-grey-900 hover:bg-grey-700 rounded-md border py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer ' +
                             (errorState ? '' : 'mt-4')
                         }
                     />

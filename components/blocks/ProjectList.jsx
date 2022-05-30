@@ -22,8 +22,8 @@ const ProjectList = ({
                     <li
                         key={i}
                         className={
-                            `relative flex w-['inherit'] rounded-lg p-2 text-sm duration-100 ease-in hover:cursor-pointer hover:bg-[#fafafa] ` +
-                            (activePath && 'bg-white font-[700]')
+                            `relative flex w-['inherit'] rounded-lg p-2 text-sm duration-100 ease-in hover:cursor-pointer hover:bg-brightGray ` +
+                            (activePath && 'bg-brightGray')
                         }
                     >
                         <Link href={`/projects/${slug}`}>
@@ -48,7 +48,7 @@ const ProjectList = ({
                                             toggledHeader
                                                 ? 'delay-50 opacity-0'
                                                 : 'opacity-100 delay-200'
-                                        } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-deepChampagne text-[10px]  duration-150 ease-in`}
+                                        } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-brightGray text-[10px]  duration-150 ease-in`}
                                     >
                                         {counter.length}
                                     </span>
