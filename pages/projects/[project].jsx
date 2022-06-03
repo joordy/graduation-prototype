@@ -8,21 +8,6 @@ import Page from '_components/scopes/global/Page'
 import Board from '_components/scopes/project/Board'
 import StatusCheck from '_components/scopes/project/StatusCheck'
 
-const TEST_DATA = {
-    projectName: 'Mammut',
-    projectIcon: '/icons/mammut.ico',
-    name: 'mammut',
-    slug: '18_04_2022_0001',
-    intro: 'Vercel can`t reach the website',
-    status: 'Solved problem',
-    errorMessage: `
-        StatusCode 500 - Internal server Error`,
-    specificCodeFile: '—',
-    codeFunction: '',
-    codeLine: '',
-    priorityLevel: '',
-}
-
 const Project = ({ notifications = [], project = {}, user, ...props }) => {
     const setUserData = useSetUserData()
     const { projectName } = project
@@ -43,7 +28,8 @@ const Project = ({ notifications = [], project = {}, user, ...props }) => {
                         <h1 className="text-3xl font-bold ">{projectName}</h1>
                     </header>
 
-                    <main className="flex flex-col gap-4 pb-28 desktop:grid desktop:grid-cols-1 desktop:grid-rows-2 desktop:p-0">
+                    <main className="flex flex-col gap-4 pb-28 desktop:grid desktop:max-h-[calc(100%-5em)] desktop:grid-cols-1 desktop:grid-rows-2 desktop:gap-8 desktop:p-0">
+                        {/* desktop:grid-rows-[minmax(100px,_300px)_minmax(75px,_1fr)] */}
                         <Board notifications={notifications} />
 
                         <StatusCheck

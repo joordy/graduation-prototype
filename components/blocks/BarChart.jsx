@@ -8,7 +8,7 @@ const data = {
         {
             label: 'Mammut',
             data: [5, 2, 7, 8, 9, 4],
-            fill: true,
+            fill: false,
             backgroundColor: 'rgba(75,192,192,0.2)',
             borderColor: 'rgba(75,192,192,1)',
         },

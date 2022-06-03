@@ -21,7 +21,7 @@ const IssueBlock = ({
     )
 
     return (
-        <article>
+        <article className="overflow-hidden">
             {showTitle && (
                 <h2 className="mb-2 font-[500]">
                     {issueTitle}
@@ -30,8 +30,9 @@ const IssueBlock = ({
                     )}
                 </h2>
             )}
+
             {checkIfValueExist(notifications, 'status', issueStatus) ? (
-                <ul className="flex flex-col gap-y-4">
+                <ul className="flex flex-col h-full pb-10 overflow-auto gap-y-2">
                     {notifications.map((data, i) => {
                         if (data.status === issueStatus)
                             return (

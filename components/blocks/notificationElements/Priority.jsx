@@ -1,13 +1,14 @@
-const Priority = ({ priority = 'urgent' }) => {
+const Priority = ({ priority = 1, styles }) => {
     return (
         <span
             className={
-                'col-start-1 row-start-2 flex h-[20px] w-fit flex-col items-center justify-center rounded-md  px-2 text-xs text-white ' +
+                styles +
+                ' col-start-1 row-start-2 flex h-[20px] w-fit flex-col items-center justify-center rounded-md  px-2 text-xs font-medium  ' +
                 (priority == 1
-                    ? 'bg-[red]'
+                    ? 'bg-[#cf0303] text-[#f0f0f0]'
                     : priority == 2
-                    ? 'bg-[orange]'
-                    : 'bg-raisinBlack')
+                    ? 'bg-[#ff7f00] text-white'
+                    : 'bg-[#444444] text-white')
             }
         >
             {priority == 1 ? 'High' : priority == 2 ? 'Medium' : 'Low'}

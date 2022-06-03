@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Select from 'react-select'
 import Link from 'next/link'
 
 import Card from '_components/blocks/Card'
@@ -6,6 +7,35 @@ import BarChart from '_components/blocks/BarChart'
 import IssueBlock from '_components/common/IssueBlock'
 
 const Overview = ({ projectData, notifications }) => {
+    // console.log({ projectData, notifications })
+    const a = projectData
+    const b = notifications
+
+    const getAmountOfProblems = (keyword) => {
+        return projectData.filter((project) => {
+            return notifications.filter((message) => {
+                if (project.slug === keyword && project.slug === message.name)
+                    console.log(message)
+            })
+        })
+    }
+    const abc = getAmountOfProblems('aubade')
+
+    console.log(abc)
+
+    // let result = b.filter((o1) => a.some((o2) => o1.service === o2.slug))
+
+    // console.log(result)
+    // var result = a.filter(function (v) {
+    //     return (
+    //         b.filter(function (v2) {
+    //             return v.slug === v2.name && v.slug === keyword
+    //         }).length > 0
+    //     )
+    // })
+
+    // console.log(filterResult('mammut'))
+
     return (
         <>
             <ProjectSelection
@@ -48,6 +78,18 @@ const ProjectSelection = ({ projectData, notifications }) => {
                                         {project.projectName}
                                     </h3>
 
+                                    {/* <div className="flex items-center justify-between pt-8">
+                                        <p className="text-xs ">
+                                            Current notifications:
+                                        </p>
+                                        <span className="text-xs">
+                                            {elementsCount(
+                                                notifications,
+                                                project.slug.toLocaleLowerCase(),
+                                            )}
+                                        </span>
+                                    </div> */}
+
                                     <div className="flex items-center justify-between pt-8">
                                         <p className="text-xs ">
                                             Current notifications:
@@ -70,13 +112,23 @@ const ProjectSelection = ({ projectData, notifications }) => {
 }
 
 const Statistics = ({}) => {
+    const options = [
+        { value: 'week', label: 'Week' },
+        { value: 'month', label: 'Month' },
+        { value: 'thisYear', label: 'This year' },
+    ]
+
     return (
         <section className="flex flex-col gap-4">
             <div>
                 <h2 className="text-xl font-medium">Statistics</h2>
             </div>
             <div className="p-4 mt-10 rounded-lg shadow-lg bg-offWhite">
-                <h3 className="mb-4 font-bold">Recent detected issues</h3>
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold ">Detected issues overtime</h3>
+                    <Select options={options} value={'month'} />
+                </div>
+
                 <div className="flex flex-col items-center justify-start w-full">
                     <div className="flex items-center w-full gap-x-2">
                         <p className="w-4 text-xs -rotate-90">Issues</p>

@@ -11,7 +11,7 @@ import { PROJECT_DATA } from '_utils/database/dataset'
 import User from '_components/blocks/icons/User'
 import Home from '_components/blocks/icons/Home'
 import Collection from '_components/blocks/icons/Collection'
-import ProjectList from '_components/blocks/ProjectList'
+import ProjectList from '_components/blocks/navElements/ProjectList'
 
 const MobileNav = ({}) => {
     const [toggleWrapper, setToggleWrapper] = useState(false)
@@ -45,7 +45,7 @@ const MobileNav = ({}) => {
     return (
         <header
             className={
-                'fixed bottom-4 z-10 rounded-lg bg-white p-4 shadow-lg desktop:hidden'
+                'fixed bottom-4 z-10 rounded-lg bg-white py-4 px-8 shadow-lg desktop:hidden'
             }
         >
             <nav className="relative z-100">

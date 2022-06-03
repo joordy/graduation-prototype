@@ -7,8 +7,9 @@ import { useSetUserData, useUserData } from '_utils/atoms/userData'
 import Page from '_components/scopes/global/Page'
 import Overview from '_components/scopes/overview/Overview'
 
-const Home = ({ notifications, projects, user, ...props }) => {
+const Home = ({ notifications, projects, user, data, ...props }) => {
     const abc = useAuth()
+    console.log(abc)
     const userData = useUserData()
     const setUserData = useSetUserData()
 
@@ -19,15 +20,15 @@ const Home = ({ notifications, projects, user, ...props }) => {
     }, [projects, userData])
 
     useEffect(() => {
-        setUserData(user?.data)
-    }, [user?.data])
+        setUserData(data)
+    }, [data])
 
     return (
         <Page>
             <section className="h-[calc(100%-3em)]">
                 <header>
                     <h1 className="text-3xl font-bold ">
-                        Hi {user?.data?.firstName}!
+                        Hi {user?.user_metadata?.firstName}!
                     </h1>
                 </header>
 
@@ -65,12 +66,12 @@ export async function getServerSideProps({ req, res }) {
         }
     }
 
+    console.log('user,', user)
+
     return {
         props: {
-            user: {
-                session: user,
-                data: data,
-            },
+            user: user,
+            data: data,
             projects: projectData || [],
             notifications: notificationData || [],
         },

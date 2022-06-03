@@ -12,8 +12,8 @@ export default function SignInPage({}) {
     }
 
     return (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#ECEFF2] py-2  font-bold">
-            <section className="px-4 py-8 bg-white rounded-lg shadow-xl">
+        <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[#ECEFF2] py-2  font-bold">
+            <section className="px-4 py-8 bg-white rounded-lg shadow-lg">
                 <header className="text-center">
                     <h1 className="text-2xl">Quickly</h1>
                 </header>
@@ -27,6 +27,27 @@ export default function SignInPage({}) {
                         {formState ? 'Sign in' : 'Sign up'}
                     </button>
                 </main>
+            </section>
+            <section className="fixed bottom-0 flex flex-col items-center text-xs text-center font-body">
+                <div className="w-64 my-2 bg-white rounded-md shadow-lg">
+                    <h2 className="mb-2">Developer role:</h2>
+                    <p className="font-normal">
+                        <span>Email:</span> jmfronik@gmail.com
+                    </p>
+                    <p className="font-normal">
+                        <span>Password:</span> Test123
+                    </p>
+                </div>
+
+                <div className="w-64 my-2 bg-white rounded-md shadow-lg">
+                    <h2 className="mb-2">Technical Director role:</h2>
+                    <p className="font-normal">
+                        <span>Email:</span> jordy@buildinamsterdam.com
+                    </p>
+                    <p className="font-normal">
+                        <span>Password:</span> Test123
+                    </p>
+                </div>
             </section>
         </div>
     )

@@ -28,7 +28,9 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
     return (
         <section className="desktop:row-start-2 desktop:row-end-3">
             <div className="flex justify-between">
-                <h2 className="mb-2 text-xl font-semibold">Current status:</h2>
+                <h2 className="mb-2 text-xl font-semibold">
+                    Connection status:
+                </h2>
 
                 <form action="">
                     <Select
@@ -46,7 +48,7 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                 </form>
             </div>
             <div className="w-full overflow-x-auto">
-                <div className="mt-12 mb-2 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 pb-2 font-bold desktop:w-full">
+                <div className="mt-4 mb-2 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 pb-2 font-bold desktop:w-full">
                     <span>Service</span>
                     <span>Priority</span>
                     <span>Type</span>
@@ -54,7 +56,7 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                     <span>Latest check</span>
                 </div>
 
-                <ul className="flex flex-col pb-4 gap-y-4">
+                <ul className="flex flex-col pb-4 ">
                     {connections.map(
                         ({ icon, name, priority, type, status }, i) => {
                             return (
@@ -85,10 +87,10 @@ const ConnectionList = ({
     status,
 }) => {
     return (
-        <li className="border-grey-400 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b pt-2 pb-4 text-xs desktop:w-full desktop:text-base">
+        <li className="border-grey-400 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b py-2 text-xs desktop:w-full desktop:text-base">
             <div className="flex items-center justify-between">
                 <div className="flex">
-                    <img className="w-6 h-6 mr-2" src={icon} alt={name} />
+                    <img className="w-6 h-6 mr-2" src={icon} alt="" />
                     <p>{name}</p>
                 </div>
                 {/* <span
