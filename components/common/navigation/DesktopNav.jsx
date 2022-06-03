@@ -13,6 +13,7 @@ import ProfileButton from '_components/blocks/navElements/ProfileButton'
 import ProjectList from '_components/blocks/navElements/ProjectList'
 import IntroName from '_components/blocks/navElements/IntroName'
 import NotificationCenter from '_components/blocks/navElements/NotificationCenter'
+import Plus from '_components/blocks/icons/Plus'
 
 const DesktopNav = ({}) => {
     const { user } = useAuth()
@@ -43,6 +44,8 @@ const DesktopNav = ({}) => {
         })
     }, [PROJECT_DATA, user?.user_metadata?.projects, userData])
 
+    console.log(user?.user_metadata?.role.includes('Technical Director'))
+    console.log(user?.user_metadata?.role)
     return (
         <header
             className={
@@ -59,6 +62,7 @@ const DesktopNav = ({}) => {
             >
                 <div className="flex flex-col gap-y-4">
                     <IntroName name="Quickly" toggledHeader={toggledHeader} />
+
                     <ProjectList
                         toggledHeader={toggledHeader}
                         projectData={projects}
@@ -67,7 +71,26 @@ const DesktopNav = ({}) => {
                         query={query}
                     />
 
-                    <hr className="mx-2 border-grey-100" />
+                    {user?.user_metadata?.role !== 'Technical Director' && (
+                        <hr className="mx-2 border-grey-100" />
+                    )}
+
+                    {user?.user_metadata?.role == 'Technical Director' && (
+                        <>
+                            <button className="m-0 flex max-h-[100%] w-full items-center overflow-hidden rounded-lg pl-[0] duration-[250ms] ease-in hover:cursor-pointer hover:bg-brightGray">
+                                <div className="relative flex flex-row items-center w-full p-2 text-sm rounded-lg false">
+                                    <span className="flex flex-col items-center justify-center w-6 h-6 p-1 m-1 rounded-full stroke-grey-800 ">
+                                        <Plus />
+                                    </span>
+                                    <p className="ml-2 w-max min-w-[125px] overflow-hidden text-left text-sm">
+                                        Add project{' '}
+                                    </p>
+                                </div>
+                            </button>
+                            {/* <p>Add project</p> */}
+                            <hr className="mx-2 border-grey-100" />
+                        </>
+                    )}
 
                     <NotificationCenter
                         query={pathname === '/notifications'}

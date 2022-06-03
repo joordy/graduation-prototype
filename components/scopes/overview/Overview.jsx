@@ -191,7 +191,7 @@ const NotificationList = ({ notifications }) => {
                     </li>
                 </ul>
 
-                <div className={openTab === 1 ? 'block' : 'hidden'} id="link2">
+                <div className={openTab === 1 ? 'block' : 'hidden'}>
                     <IssueBlock
                         showTitle={false}
                         notificationType="projectImg"
@@ -201,7 +201,7 @@ const NotificationList = ({ notifications }) => {
                         notifications={notifications}
                     />
                 </div>
-                <div className={openTab === 2 ? 'block' : 'hidden'} id="link3">
+                <div className={openTab === 2 ? 'block' : 'hidden'}>
                     <IssueBlock
                         showTitle={false}
                         notificationType="projectImg"

@@ -109,7 +109,6 @@ const Tabs = ({
                         'flex flex-col items-start gap-4 ' +
                         (openTab === 1 ? 'block' : 'hidden')
                     }
-                    id="link1"
                 >
                     <ProfileSettingsTab user={user} projects={projects} />
                 </div>
@@ -118,7 +117,6 @@ const Tabs = ({
                         'flex flex-col items-start gap-4 ' +
                         (openTab === 2 ? 'block' : 'hidden')
                     }
-                    id="link1"
                 >
                     {directorRole && (
                         <ProjectSettingsTab user={user} userData={userData} />
@@ -234,7 +232,7 @@ const ProfileSettingsTab = ({ user, projects }) => {
                     </div>
 
                     <form className="flex w-[50%] items-end justify-between">
-                        <input type="file" name="" id="" />
+                        <input type="file" name="" />
                         <input
                             type="submit"
                             value="Upload profile image"

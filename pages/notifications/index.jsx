@@ -12,6 +12,7 @@ import Assigned from '_components/blocks/notificationElements/Assigned'
 import NotificationPreview from '_components/common/notifications/NotificationPreview'
 
 import Page from '_components/scopes/global/Page'
+import EmptyState from '_components/blocks/icons/Empty'
 
 const NotificationCenter = ({ notifications, ...props }) => {
     const [openTab, setOpenTab] = useState(1)
@@ -75,10 +76,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
                             </li>
                         </ul>
 
-                        <div
-                            className={openTab === 1 ? 'block' : 'hidden'}
-                            id="link2"
-                        >
+                        <div className={openTab === 1 ? 'block' : 'hidden'}>
                             {checkIfValueExist(
                                 notifications,
                                 'status',
@@ -111,10 +109,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
                                 <p className="text-xs">{'no notifications'}</p>
                             )}
                         </div>
-                        <div
-                            className={openTab === 2 ? 'block' : 'hidden'}
-                            id="link3"
-                        >
+                        <div className={openTab === 2 ? 'block' : 'hidden'}>
                             {checkIfValueExist(
                                 notifications,
                                 'status',
@@ -152,6 +147,9 @@ const NotificationCenter = ({ notifications, ...props }) => {
                         <article className="flex max-h-[calc(100%-2.5em)] duration-200 ease-in-out ">
                             {currentIndex == null && !results ? (
                                 <section className="flex flex-col items-center justify-center w-full p-4 mt-10 bg-white border rounded-lg shadow-md border-flashWhite">
+                                    <div className="">
+                                        <EmptyState styles={'w-48'} />
+                                    </div>
                                     <p>Nothing selected yet...</p>
                                 </section>
                             ) : (
