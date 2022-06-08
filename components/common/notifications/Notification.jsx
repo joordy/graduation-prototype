@@ -54,7 +54,7 @@ const NewNotification = ({ data, notificationType, linked, ...props }) => {
                             <img
                                 src={img}
                                 alt={`icon of ${data?.service} on the ${data?.projectName} project`}
-                                className="h-[32px] w-[32px]"
+                                className="h-[32px] w-[32px] opacity-40"
                             />
                         </div>
                         <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-1">
@@ -88,7 +88,7 @@ const InProgress = ({ data, ...props }) => {
                             <img
                                 src={data?.serviceIcon}
                                 alt={`icon of ${data?.serviceIcon} on the ${data?.projectName} project`}
-                                className="h-[32px] w-[32px]"
+                                className="h-[32px] w-[32px] opacity-40"
                             />
                         </div>
                         <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">
@@ -121,7 +121,7 @@ const FixedIssue = ({ data, ...props }) => {
                             <img
                                 src={data?.serviceIcon}
                                 alt={`icon of ${data?.serviceIcon} on the ${data?.projectName} project`}
-                                className="h-[32px] w-[32px]"
+                                className="h-[32px] w-[32px] opacity-40"
                             />
                         </div>
                         <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">

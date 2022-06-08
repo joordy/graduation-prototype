@@ -27,7 +27,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
                                 toggledHeader
                                     ? 'delay-50 opacity-0'
                                     : 'opacity-100 delay-200'
-                            } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-brightGray text-[10px] duration-150 ease-in `}
+                            } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-brightGray text-[10px] shadow-lg duration-150 ease-in`}
                         >
                             {elementsCount}
                         </span>

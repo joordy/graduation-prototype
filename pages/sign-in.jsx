@@ -19,18 +19,13 @@ export default function SignInPage({}) {
                 </header>
 
                 <main className="flex flex-col">
-                    <Form formState={formState} />
-                    <button
-                        onClick={toggleClick}
-                        className="mt-4 text-sm underline"
-                    >
-                        {formState ? 'Sign in' : 'Sign up'}
-                    </button>
+                    <Form />
                 </main>
             </section>
             <section className="fixed bottom-0 flex flex-col items-center text-xs text-center font-body">
                 <div className="w-64 my-2 bg-white rounded-md shadow-lg">
-                    <h2 className="mb-2">Developer role:</h2>
+                    <h2 className="mb-2">Technical Director role:</h2>
+
                     <p className="font-normal">
                         <span>Email:</span> jmfronik@gmail.com
                     </p>
@@ -40,7 +35,7 @@ export default function SignInPage({}) {
                 </div>
 
                 <div className="w-64 my-2 bg-white rounded-md shadow-lg">
-                    <h2 className="mb-2">Technical Director role:</h2>
+                    <h2 className="mb-2">Developer role:</h2>
                     <p className="font-normal">
                         <span>Email:</span> jordy@buildinamsterdam.com
                     </p>

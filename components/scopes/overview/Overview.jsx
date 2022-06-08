@@ -67,7 +67,7 @@ const ProjectSelection = ({ projectData, notifications }) => {
                             tag="li"
                             key={i}
                             className={
-                                'shadow-md w-full rounded-xl bg-offWhite  p-4 shadow-lg duration-75 ease-in hover:bg-flashWhite'
+                                'shadow-md w-full rounded-xl bg-offWhite  px-4 pt-4 pb-2 shadow-lg duration-75 ease-in hover:bg-flashWhite'
                             }
                         >
                             <Link
@@ -78,23 +78,11 @@ const ProjectSelection = ({ projectData, notifications }) => {
                                         {project.projectName}
                                     </h3>
 
-                                    {/* <div className="flex items-center justify-between pt-8">
-                                        <p className="text-xs ">
-                                            Current notifications:
-                                        </p>
-                                        <span className="text-xs">
-                                            {elementsCount(
-                                                notifications,
-                                                project.slug.toLocaleLowerCase(),
-                                            )}
-                                        </span>
-                                    </div> */}
-
                                     <div className="flex items-center justify-between pt-8">
                                         <p className="text-xs ">
                                             Current notifications:
                                         </p>
-                                        <span className="text-xs">
+                                        <span className="p-2 text-xs rounded-md bg-brightGray">
                                             {elementsCount(
                                                 notifications,
                                                 project.slug.toLocaleLowerCase(),
@@ -118,6 +106,12 @@ const Statistics = ({}) => {
         { value: 'thisYear', label: 'This year' },
     ]
 
+    const labelOptions = [
+        { value: 'low', label: 'Low priority' },
+        { value: 'medium', label: 'Medium priority' },
+        { value: 'high', label: 'High priority' },
+    ]
+
     return (
         <section className="flex flex-col gap-4">
             <div>
@@ -126,7 +120,13 @@ const Statistics = ({}) => {
             <div className="p-4 mt-10 rounded-lg shadow-lg bg-offWhite">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold ">Detected issues overtime</h3>
-                    <Select options={options} value={'month'} />
+                    <div className="flex gap-2">
+                        <Select
+                            options={labelOptions}
+                            value={labelOptions[2]}
+                        />
+                        <Select options={options} value={options[2]} />
+                    </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-start w-full">

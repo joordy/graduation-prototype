@@ -68,9 +68,10 @@ const Profile = ({ user, userData, projects, ...props }) => {
                                             : '')
                                     }
                                 >
-                                    {user?.user_metadata?.role === 'Developer'
+                                    {user?.user_metadata?.role !==
+                                    'Technical Director'
                                         ? 'Settings'
-                                        : 'Project settings'}
+                                        : 'Application settings'}
                                 </button>
                             </li>
                         </ul>
@@ -133,25 +134,8 @@ const Tabs = ({
 const ProfileSettingsTab = ({ user, projects }) => {
     const obj = {}
 
-    // for (const projectKey of projects) {
-    //     // console.log(projectKey)
-    //     // obj[key.projectName] = false
-    //     for (const key of user?.user_metadata?.projects) {
-    //         // console.log(key)
-    //         obj[projectKey.projectName] = projectKey.projectName === key
-    //     }
-    // }
-
-    // // console.log('OBJJJJ', obj)
-
     const [checkboxes, setCheckboxes] = useState(obj)
-    const onHandleSubmit = (e) => {
-        //     e.preventDefault()
-        //     // console.log(checkboxes)
-        //     // console.log(e)
-    }
-
-    // const [allChecked, setAllChecked] = useState(false)
+    const onHandleSubmit = (e) => {}
 
     return (
         <>
@@ -246,64 +230,193 @@ const ProfileSettingsTab = ({ user, projects }) => {
 }
 
 const ProjectSettingsTab = ({}) => {
+    const [submitted, setSubmitted] = useState(false)
+    const [msg, setMsg] = useState(null)
+    const [errorState, setErrorState] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(null)
+
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onHandleRegister = async (e) => {
+        e.preventDefault()
+
+        const { data: userWithUsername } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single()
+
+        if (!userWithUsername) {
+            setSubmitted(true)
+            setMsg(
+                `Please verify the users email address which you've just registered.`,
+            )
+        } else {
+            setErrorState(true)
+            setErrorMsg('This email address already exists')
+
+            throw new Error('User with email exists')
+        }
+
+        const { user, session, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        })
+
+        const { user: userObj, error: errorMsg } = await supabase.auth.update({
+            data: {
+                projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
+                firstName: firstName,
+                lastName: lastName,
+                role: 'Developer',
+            },
+        })
+
+        console.log({ user, userObj })
+        const {
+            data: dataObj,
+            session: sess,
+            error: err,
+        } = await supabase.from('users').insert([
+            {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                user_role: 'Developer',
+                uid: user.id,
+                projects: ['Mammut', 'Foam', 'Land of Ride', 'Aubade'],
+            },
+        ])
+    }
+
     return (
-        <div className=" grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] border-b-2 border-b-raisinBlack py-4">
-            <div className="flex flex-col">
-                <h2 className="mt-4 text-xl font-bold">Add project</h2>
-                <p className="pr-12 mt-2 text-sm opacity-75">
-                    Add new projects for the developers.
-                </p>
-            </div>
-            <form className="mt-1">
-                <fieldset className="w-full">
-                    <Input
-                        label="Project name:"
-                        type="text"
-                        name="projectName"
-                        placeholder="Mammut, Flying Papers, Secrid..."
-                        styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
-                        inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
-                        textStyles="tablet:w-[15rem] font-bold"
-                    />
-                    <Input
-                        label="Domain:"
-                        type="text"
-                        name="domain"
-                        placeholder="bia.com"
-                        styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
-                        inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
-                        textStyles="tablet:w-[15rem] font-bold"
-                    />
-                    <Input
-                        label="Project slug:"
-                        type="text"
-                        name="slug"
-                        placeholder="slug"
-                        styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
-                        inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
-                        textStyles="tablet:w-[15rem] font-bold"
-                    />
+        <section className="w-full py-4">
+            <article className="grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] border-b-2 border-b-raisinBlack pb-4">
+                <div className="flex flex-col">
+                    <h2 className="mt-4 text-xl font-bold">
+                        Register new user
+                    </h2>
+                    <p className="pr-12 mt-2 text-sm opacity-75">
+                        Register new users to the application with their BiA
+                        account.
+                    </p>
+                </div>
+                <form className="mt-1" onSubmit={onHandleRegister}>
+                    <fieldset className="w-full">
+                        <Input
+                            label="First name:"
+                            type="text"
+                            name="firstName"
+                            placeholder="John"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <Input
+                            label="Last name:"
+                            type="text"
+                            name="lastName"
+                            placeholder="Doe"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                        <Input
+                            label="User email:"
+                            type="email"
+                            name="userEmail"
+                            placeholder="john@buildinamsterdam.com"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Input
+                            label="Password"
+                            type="password"
+                            name="domain"
+                            placeholder="****"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
 
-                    <Input
-                        label="Project connections:"
-                        type="text"
-                        name="slug"
-                        placeholder="Connection type"
-                        styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
-                        inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
-                        textStyles="tablet:w-[15rem] font-bold"
-                    />
+                        <VerifyEmail submitted={submitted} msg={msg} />
 
-                    {/* <Input /> */}
+                        <Errors errorState={errorState} errorMsg={errorMsg} />
 
-                    <input
-                        type="submit"
-                        value="Add new project"
-                        className="mt-10 h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
-                    />
-                </fieldset>
-            </form>
-        </div>
+                        <input
+                            type="submit"
+                            value="Add new user"
+                            className="mt-10 h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                        />
+                    </fieldset>
+                </form>
+            </article>
+            <article className="grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] border-b-2 border-b-raisinBlack py-4">
+                <div className="flex flex-col">
+                    <h2 className="mt-4 text-xl font-bold">Add project</h2>
+                    <p className="pr-12 mt-2 text-sm opacity-75">
+                        Add new projects for the developers.
+                    </p>
+                </div>
+                <form className="mt-1">
+                    <fieldset className="w-full">
+                        <Input
+                            label="Project name:"
+                            type="text"
+                            name="projectName"
+                            placeholder="Mammut, Flying Papers, Secrid..."
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                        />
+                        <Input
+                            label="Domain:"
+                            type="text"
+                            name="domain"
+                            placeholder="bia.com"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                        />
+                        <Input
+                            label="Project slug:"
+                            type="text"
+                            name="slug"
+                            placeholder="slug"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                        />
+
+                        <Input
+                            label="Project connections:"
+                            type="text"
+                            name="slug"
+                            placeholder="Connection type"
+                            styles="flex flex-col my-2 tablet:mb-2 tablet:mx-0 tablet:items-center tablet:flex-row"
+                            inputStyles="px-1 py-2 bg-transparent border-b-2 border-b-raisinBlack w-full tablet:ml-4"
+                            textStyles="tablet:w-[15rem] font-bold"
+                        />
+
+                        {/* <Input /> */}
+
+                        <input
+                            type="submit"
+                            value="Add new project"
+                            className="mt-10 h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                        />
+                    </fieldset>
+                </form>
+            </article>
+        </section>
     )
 }
 
@@ -359,6 +472,24 @@ const SettingsTab = ({ user, userData }) => {
                 <a className="button">Go Home</a>
             </Link>
         </div>
+    )
+}
+
+const VerifyEmail = ({ submitted, msg }) => {
+    return (
+        submitted && (
+            <p className="mt-8 text-sm italic font-light text-left ">{msg}</p>
+        )
+    )
+}
+
+const Errors = ({ errorState, errorMsg }) => {
+    return (
+        errorState && (
+            <p className="mb-2 text-sm font-medium text-center text-red">
+                {errorMsg}
+            </p>
+        )
     )
 }
 

@@ -25,6 +25,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
         return notifications[currentIndex]
     }, [currentIndex])
 
+    console.log(notifications)
     return (
         <Page topNav={true}>
             <section className="mb-24 desktop:mb-0 desktop:h-[calc(100%-5em)]">
@@ -84,13 +85,19 @@ const NotificationCenter = ({ notifications, ...props }) => {
                             ) ? (
                                 <ul className="flex flex-col gap-y-2">
                                     {notifications.map((data, i) => {
+                                        if (data.id === results?.id)
+                                            console.log('hello')
+
                                         if (data.status === 'Reported')
                                             return (
                                                 <Card
                                                     tag="li"
                                                     key={i}
                                                     className={
-                                                        'shadow-md w-full rounded-xl  bg-offWhite px-4 py-3 duration-75 ease-in hover:bg-flashWhite'
+                                                        'shadow-md w-full rounded-lg  bg-offWhite px-4 py-3 duration-75 ease-in hover:bg-flashWhite ' +
+                                                        (data.id === results?.id
+                                                            ? ' border-2  border-raisinBlack border-opacity-50 bg-flashWhite'
+                                                            : '')
                                                     }
                                                 >
                                                     <button
@@ -146,11 +153,11 @@ const NotificationCenter = ({ notifications, ...props }) => {
                     <section className="overflow-hidden">
                         <article className="flex max-h-[calc(100%-2.5em)] duration-200 ease-in-out ">
                             {currentIndex == null && !results ? (
-                                <section className="flex flex-col items-center justify-center w-full p-4 mt-10 bg-white border rounded-lg shadow-md border-flashWhite">
+                                <section className="flex flex-col items-center justify-center w-full px-4 py-24 mt-10 bg-white border rounded-lg shadow-md border-flashWhite">
                                     <div className="">
                                         <EmptyState styles={'w-48'} />
                                     </div>
-                                    <p>Nothing selected yet...</p>
+                                    <p>No notification selected yet...</p>
                                 </section>
                             ) : (
                                 <NotificationPreview data={results} />
@@ -170,7 +177,7 @@ const CardType = ({ data }) => {
                 <img
                     src={data?.projectIcon}
                     alt={`icon of ${data?.service} on the ${data?.projectName} project`}
-                    className="h-[32px] w-[32px]"
+                    className="h-[32px] w-[32px] opacity-40"
                 />
             </div>
             <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">

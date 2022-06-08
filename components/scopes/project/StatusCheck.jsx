@@ -3,6 +3,8 @@ import Select from 'react-select'
 
 import { getValueInArrayCounter } from '_utils/helpers/arrayHelpers'
 
+import Arrow from '_components/blocks/icons/Arrow'
+
 const StatusCheck = ({ project = {}, notifications = [] }) => {
     const [selectedFilter, setSelectedFilter] = useState(null)
 
@@ -25,35 +27,113 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
         })
     }, [project?.connections, selectedFilter])
 
+    const [value, setValue] = useState({
+        key: 'status',
+        direction: 'ascending',
+    })
+
+    const toggleDirectionValue = (newVal) => {
+        let newDirection
+        if (value.key === newVal && value.direction === 'ascending') {
+            newDirection = 'descending'
+        } else {
+            newDirection = 'ascending'
+        }
+        setValue({ key: newVal, direction: newDirection })
+    }
+
+    const sortedItems = useMemo(() => {
+        return connections.sort((a, b) => {
+            if (a[value.key] < b[value.key]) {
+                return value.direction === 'ascending' ? -1 : 1
+            }
+
+            return value.direction === 'ascending' ? 1 : -1
+        })
+    }, [value, connections])
+
     return (
         <section className="desktop:row-start-2 desktop:row-end-3">
             <div className="flex justify-between">
                 <h2 className="mb-2 text-xl font-semibold">
                     Connection status:
                 </h2>
-
-                <form action="">
-                    <Select
-                        options={statusFilters}
-                        onChange={handleFilterChange}
-                        className="w-48 text-xs"
-                        value={
-                            selectedFilter
-                                ? statusFilters.find(
-                                      (obj) => obj.value === selectedFilter,
-                                  )
-                                : statusFilters[0]
-                        }
-                    />
-                </form>
             </div>
             <div className="w-full overflow-x-auto">
                 <div className="mt-4 mb-2 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 pb-2 font-bold desktop:w-full">
-                    <span>Service</span>
-                    <span>Priority</span>
-                    <span>Type</span>
-                    <span>Status</span>
-                    <span>Latest check</span>
+                    <span
+                        className="flex justify-between"
+                        onClick={() => {
+                            toggleDirectionValue('name')
+                        }}
+                    >
+                        Service
+                        <Arrow
+                            className={
+                                'duration-300 ease-in hover:cursor-pointer ' +
+                                (value.key === 'name'
+                                    ? value.direction === 'ascending'
+                                        ? '-rotate-90'
+                                        : 'rotate-90'
+                                    : 'hidden')
+                            }
+                        />
+                    </span>
+                    <span
+                        className="flex justify-between"
+                        onClick={() => {
+                            toggleDirectionValue('priority')
+                        }}
+                    >
+                        Priority
+                        <Arrow
+                            className={
+                                'duration-300 ease-in hover:cursor-pointer ' +
+                                (value.key === 'priority'
+                                    ? value.direction === 'ascending'
+                                        ? '-rotate-90'
+                                        : 'rotate-90'
+                                    : 'hidden')
+                            }
+                        />
+                    </span>
+                    <span
+                        className="flex justify-between"
+                        onClick={() => {
+                            toggleDirectionValue('type')
+                        }}
+                    >
+                        Type
+                        <Arrow
+                            className={
+                                'duration-300 ease-in hover:cursor-pointer ' +
+                                (value.key === 'type'
+                                    ? value.direction === 'ascending'
+                                        ? '-rotate-90'
+                                        : 'rotate-90'
+                                    : 'hidden')
+                            }
+                        />
+                    </span>
+                    <span
+                        className="flex justify-between"
+                        onClick={() => {
+                            toggleDirectionValue('status')
+                        }}
+                    >
+                        Status
+                        <Arrow
+                            className={
+                                'duration-300 ease-in hover:cursor-pointer ' +
+                                (value.key === 'status'
+                                    ? value.direction === 'ascending'
+                                        ? '-rotate-90'
+                                        : 'rotate-90'
+                                    : 'hidden')
+                            }
+                        />
+                    </span>
+                    <span>Few seconds ago</span>
                 </div>
 
                 <ul className="flex flex-col pb-4 ">
@@ -86,6 +166,15 @@ const ConnectionList = ({
     type,
     status,
 }) => {
+    const statusCheck = useMemo(() => {
+        const duplicate = notifications.some((elem) => {
+            console.log(elem)
+            return elem.service === name.toLocaleLowerCase()
+        })
+
+        return duplicate ? 'Problem detected' : 'Online'
+    }, [notifications, name])
+
     return (
         <li className="border-grey-400 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b py-2 text-xs desktop:w-full desktop:text-base">
             <div className="flex items-center justify-between">
@@ -93,26 +182,23 @@ const ConnectionList = ({
                     <img className="w-6 h-6 mr-2" src={icon} alt="" />
                     <p>{name}</p>
                 </div>
-                {/* <span
-                    className={`bg-grey-100 flex h-5  w-5 items-center  justify-center rounded-md text-[10px]  duration-150 ease-in`}
-                >
-                    {getValueInArrayCounter(
-                        notifications,
-                        'service',
-                        name,
-                        true,
-                    )}
-                </span> */}
             </div>
             <div className="flex items-center">
                 {priority == 1 ? 'High' : priority == 2 ? 'Medium' : 'Low'}
             </div>
             <div className="flex items-center">{type}</div>
-            <div className="flex h-8 flex-col items-center justify-center rounded-full bg-[green] text-center text-white">
-                {status ? 'Online' : 'Problem detected'}
+            <div
+                className={
+                    'flex h-8 flex-col items-center justify-center rounded-full text-center text-white ' +
+                    (statusCheck === 'Problem detected'
+                        ? 'bg-[red]'
+                        : 'bg-[green]')
+                }
+            >
+                {statusCheck}
             </div>
             <div className="flex items-center">
-                <p>20-04-2022 — 14:45</p>
+                <p>{statusCheck === 'Online' ? '—' : '1h ago'}</p>
             </div>
         </li>
     )

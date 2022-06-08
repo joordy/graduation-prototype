@@ -44,8 +44,6 @@ const DesktopNav = ({}) => {
         })
     }, [PROJECT_DATA, user?.user_metadata?.projects, userData])
 
-    console.log(user?.user_metadata?.role.includes('Technical Director'))
-    console.log(user?.user_metadata?.role)
     return (
         <header
             className={
@@ -87,7 +85,6 @@ const DesktopNav = ({}) => {
                                     </p>
                                 </div>
                             </button>
-                            {/* <p>Add project</p> */}
                             <hr className="mx-2 border-grey-100" />
                         </>
                     )}
@@ -99,7 +96,7 @@ const DesktopNav = ({}) => {
                     />
                 </div>
 
-                <div className="flex max-h-[100%] w-full flex-col gap-4 overflow-y-auto overflow-x-hidden pl-[0] duration-[250ms] ease-in">
+                <div className="flex max-h-[100%] w-full flex-col gap-4  overflow-x-hidden pl-[0] duration-[250ms] ease-in">
                     {userData && (
                         <ProfileButton
                             user={user}

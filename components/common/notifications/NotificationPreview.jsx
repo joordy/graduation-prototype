@@ -48,7 +48,7 @@ const NotificationPreview = ({ data }) => {
     ]
 
     return (
-        <section className="relative w-full mt-10 overflow-y-scroll bg-white border shadow-md rounded-xl border-flashWhite">
+        <section className="shadow-md relative mt-10 w-full overflow-y-scroll rounded-xl border border-flashWhite bg-white">
             <header className="flex items-center justify-between p-4 ">
                 <span className="flex items-center gap-4">
                     <h2 className="text-xl font-bold">
@@ -58,14 +58,14 @@ const NotificationPreview = ({ data }) => {
                 <Close styles="w-18" />
             </header>
 
-            <section className="flex flex-col gap-2 px-4 py-4 mx-4 ">
+            <section className="mx-4 flex flex-col gap-2 px-4 py-4 ">
                 {/* <div className="flex items-center">
                     <h3 className="w-32">Priority:</h3>
                 </div> */}
 
                 <div className="flex flex-col gap-2 ">
                     <div className="flex ">
-                        <h3 className="w-32 mb-2 font-bold text-raisinBlack">
+                        <h3 className="mb-2 w-32 font-bold text-raisinBlack">
                             Priority:
                         </h3>
                         <Priority
@@ -74,7 +74,7 @@ const NotificationPreview = ({ data }) => {
                         />
                     </div>
                     <div className="flex ">
-                        <h3 className="w-32 mb-2 font-bold text-raisinBlack">
+                        <h3 className="mb-2 w-32 font-bold text-raisinBlack">
                             Status:
                         </h3>
                         <Select
@@ -94,7 +94,7 @@ const NotificationPreview = ({ data }) => {
                     </div>
 
                     <div className="flex w-full">
-                        <h3 className="w-32 mb-2 font-bold text-raisinBlack">
+                        <h3 className="mb-2 w-32 font-bold text-raisinBlack">
                             Assignee:
                         </h3>
                         <Select
@@ -117,8 +117,8 @@ const NotificationPreview = ({ data }) => {
                 </div>
             </section>
 
-            <section className="px-4 py-8 mx-4 mb-4 bg-flashWhite">
-                <ul className="flex gap-4 mb-4 border-b-2 border-b-raisinBlack">
+            <section className="mx-4 mb-4 bg-flashWhite px-4 py-8">
+                <ul className="mb-4 flex gap-4 border-b-2 border-b-raisinBlack">
                     <li>
                         <button
                             onClick={(e) => {
@@ -168,7 +168,7 @@ const NotificationPreview = ({ data }) => {
 
                     <section>
                         <h3 className="mb-1 font-bold">Error message:</h3>
-                        <div className="p-2 border rounded-sm border-brightGray">
+                        <div className="rounded-sm border border-brightGray p-2">
                             {/* {capitalizeFirstLetter(service)} {message} */}
                             {data.errorMessage?.length >= 1 ? (
                                 data.errorMessage.map((line, i) => {
@@ -192,7 +192,10 @@ const NotificationPreview = ({ data }) => {
                     }
                 >
                     <section>
-                        <Changelog title={false} />
+                        <Changelog
+                            className="text-raisinBlack opacity-80"
+                            title={false}
+                        />
                     </section>
                 </article>
                 {/* <section className="mb-8">
@@ -393,7 +396,7 @@ const Element = ({ char, name }) => {
     return (
         <div className="flex">
             {char && (
-                <span className="flex flex-col items-center justify-center w-6 h-6 row-start-2 mr-2 text-sm text-right rounded-full z-1 text-grey-900 group bg-brightGray">
+                <span className="z-1 text-grey-900 group row-start-2 mr-2 flex h-6 w-6 flex-col items-center justify-center rounded-full bg-brightGray text-right text-sm">
                     {char}
                 </span>
             )}

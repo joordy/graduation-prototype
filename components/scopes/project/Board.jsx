@@ -21,7 +21,8 @@ const Board = ({ notifications }) => {
             <aside className="flex items-center justify-between gap-4 desktop:col-start-1 desktop:col-end-5 desktop:row-start-1">
                 <h2 className="text-xl font-bold">Notifications</h2>
 
-                <form action="">
+                <form className="flex items-center">
+                    <label className="mr-2 text-sm font-bold">Sort by:</label>
                     <Select
                         options={filterOptions}
                         value={

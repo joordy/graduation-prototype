@@ -12,7 +12,7 @@ const Notification = ({ type = '', hit, onClick = () => {}, projectSlug }) => {
                             <img
                                 src={projectIcon}
                                 alt={`icon of ${projectName}`}
-                                className="h-[32px] w-[32px]"
+                                className="h-[32px] w-[32px] opacity-40"
                             />
                         </div>
                         <div className="flex items-center justify-center ml-4">
@@ -28,7 +28,7 @@ const Notification = ({ type = '', hit, onClick = () => {}, projectSlug }) => {
                             <img
                                 src={projectIcon}
                                 alt={`icon of ${projectName}`}
-                                className="h-[32px] w-[32px]"
+                                className="h-[32px] w-[32px] opacity-40"
                             />
                         </div>
                         <div className="ml-4">
