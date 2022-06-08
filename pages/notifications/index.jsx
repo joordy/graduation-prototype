@@ -111,7 +111,9 @@ const NotificationCenter = ({ notifications, ...props }) => {
                                     })}
                                 </ul>
                             ) : (
-                                <p className="pt-2 ml-1 text-xs">{emptyText}</p>
+                                <p className="pt-2 ml-1 text-xs">
+                                    Currently nothing reported.
+                                </p>
                             )}
                         </div>
 
@@ -148,7 +150,9 @@ const NotificationCenter = ({ notifications, ...props }) => {
                                     })}
                                 </ul>
                             ) : (
-                                <p className="pt-2 ml-1 text-xs">{emptyText}</p>
+                                <p className="pt-2 ml-1 text-xs">
+                                    Currently no notifications in progress.
+                                </p>
                             )}
                         </div>
                     </section>
