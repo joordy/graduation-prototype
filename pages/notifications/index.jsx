@@ -8,6 +8,8 @@ import Priority from '_components/blocks/notificationElements/Priority'
 import Status from '_components/blocks/notificationElements/Status'
 import Title from '_components/blocks/notificationElements/Title'
 import Assigned from '_components/blocks/notificationElements/Assigned'
+import IssueBlock from '_components/common/IssueBlock'
+import Notification from '_components/common/notifications/Notification'
 
 import NotificationPreview from '_components/common/notifications/NotificationPreview'
 
@@ -25,7 +27,6 @@ const NotificationCenter = ({ notifications, ...props }) => {
         return notifications[currentIndex]
     }, [currentIndex])
 
-    console.log(notifications)
     return (
         <Page topNav={true}>
             <section className="mb-24 desktop:mb-0 desktop:h-[calc(100%-5em)]">
@@ -35,8 +36,8 @@ const NotificationCenter = ({ notifications, ...props }) => {
                     </h1>
                 </header>
                 <main className="h-[inherit] gap-x-8 desktop:grid desktop:grid-cols-[2fr,3fr]">
-                    <section>
-                        <ul className="flex gap-4 mb-4">
+                    <section className="p-4 bg-white rounded-lg shadow-sm shadow-slate-300">
+                        <ul className="flex gap-4 mb-2 ml-1">
                             <li>
                                 <button
                                     onClick={(e) => {
@@ -48,7 +49,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
                                         className={
                                             'text-xs ' +
                                             (openTab === 1
-                                                ? ' border-b-2 font-bold'
+                                                ? ' border-b-2 border-b-slate-800 font-bold text-slate-800'
                                                 : '')
                                         }
                                     >
@@ -67,7 +68,7 @@ const NotificationCenter = ({ notifications, ...props }) => {
                                         className={
                                             'text-xs ' +
                                             (openTab === 2
-                                                ? ' border-b-2 font-bold'
+                                                ? ' border-b-2 border-b-slate-800 font-bold text-slate-800'
                                                 : '')
                                         }
                                     >
@@ -77,116 +78,95 @@ const NotificationCenter = ({ notifications, ...props }) => {
                             </li>
                         </ul>
 
-                        <div className={openTab === 1 ? 'block' : 'hidden'}>
+                        <div
+                            className={
+                                'h-full ' + (openTab === 1 ? 'block' : 'hidden')
+                            }
+                        >
                             {checkIfValueExist(
                                 notifications,
                                 'status',
                                 'Reported',
                             ) ? (
-                                <ul className="flex flex-col gap-y-2">
+                                <ul
+                                    className={
+                                        'flex h-full flex-col gap-y-3 overflow-y-auto px-0 pt-2 '
+                                    }
+                                >
                                     {notifications.map((data, i) => {
-                                        if (data.id === results?.id)
-                                            console.log('hello')
-
                                         if (data.status === 'Reported')
                                             return (
-                                                <Card
-                                                    tag="li"
-                                                    key={i}
-                                                    className={
-                                                        'shadow-md w-full rounded-lg  bg-offWhite px-4 py-3 duration-75 ease-in hover:bg-flashWhite ' +
-                                                        (data.id === results?.id
-                                                            ? ' border-2  border-raisinBlack border-opacity-50 bg-flashWhite'
-                                                            : '')
+                                                <Notification
+                                                    onClick={(e) =>
+                                                        setCurrentIndex(i)
                                                     }
-                                                >
-                                                    <button
-                                                        onClick={(e) =>
-                                                            setCurrentIndex(i)
-                                                        }
-                                                        className={'w-full'}
-                                                    >
-                                                        <CardType data={data} />
-                                                    </button>
-                                                </Card>
+                                                    linked={false}
+                                                    notificationType={
+                                                        'Reported'
+                                                    }
+                                                    data={data}
+                                                    key={i}
+                                                />
                                             )
                                     })}
                                 </ul>
                             ) : (
-                                <p className="text-xs">{'no notifications'}</p>
+                                <p className="pt-2 ml-1 text-xs">{emptyText}</p>
                             )}
                         </div>
-                        <div className={openTab === 2 ? 'block' : 'hidden'}>
+
+                        <div
+                            className={
+                                'h-full ' + (openTab === 2 ? 'block' : 'hidden')
+                            }
+                        >
                             {checkIfValueExist(
                                 notifications,
                                 'status',
                                 'In progress',
                             ) ? (
-                                <ul className="flex flex-col gap-y-2">
+                                <ul
+                                    className={
+                                        'flex h-full flex-col gap-y-3 overflow-y-auto px-0 pt-2 '
+                                    }
+                                >
                                     {notifications.map((data, i) => {
                                         if (data.status === 'In progress')
                                             return (
-                                                <Card
-                                                    tag="li"
-                                                    key={i}
-                                                    className={
-                                                        'shadow-md w-full rounded-xl  bg-offWhite p-4 duration-75 ease-in hover:bg-flashWhite'
+                                                <Notification
+                                                    onClick={(e) =>
+                                                        setCurrentIndex(i)
                                                     }
-                                                >
-                                                    <button
-                                                        onClick={(e) =>
-                                                            setCurrentIndex(i)
-                                                        }
-                                                        className={'w-full'}
-                                                    >
-                                                        <CardType data={data} />
-                                                    </button>
-                                                </Card>
+                                                    linked={false}
+                                                    notificationType={
+                                                        'In progress'
+                                                    }
+                                                    data={data}
+                                                    key={i}
+                                                />
                                             )
                                     })}
                                 </ul>
                             ) : (
-                                <p className="text-xs">{'no notifications'}</p>
+                                <p className="pt-2 ml-1 text-xs">{emptyText}</p>
                             )}
                         </div>
                     </section>
-                    <section className="overflow-hidden">
-                        <article className="flex max-h-[calc(100%-2.5em)] duration-200 ease-in-out ">
-                            {currentIndex == null && !results ? (
-                                <section className="flex flex-col items-center justify-center w-full px-4 py-24 mt-10 bg-white border rounded-lg shadow-md border-flashWhite">
-                                    <div className="">
-                                        <EmptyState styles={'w-48'} />
-                                    </div>
-                                    <p>No notification selected yet...</p>
-                                </section>
-                            ) : (
-                                <NotificationPreview data={results} />
-                            )}
-                        </article>
+                    <section className="flex duration-200 ease-in-out ">
+                        {currentIndex == null && !results ? (
+                            <section className="flex flex-col items-center justify-center w-full px-4 py-24 rounded-lg shadow-md border-flashWhite">
+                                <div className="">
+                                    <EmptyState styles={'w-48'} />
+                                </div>
+                                <p>No notification selected yet...</p>
+                            </section>
+                        ) : (
+                            <NotificationPreview data={results} />
+                        )}
                     </section>
                 </main>
             </section>
         </Page>
-    )
-}
-
-const CardType = ({ data }) => {
-    return (
-        <div className="grid grid-cols-[32px_auto] gap-4">
-            <div className="flex items-center justify-center">
-                <img
-                    src={data?.projectIcon}
-                    alt={`icon of ${data?.service} on the ${data?.projectName} project`}
-                    className="h-[32px] w-[32px] opacity-40"
-                />
-            </div>
-            <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">
-                <Title service={data.service} message={data.message} />
-                <Priority priority={data.priorityLevel} />
-                <Status status="1h ago" />
-                <Assigned assignedTo={data.assignedTo} />
-            </div>
-        </div>
     )
 }
 

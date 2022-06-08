@@ -34,33 +34,10 @@ const Notification = ({
 }
 
 export async function getServerSideProps({ params }) {
-    // const id = uuid()
-
-    // const { data: injectedData, error: injectedError } = await supabase
-    //     .from('notifications')
-    //     .insert([
-    // {
-    //     projectIcon: '/icons/mammut.ico',
-    //     service: 'vercel',
-    //     name: 'mammut',
-    //     notification_id: id,
-    //     slug: id,
-    //     message: 'Vercel can`t reach the website',
-    //     status: 'inProgress',
-    //     errorMessage: [`StatusCode 500 - Internal server Error`],
-    //     codeFile: false,
-    //     codeFunction: false,
-    //     codeLine: false,
-    //     priorityLevel: 'High',
-    // },
-    //     ])
-
     const { data: note, error: noteError } = await supabase
         .from('notifications')
         .select()
         .match({ name: params?.slug[0], notification_id: params?.slug[2] })
-
-    console.log('note', note)
 
     const { data, error } = await supabase
         .from('notifications')

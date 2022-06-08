@@ -5,20 +5,14 @@ const IntroName = ({ name }) => {
         <Link href="/">
             <a className={`mb-16 flex w-fit items-center justify-center`}>
                 <div className="flex flex-col items-center justify-center w-10 h-10 rounded-lg">
-                    <span className="flex h-[32px] w-[32px] flex-col items-center justify-center rounded-full ">
+                    <span className="flex flex-col items-center justify-center w-16 h-16 rounded-full ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="w-8 h-8"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
+                            className="w-8 h-8 mb-1 ml-4 rotate-45"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
                         </svg>
                     </span>
                 </div>

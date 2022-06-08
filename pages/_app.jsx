@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify'
 
 import { AuthProvider } from '_utils/context/auth'
 import { supabase } from 'utils/database/init'
@@ -32,6 +33,14 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
             <div className="flex justify-center w-full">
                 {router.pathname !== '/sign-in' && (
                     <>
+                        <ToastContainer
+                            position="top-right"
+                            hideProgressBar={true}
+                            draggable={true}
+                            progress={undefined}
+                            closeOnClick
+                        />
+
                         <Sidebar />
 
                         {/* 

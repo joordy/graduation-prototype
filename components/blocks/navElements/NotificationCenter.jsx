@@ -8,7 +8,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
             <a
                 className={`m-0 flex max-h-[100%] items-center overflow-hidden rounded-lg ${
                     toggledHeader ? 'w-[48px] pl-0' : 'w-full pl-[0]'
-                } duration-[250ms] ease-in hover:cursor-pointer hover:bg-brightGray`}
+                } duration-[250ms] ease-in hover:cursor-pointer hover:bg-slate-200`}
             >
                 <div
                     className={`relative flex w-full flex-row  items-center rounded-lg  p-2 text-sm  ${
@@ -27,7 +27,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
                                 toggledHeader
                                     ? 'delay-50 opacity-0'
                                     : 'opacity-100 delay-200'
-                            } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-brightGray text-[10px] shadow-lg duration-150 ease-in`}
+                            } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-[#E5E5EF] text-[10px] shadow-sm shadow-slate-300 duration-150 ease-in`}
                         >
                             {elementsCount}
                         </span>

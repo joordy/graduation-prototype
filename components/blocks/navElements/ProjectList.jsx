@@ -22,8 +22,8 @@ const ProjectList = ({
                     <li
                         key={i}
                         className={
-                            `relative flex w-['inherit'] rounded-lg p-2 text-sm duration-100 ease-in hover:cursor-pointer hover:bg-brightGray ` +
-                            (activePath && 'bg-brightGray')
+                            `relative flex w-['inherit'] rounded-lg p-2 text-sm duration-100 ease-in hover:cursor-pointer hover:bg-slate-200 ` +
+                            (activePath && 'bg-slate-200')
                         }
                     >
                         <Link href={`/projects/${slug}`}>
@@ -44,11 +44,12 @@ const ProjectList = ({
 
                                 {counter.length >= 1 && (
                                     <span
-                                        className={`${
-                                            toggledHeader
+                                        className={
+                                            'absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-[#E5E5EF] text-[10px] shadow-sm shadow-slate-300 duration-150 ease-in ' +
+                                            (toggledHeader
                                                 ? 'delay-50 opacity-0'
-                                                : 'opacity-100 delay-200'
-                                        } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-brightGray text-[10px] shadow-lg duration-150 ease-in`}
+                                                : 'opacity-100 delay-200')
+                                        }
                                     >
                                         {counter.length}
                                     </span>

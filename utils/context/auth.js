@@ -32,34 +32,6 @@ export const AuthProvider = ({ supabase, ...props }) => {
             },
         )
 
-        // const { data: authListener } = supabase.auth.onAuthStateChange(
-        //     (event, currentSession) => {
-        //         setSession(currentSession)
-        //         setUser(currentSession?.user ?? null)
-
-        //         switch (event) {
-        //             case EVENTS.PASSWORD_RECOVERY:
-        //                 setView(VIEWS.UPDATE_PASSWORD)
-        //                 break
-        //             case EVENTS.SIGNED_OUT:
-        //             case EVENTS.USER_UPDATED:
-        //                 setView(VIEWS.SIGN_IN)
-        //                 break
-        //             default:
-        //         }
-
-        //         // This is needed to set the cookie for SSR
-        //         fetch('/api/auth', {
-        //             method: 'POST',
-        //             headers: new Headers({
-        //                 'Content-Type': 'application/json',
-        //             }),
-        //             credentials: 'same-origin',
-        //             body: JSON.stringify({ event, session: currentSession }),
-        //         }).then((res) => res.json())
-        //     },
-        // )
-
         return () => {
             authListener?.unsubscribe()
         }

@@ -13,6 +13,8 @@ const IssueBlock = ({
     issueStatus,
     emptyText,
     notifications,
+    background,
+    innerWrapper,
 }) => {
     const counterLength = getValueInArrayCounter(
         notifications,
@@ -21,18 +23,14 @@ const IssueBlock = ({
     )
 
     return (
-        <article className="overflow-hidden">
-            {showTitle && (
-                <h2 className="mb-2 font-[500]">
-                    {issueTitle}
-                    {counterLength >= 1 && (
-                        <span className="text-sm">{` (${counterLength}):`}</span>
-                    )}
-                </h2>
-            )}
-
+        <>
             {checkIfValueExist(notifications, 'status', issueStatus) ? (
-                <ul className="flex flex-col h-full pb-10 overflow-auto gap-y-2">
+                <ul
+                    className={
+                        'flex h-full flex-col gap-y-3 overflow-y-auto px-0 pt-2 ' +
+                        innerWrapper
+                    }
+                >
                     {notifications.map((data, i) => {
                         if (data.status === issueStatus)
                             return (
@@ -41,14 +39,15 @@ const IssueBlock = ({
                                     notificationType={notificationType}
                                     data={data}
                                     key={i}
+                                    background={background}
                                 />
                             )
                     })}
                 </ul>
             ) : (
-                <p className="text-xs">{emptyText}</p>
+                <p className="pt-2 ml-1 text-xs">{emptyText}</p>
             )}
-        </article>
+        </>
     )
 }
 

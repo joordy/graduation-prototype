@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react'
 
-import { useAuth } from '_utils/context/auth'
 import { supabase } from '_utils/database/init'
 import { useSetUserData, useUserData } from '_utils/atoms/userData'
 
@@ -8,8 +7,6 @@ import Page from '_components/scopes/global/Page'
 import Overview from '_components/scopes/overview/Overview'
 
 const Home = ({ notifications, projects, user, data, ...props }) => {
-    const abc = useAuth()
-    console.log(abc)
     const userData = useUserData()
     const setUserData = useSetUserData()
 
@@ -27,7 +24,7 @@ const Home = ({ notifications, projects, user, data, ...props }) => {
         <Page>
             <section className="h-[calc(100%-3em)]">
                 <header>
-                    <h1 className="text-3xl font-bold ">
+                    <h1 className="ml-1 text-3xl font-bold ">
                         Hi {user?.user_metadata?.firstName}!
                     </h1>
                 </header>
@@ -65,8 +62,6 @@ export async function getServerSideProps({ req, res }) {
             redirect: { destination: '/sign-in', permanent: false },
         }
     }
-
-    console.log('user,', user)
 
     return {
         props: {

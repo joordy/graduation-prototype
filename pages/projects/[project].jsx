@@ -24,12 +24,11 @@ const Project = ({ notifications = [], project = {}, user, ...props }) => {
 
             <Page topNav={true}>
                 <section className="h-[calc(100%-3em)]">
-                    <header>
+                    <header className="mb-4">
                         <h1 className="text-3xl font-bold ">{projectName}</h1>
                     </header>
 
-                    <main className="flex flex-col gap-4 pb-28 desktop:grid desktop:max-h-[calc(100%-5em)] desktop:grid-cols-1 desktop:grid-rows-2 desktop:gap-8 desktop:p-0">
-                        {/* desktop:grid-rows-[minmax(100px,_300px)_minmax(75px,_1fr)] */}
+                    <main className="flex flex-col gap-4 pb-28 desktop:grid desktop:max-h-[calc(100%-5em)] desktop:grid-cols-1 desktop:grid-rows-[minmax(100px,_350px)_minmax(75px,_1fr)] desktop:gap-12 desktop:p-0">
                         <Board notifications={notifications} />
 
                         <StatusCheck

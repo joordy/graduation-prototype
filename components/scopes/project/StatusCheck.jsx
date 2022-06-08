@@ -4,6 +4,8 @@ import Select from 'react-select'
 import { getValueInArrayCounter } from '_utils/helpers/arrayHelpers'
 
 import Arrow from '_components/blocks/icons/Arrow'
+import List from '_components/blocks/icons/List'
+import Grid from '_components/blocks/icons/Grid'
 
 const StatusCheck = ({ project = {}, notifications = [] }) => {
     const [selectedFilter, setSelectedFilter] = useState(null)
@@ -58,9 +60,18 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                 <h2 className="mb-2 text-xl font-semibold">
                     Connection status:
                 </h2>
+
+                <div className="flex gap-2">
+                    <span>
+                        <List />
+                    </span>
+                    <span className="opacity-20 hover:cursor-not-allowed ">
+                        <Grid />
+                    </span>
+                </div>
             </div>
-            <div className="w-full overflow-x-auto">
-                <div className="mt-4 mb-2 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 pb-2 font-bold desktop:w-full">
+            <div className="w-full px-8 pt-8 pb-2 overflow-x-auto bg-white rounded-md shadow-sm shadow-slate-300">
+                <div className="grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 border-b-slate-500  font-bold desktop:w-full desktop:px-6">
                     <span
                         className="flex justify-between"
                         onClick={() => {
@@ -136,7 +147,7 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                     <span>Few seconds ago</span>
                 </div>
 
-                <ul className="flex flex-col pb-4 ">
+                <ul className="flex flex-col pb-4 gap-y-0">
                     {connections.map(
                         ({ icon, name, priority, type, status }, i) => {
                             return (
@@ -168,15 +179,17 @@ const ConnectionList = ({
 }) => {
     const statusCheck = useMemo(() => {
         const duplicate = notifications.some((elem) => {
-            console.log(elem)
-            return elem.service === name.toLocaleLowerCase()
+            return (
+                elem.status !== 'Solved' &&
+                elem.service === name.toLocaleLowerCase()
+            )
         })
 
         return duplicate ? 'Problem detected' : 'Online'
     }, [notifications, name])
 
     return (
-        <li className="border-grey-400 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b py-2 text-xs desktop:w-full desktop:text-base">
+        <li className="border-grey-400 grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6  border-b py-2 px-2 text-xs shadow-sm  odd:bg-slate-200 even:bg-white  desktop:w-full desktop:px-6 desktop:text-base">
             <div className="flex items-center justify-between">
                 <div className="flex">
                     <img className="w-6 h-6 mr-2" src={icon} alt="" />
@@ -189,10 +202,10 @@ const ConnectionList = ({
             <div className="flex items-center">{type}</div>
             <div
                 className={
-                    'flex h-8 flex-col items-center justify-center rounded-full text-center text-white ' +
+                    'flex h-6 flex-col items-center justify-center rounded-full text-center text-sm text-white ' +
                     (statusCheck === 'Problem detected'
-                        ? 'bg-[red]'
-                        : 'bg-[green]')
+                        ? 'bg-red-800'
+                        : 'bg-green-800')
                 }
             >
                 {statusCheck}

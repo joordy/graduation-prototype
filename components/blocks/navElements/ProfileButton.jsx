@@ -16,9 +16,7 @@ const ProfileButton = ({ user, userData, toggledHeader }) => {
     }
 
     const onHandleClick = (e) => {
-        console.log('hello')
         setToggle(!toggle)
-        console.log(toggle)
     }
 
     const onHandleSignOut = async (e) => {
@@ -37,14 +35,14 @@ const ProfileButton = ({ user, userData, toggledHeader }) => {
         <div
             className={`m-0 flex max-h-[100%] items-center   rounded-lg ${
                 toggledHeader ? 'w-[48px] pl-0' : 'w-full pl-[0]'
-            } duration-[250ms] ease-in hover:cursor-pointer hover:bg-brightGray`}
+            } duration-[250ms] ease-in hover:cursor-pointer hover:bg-slate-200`}
         >
             <Link href="/profile">
                 <a>
                     <div
                         className={`relative flex w-full flex-row  items-center rounded-lg  p-2 text-sm`}
                     >
-                        <span className="flex flex-col items-center justify-center w-6 h-6 p-4 text-white rounded-full stroke-grey-800 bg-raisinBlack">
+                        <span className="flex flex-col items-center justify-center w-6 h-6 p-4 text-white rounded-full stroke-grey-800 bg-slate-800">
                             {user?.user_metadata.firstName
                                 ? user?.user_metadata.firstName.charAt(0)
                                 : userData?.firstName?.charAt(0)}

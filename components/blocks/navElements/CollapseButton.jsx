@@ -2,7 +2,7 @@ const CollapseButton = ({ onClick, toggledHeader }) => {
     return (
         <button
             onClick={onClick}
-            className="absolute top-8 right-[-1.5rem]  z-10 h-[2rem] w-[1.5rem] bg-offWhite shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] tablet:rounded-r-lg"
+            className="absolute top-8 right-[-1.5rem]  z-10 h-[2rem] w-[1.5rem] border bg-white shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-200 ease-in hover:bg-slate-200 tablet:rounded-r-lg"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

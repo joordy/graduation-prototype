@@ -38,7 +38,6 @@ const MobileNav = ({}) => {
     }, [PROJECT_DATA, user?.user_metadata?.projects, userData])
 
     const handleClick = useCallback(() => {
-        console.log('toggleHeihgt', toggleWrapper)
         setToggleWrapper(!toggleWrapper)
     }, [toggleWrapper])
 
@@ -94,7 +93,7 @@ const MobileNav = ({}) => {
             </nav>
             <div
                 className={
-                    'absolute left-[50%] w-[225px] -translate-x-[50%] rounded-lg bg-offWhite px-4 py-2 shadow-lg duration-200  ease-in ' +
+                    'bg-offWhite absolute left-[50%] w-[225px] -translate-x-[50%] rounded-lg px-4 py-2 shadow-lg duration-200  ease-in ' +
                     (toggleWrapper
                         ? 'visible bottom-[5rem] h-auto'
                         : 'invisible bottom-2 h-[20px]')

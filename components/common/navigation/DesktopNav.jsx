@@ -47,7 +47,7 @@ const DesktopNav = ({}) => {
     return (
         <header
             className={
-                'z-100 relative top-0 bottom-0 left-0  hidden h-screen flex-col items-center justify-between overflow-visible bg-offWhite px-4 pt-8 pb-16 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in desktop:flex ' +
+                'z-100 relative top-0 bottom-0 left-0  hidden h-screen flex-col items-center justify-between overflow-visible border-r bg-white px-4 pt-8 pb-16 shadow-[0_0_30px_-15px_rgba(0,0,0,0.3)] duration-[250ms] ease-in desktop:flex ' +
                 (toggledHeader ? ' tablet:w-[80px]' : ' tablet:w-[300px]')
             }
         >
@@ -75,7 +75,7 @@ const DesktopNav = ({}) => {
 
                     {user?.user_metadata?.role == 'Technical Director' && (
                         <>
-                            <button className="m-0 flex max-h-[100%] w-full items-center overflow-hidden rounded-lg pl-[0] duration-[250ms] ease-in hover:cursor-pointer hover:bg-brightGray">
+                            <button className="m-0 flex max-h-[100%] w-full items-center overflow-hidden rounded-lg pl-[0] duration-[250ms] ease-in hover:cursor-pointer hover:bg-slate-200">
                                 <div className="relative flex flex-row items-center w-full p-2 text-sm rounded-lg false">
                                     <span className="flex flex-col items-center justify-center w-6 h-6 p-1 m-1 rounded-full stroke-grey-800 ">
                                         <Plus />

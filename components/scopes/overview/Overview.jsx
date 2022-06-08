@@ -7,35 +7,6 @@ import BarChart from '_components/blocks/BarChart'
 import IssueBlock from '_components/common/IssueBlock'
 
 const Overview = ({ projectData, notifications }) => {
-    // console.log({ projectData, notifications })
-    const a = projectData
-    const b = notifications
-
-    const getAmountOfProblems = (keyword) => {
-        return projectData.filter((project) => {
-            return notifications.filter((message) => {
-                if (project.slug === keyword && project.slug === message.name)
-                    console.log(message)
-            })
-        })
-    }
-    const abc = getAmountOfProblems('aubade')
-
-    console.log(abc)
-
-    // let result = b.filter((o1) => a.some((o2) => o1.service === o2.slug))
-
-    // console.log(result)
-    // var result = a.filter(function (v) {
-    //     return (
-    //         b.filter(function (v2) {
-    //             return v.slug === v2.name && v.slug === keyword
-    //         }).length > 0
-    //     )
-    // })
-
-    // console.log(filterResult('mammut'))
-
     return (
         <>
             <ProjectSelection
@@ -59,22 +30,28 @@ const ProjectSelection = ({ projectData, notifications }) => {
 
     return (
         <section className="py-4 desktop:col-start-1 desktop:col-end-3">
-            <h2 className="mb-4 text-xl font-medium">Your projects</h2>
-            <ul className="flex justify-between w-full gap-4 pb-4 overflow-x-auto desktop:p-0">
+            <h2 className="mb-4 ml-1 text-xl font-medium">Your projects</h2>
+            <ul className="flex justify-between w-full gap-2 pb-4 overflow-x-auto desktop:p-0">
                 {projectData.map((project, i) => {
                     return (
                         <Card
                             tag="li"
                             key={i}
                             className={
-                                'shadow-md w-full rounded-xl bg-offWhite  px-4 pt-4 pb-2 shadow-lg duration-75 ease-in hover:bg-flashWhite'
+                                'm-1 w-full rounded-xl bg-white px-4 pt-4 pb-2 shadow-sm  duration-75 ease-in hover:bg-slate-200'
                             }
                         >
                             <Link
                                 href={`/projects/${project?.slug?.toLocaleLowerCase()}`}
                             >
                                 <a className="flex flex-col justify-between ">
-                                    <h3 className="font-bold text-md ">
+                                    <h3 className="flex items-center font-bold text-md ">
+                                        <span className="w-5 mr-2">
+                                            <img
+                                                className="w-full"
+                                                src={project.icon}
+                                            />
+                                        </span>
                                         {project.projectName}
                                     </h3>
 
@@ -113,19 +90,26 @@ const Statistics = ({}) => {
     ]
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4 mr-1">
             <div>
                 <h2 className="text-xl font-medium">Statistics</h2>
             </div>
-            <div className="p-4 mt-10 rounded-lg shadow-lg bg-offWhite">
+            <div className="p-4 bg-white rounded-lg shadow-sm shadow-slate-300">
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-bold ">Detected issues overtime</h3>
+                    <h3 className="text-sm font-bold">
+                        Detected issues overtime
+                    </h3>
                     <div className="flex gap-2">
                         <Select
                             options={labelOptions}
                             value={labelOptions[2]}
+                            className="text-xs"
                         />
-                        <Select options={options} value={options[2]} />
+                        <Select
+                            options={options}
+                            value={options[2]}
+                            className="text-xs"
+                        />
                     </div>
                 </div>
 
@@ -147,10 +131,10 @@ const NotificationList = ({ notifications }) => {
     return (
         <section className="flex flex-col gap-4">
             <div>
-                <h2 className="text-xl font-medium">Notifications</h2>
+                <h2 className="ml-1 text-xl font-medium ">Notifications</h2>
             </div>
-            <div>
-                <ul className="flex gap-4 mb-4">
+            <div className="h-auto px-2 py-4 ml-1 duration-200 ease-in bg-white shadow-sm rounded-xl shadow-slate-300">
+                <ul className="flex gap-4 mb-1 ml-1">
                     <li>
                         <button
                             onClick={(e) => {
@@ -162,7 +146,7 @@ const NotificationList = ({ notifications }) => {
                                 className={
                                     'text-xs ' +
                                     (openTab === 1
-                                        ? ' border-b-2 font-bold'
+                                        ? ' border-b-2 border-b-slate-800 font-bold text-slate-800'
                                         : '')
                                 }
                             >
@@ -181,7 +165,7 @@ const NotificationList = ({ notifications }) => {
                                 className={
                                     'text-xs ' +
                                     (openTab === 2
-                                        ? ' border-b-2 font-bold'
+                                        ? ' border-b-2 border-b-slate-800 font-bold text-slate-800'
                                         : '')
                                 }
                             >
@@ -199,6 +183,7 @@ const NotificationList = ({ notifications }) => {
                         issueStatus="Reported"
                         emptyText="No notifications reported."
                         notifications={notifications}
+                        background="bg-white border-2 shadow-transparent"
                     />
                 </div>
                 <div className={openTab === 2 ? 'block' : 'hidden'}>
@@ -209,6 +194,7 @@ const NotificationList = ({ notifications }) => {
                         issueStatus="In progress"
                         emptyText="No notifications in progress yet."
                         notifications={notifications}
+                        background="bg-white border-2 shadow-transparent"
                     />
                 </div>
             </div>

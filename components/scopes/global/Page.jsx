@@ -12,7 +12,7 @@ export default function Page({ topNav = false, breadCrumbs = true, children }) {
         <>
             <main
                 className={
-                    'h-screen w-full p-4 tablet:top-0 desktop:bottom-0 desktop:right-0 desktop:p-8 desktop:pl-12 ' +
+                    'h-screen w-full p-4 tablet:top-0 desktop:bottom-0 desktop:right-0 desktop:px-24 desktop:py-16  desktopXXL:px-36  ' +
                     (toggledHeader
                         ? 'close overflow-hidden desktop:ml-[0]'
                         : 'open overflow-auto desktop:ml-[0]') +

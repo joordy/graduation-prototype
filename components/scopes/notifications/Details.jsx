@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
+import { toast } from 'react-toastify'
 import Select from 'react-select'
-import moment from 'moment'
 
 import { capitalizeFirstLetter } from '_utils/helpers/stringHelpers'
 import { supabase } from 'utils/database/init'
@@ -11,6 +10,7 @@ import { supabase } from 'utils/database/init'
 import Changelog from '_components/blocks/Changelog'
 import Priority from '_components/blocks/notificationElements/Priority'
 import EmptyState from '_components/blocks/icons/Empty'
+import Popup from '_components/common/notifications/Popup'
 
 const Details = ({ STATUS, notification, ...props }) => {
     const {
@@ -29,7 +29,7 @@ const Details = ({ STATUS, notification, ...props }) => {
         (codeFunction == '' || codeFunction == 'false')
 
     return (
-        <article className="mt-8 flex min-h-[50vh] flex-col gap-4 rounded-xl bg-flashWhite shadow-lg desktop:grid  desktop:grid-cols-[minmax(500px,_4fr)_minmax(400px,_3fr)] desktop:gap-0">
+        <article className="bg-flashWhite mt-8 flex min-h-[50vh] flex-col gap-4 rounded-xl shadow-lg desktop:grid  desktop:grid-cols-[minmax(500px,_4fr)_minmax(400px,_3fr)] desktop:gap-0">
             <div className="p-2 rounded-lg desktop:p-8 ">
                 <h2 className="pb-2 text-xl font-bold border-b-2 border-b-brightGray">{`${capitalizeFirstLetter(
                     service,
@@ -128,6 +128,7 @@ const TicketSelector = ({ notification, type }) => {
 
                         <Select
                             options={options}
+                            className="text-xs"
                             classNamePrefix="filter"
                             onChange={onHandleChange}
                             value={
@@ -151,21 +152,8 @@ const TicketSelector = ({ notification, type }) => {
 }
 
 const TicketElement = ({ type, notification }) => {
-    const {
-        service,
-        intro,
-        projectIcon,
-        slug,
-        specificCodeFile,
-        errorMessage,
-        time,
-        tickets,
-        assignedTo,
-        name,
-        message,
-        status,
-        priorityLevel,
-    } = notification
+    const { slug, serviceIcon, assignedTo, status, priorityLevel } =
+        notification
 
     const [selectedFilter, setSelectedFilter] = useState(null)
     const [selectedUser, setSelectedUser] = useState(null)
@@ -184,7 +172,6 @@ const TicketElement = ({ type, notification }) => {
         refreshData()
     }
 
-    // console.log({ selectedUser, selectedFilter })
     const handleUserChange = useCallback(async (e) => {
         setSelectedUser(e.value)
 
@@ -192,65 +179,37 @@ const TicketElement = ({ type, notification }) => {
             .from('notifications')
             .update({ assignedTo: e.value })
             .match({ notification_id: slug })
+
+        toast(
+            <Popup
+                id={1234567}
+                message={'Updated ticket'}
+                intro={`You've updated the user.`}
+                icon={serviceIcon}
+            />,
+            { toastId: 1234567 },
+        )
     }, [])
 
-    // console.log(notification)
     const handleFilterChange = useCallback(async (e) => {
         setSelectedFilter(e.value)
 
-        // const { data, error } = await supabase
-        //     .from('projects')
-        //     .select()
-        //     //     .update({connections[service]})
-        //     .match({ slug: name })
-        //     .single()
+        const { data, error } = await supabase
+            .from('notifications')
+            .update({ status: e.value })
+            .match({ notification_id: slug })
+            .single()
 
-        // console.log({ data, error })
-
-        // const connections = data.connections
-        // console.log(
-        //     '🚀 ~ file: Details.jsx ~ line 211 ~ handleFilterChange ~ connections',
-        //     connections,
-        // )
-        // console.log(selectedFilter)
-        // const newObj = connections.map((elem) => {
-        //     return {
-        //         icon: elem.icon,
-        //         name: elem.name,
-        //         type: elem.type,
-        //         status:
-        //             elem.name.toLocaleLowerCase() === service &&
-        //             e.value === 'solved'
-        //                 ? true
-        //                 : elem.status,
-        //         priority: elem.priority,
-        //     }
-        //     // console.log(elem)
-        // })
-        // console.log(newObj)
-        // const { data, error } = await supabase
-        //     .from('notifications')
-        //     .update({ status: e.value })
-        //     .match({ notification_id: slug })
-        //     .single()
-
-        // const { data: test, error: abc } = await supabase
-        //     .from('projects')
-        //     .update({connections[service]})
-        //     .match({ slug: name })
-
-        // console.log({ test, abc })
+        toast(
+            <Popup
+                id={1234567}
+                message={'Updated ticket'}
+                intro={`you've updated the ticket status.`}
+                icon={serviceIcon}
+            />,
+            { toastId: 1234567 },
+        )
     }, [])
-
-    //     setSelectedFilter(e.value)
-    //     console.log(selectedFilter)
-    //     // const { data, error } = await supabase
-    //     //     .from('notifications')
-    //     //     .update({ status: e.value })
-    //     //     .match({ notification_id: slug })
-    //     //     .single()
-    //     // console.log({ data, error })
-    // }
 
     const ticketOptions = [
         { value: 'Reported', label: 'Reported' },
@@ -275,15 +234,11 @@ const TicketElement = ({ type, notification }) => {
             <aside className="flex flex-col pb-4 my-4 border-b-2 border-b-brightGray">
                 <section className="flex h-8 ">
                     <h3 className="w-[50%] text-sm font-bold">Priority</h3>
-                    <Priority
-                        priority={priorityLevel}
-                        styles={'w-50% py-3 px-6'}
-                    />
                 </section>
                 <section className="flex items-center h-12">
                     <h3 className="w-[50%] text-sm font-bold">Assignee:</h3>
                     <Select
-                        className="w-48 text-sm"
+                        className="w-48 text-xs"
                         options={userOptions}
                         onChange={handleUserChange}
                         value={
@@ -304,7 +259,7 @@ const TicketElement = ({ type, notification }) => {
 
                     <div>
                         <Select
-                            className="w-48 text-sm"
+                            className="w-48 text-xs"
                             options={ticketOptions}
                             onChange={handleFilterChange}
                             value={

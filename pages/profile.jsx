@@ -36,7 +36,7 @@ const Profile = ({ user, userData, projects, ...props }) => {
                     </div>
                     <nav>
                         <ul
-                            className="flex flex-row flex-wrap pt-3 mb-0 list-none border-b border-grey-300 gap-x-4"
+                            className="flex flex-row flex-wrap pt-3 mb-0 list-none border-b gap-x-4 border-slate-300"
                             role="tablist"
                         >
                             <li className="mr-2 -mb-px text-center">
@@ -48,7 +48,7 @@ const Profile = ({ user, userData, projects, ...props }) => {
                                     className={
                                         'block py-3 text-xs  uppercase leading-normal ' +
                                         (openTab === 1
-                                            ? 'border-b-2 font-bold'
+                                            ? ' border-b-2 border-b-slate-800 font-bold text-slate-800'
                                             : '')
                                     }
                                 >
@@ -64,7 +64,7 @@ const Profile = ({ user, userData, projects, ...props }) => {
                                     className={
                                         'block py-3 text-xs  uppercase leading-normal ' +
                                         (openTab === 2
-                                            ? 'border-b-2 font-bold'
+                                            ? ' border-b-2 border-b-slate-800 font-bold text-slate-800'
                                             : '')
                                     }
                                 >
@@ -139,10 +139,10 @@ const ProfileSettingsTab = ({ user, projects }) => {
 
     return (
         <>
-            <section className="w-full py-4 border-b-2 border-b-grey-500">
-                <article className="flex justify-between w-full ">
+            <section className="w-full py-2 ">
+                <article className="flex justify-between w-full px-4 py-8 bg-white border rounded-lg shadow-sm shadow-slate-300">
                     <div>
-                        <h2 className="text-2xl font-bold ">Your projects</h2>
+                        <h2 className="text-xl font-bold ">Your projects</h2>
                         <p className="mt-2 text-sm opacity-75 w-96">
                             Select the projects you want to see in the
                             navigation bar
@@ -199,16 +199,16 @@ const ProfileSettingsTab = ({ user, projects }) => {
                         <input
                             type="submit"
                             value="Save project settings"
-                            className="h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="bg-violetBlue h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </form>
                 </article>
             </section>
 
-            <section className="w-full py-4 border-b-2 border-b-grey-500">
-                <article className="flex justify-between w-full ">
+            <section className="w-full py-2">
+                <article className="flex justify-between w-full px-4 py-8 bg-white border rounded-lg shadow-sm shadow-slate-300">
                     <div>
-                        <h2 className="text-2xl font-bold ">Profile image</h2>
+                        <h2 className="text-xl font-bold ">Profile image</h2>
                         <p className="mt-2 text-sm opacity-75 w-96">
                             Change your profile picture so that other users can
                             see it when you are working on a notification.
@@ -220,7 +220,7 @@ const ProfileSettingsTab = ({ user, projects }) => {
                         <input
                             type="submit"
                             value="Upload profile image"
-                            className="h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="bg-violetBlue h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </form>
                 </article>
@@ -275,7 +275,6 @@ const ProjectSettingsTab = ({}) => {
             },
         })
 
-        console.log({ user, userObj })
         const {
             data: dataObj,
             session: sess,
@@ -293,8 +292,8 @@ const ProjectSettingsTab = ({}) => {
     }
 
     return (
-        <section className="w-full py-4">
-            <article className="grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] border-b-2 border-b-raisinBlack pb-4">
+        <>
+            <article className="border-b-raisinBlack grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] rounded-lg border border-b-2 bg-white px-4 py-8 shadow-sm shadow-slate-300">
                 <div className="flex flex-col">
                     <h2 className="mt-4 text-xl font-bold">
                         Register new user
@@ -354,12 +353,12 @@ const ProjectSettingsTab = ({}) => {
                         <input
                             type="submit"
                             value="Add new user"
-                            className="mt-10 h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="bg-violetBlue mt-10 h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </fieldset>
                 </form>
             </article>
-            <article className="grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] border-b-2 border-b-raisinBlack py-4">
+            <article className="border-b-raisinBlack grid w-full grid-cols-[minmax(100px,_1fr)_minmax(200px,_3fr)] rounded-lg border border-b-2 bg-white px-4 py-8 shadow-sm shadow-slate-300">
                 <div className="flex flex-col">
                     <h2 className="mt-4 text-xl font-bold">Add project</h2>
                     <p className="pr-12 mt-2 text-sm opacity-75">
@@ -411,12 +410,12 @@ const ProjectSettingsTab = ({}) => {
                         <input
                             type="submit"
                             value="Add new project"
-                            className="mt-10 h-10 w-[175px] rounded-lg bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="bg-violetBlue mt-10 h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </fieldset>
                 </form>
             </article>
-        </section>
+        </>
     )
 }
 
