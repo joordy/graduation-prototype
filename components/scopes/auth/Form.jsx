@@ -63,7 +63,7 @@ const Form = ({}) => {
                 <input
                     type="submit"
                     className={
-                        'border-b-grey-900 hover:bg-grey-700 rounded-md border bg-violetBlue py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer ' +
+                        ' rounded-md bg-blue-700 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:bg-blue-300 hover:text-black ' +
                         (errorState ? '' : 'mt-4')
                     }
                 />
