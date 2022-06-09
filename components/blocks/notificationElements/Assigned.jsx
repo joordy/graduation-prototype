@@ -1,6 +1,6 @@
 const Assigned = ({ assignedTo }) => {
     return (
-        <p className="z-1 text-grey-900 group absolute -right-2 -bottom-[0.125rem] row-start-2 flex h-6 w-6 flex-col items-center justify-center rounded-full bg-brightGray text-right text-sm shadow-lg">
+        <p className="z-1 text-grey-900 group absolute -right-2 -bottom-[0.125rem] row-start-2 flex h-6 w-6 flex-col items-center justify-center rounded-full bg-slate-300 text-right text-sm shadow-lg">
             {assignedTo ? assignedTo.charAt(0) : '—'}
             <span
                 className={

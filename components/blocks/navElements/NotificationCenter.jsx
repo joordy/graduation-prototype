@@ -2,7 +2,11 @@ import Link from 'next/link'
 
 import Alert from '_components/blocks/icons/Alert'
 
-const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
+const NotificationCenter = ({ query, toggledHeader, getNotifications }) => {
+    const getLength = getNotifications.filter((elem) => {
+        return elem.status !== 'Solved'
+    })
+
     return (
         <Link href="/notifications">
             <a
@@ -21,7 +25,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
                     <p className="ml-2 w-max min-w-[125px] overflow-hidden text-sm">
                         Notification center
                     </p>
-                    {elementsCount >= 1 && (
+                    {getLength.length >= 1 && (
                         <span
                             className={`${
                                 toggledHeader
@@ -29,7 +33,7 @@ const NotificationCenter = ({ query, toggledHeader, elementsCount }) => {
                                     : 'opacity-100 delay-200'
                             } absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-[#E5E5EF] text-[10px] shadow-sm shadow-slate-300 duration-150 ease-in`}
                         >
-                            {elementsCount}
+                            {getLength.length}
                         </span>
                     )}
                 </div>

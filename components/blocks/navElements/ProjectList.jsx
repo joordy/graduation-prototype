@@ -3,10 +3,18 @@ import Link from 'next/link'
 const ProjectList = ({
     toggledHeader,
     projectData,
-    elementsCount,
     getNotifications,
     query,
 }) => {
+    const getLength = (slug) => {
+        const openIssues = getNotifications.filter((elem) => {
+            if (elem.name === slug && elem.status !== 'Solved') {
+                return elem
+            } else return
+        })
+        return openIssues.length
+    }
+
     return (
         <ul
             className={`flex max-h-[100%] flex-col gap-4 ${
@@ -15,9 +23,7 @@ const ProjectList = ({
         >
             {projectData.map(({ icon, projectName, slug }, i) => {
                 const activePath = query.project === slug
-
-                const counter = elementsCount(getNotifications, slug)
-
+                const length = getLength(slug)
                 return (
                     <li
                         key={i}
@@ -42,7 +48,7 @@ const ProjectList = ({
                                     </span>
                                 </div>
 
-                                {counter.length >= 1 && (
+                                {length >= 1 && (
                                     <span
                                         className={
                                             'absolute top-[50%] right-3 flex  h-5 w-5 -translate-y-[50%] items-center justify-center rounded-md bg-[#E5E5EF] text-[10px] shadow-sm shadow-slate-300 duration-150 ease-in ' +
@@ -51,7 +57,7 @@ const ProjectList = ({
                                                 : 'opacity-100 delay-200')
                                         }
                                     >
-                                        {counter.length}
+                                        {length}
                                     </span>
                                 )}
                             </a>

@@ -30,7 +30,7 @@ const DesktopNav = ({}) => {
 
     const elementsCount = (data, selected) => {
         return data.filter((item) => {
-            return item.name === selected
+            return item.name === selected && item.status !== 'Solved'
         })
     }
 
@@ -81,7 +81,7 @@ const DesktopNav = ({}) => {
                                         <Plus />
                                     </span>
                                     <p className="ml-2 w-max min-w-[125px] overflow-hidden text-left text-sm">
-                                        Add project{' '}
+                                        Add project
                                     </p>
                                 </div>
                             </button>
@@ -92,7 +92,7 @@ const DesktopNav = ({}) => {
                     <NotificationCenter
                         query={pathname === '/notifications'}
                         toggledHeader={toggledHeader}
-                        elementsCount={getNotifications.length}
+                        getNotifications={getNotifications}
                     />
                 </div>
 

@@ -1,14 +1,8 @@
 import Link from 'next/link'
+
 import { capitalizeFirstLetter } from '_utils/helpers/stringHelpers'
 
-const Popup = ({
-    message,
-    linked = false,
-    pathName,
-    intro,
-    icon,
-    ...props
-}) => {
+const Popup = ({ message, linked = false, pathName, intro, icon }) => {
     return linked ? (
         <Link href={`/${pathName}`}>
             <a>

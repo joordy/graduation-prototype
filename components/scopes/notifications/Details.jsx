@@ -29,14 +29,14 @@ const Details = ({ STATUS, notification, ...props }) => {
         (codeFunction == '' || codeFunction == 'false')
 
     return (
-        <article className="bg-flashWhite mt-8 flex min-h-[50vh] flex-col gap-4 rounded-xl shadow-lg desktop:grid  desktop:grid-cols-[minmax(500px,_4fr)_minmax(400px,_3fr)] desktop:gap-0">
-            <div className="p-2 rounded-lg desktop:p-8 ">
+        <article className="mt-8 flex min-h-[50vh] w-full flex-col gap-4 rounded-xl bg-white shadow-sm shadow-slate-300 desktop:grid  desktop:grid-cols-[minmax(30vw,_4fr)_minmax(30vw,_3fr)] desktop:gap-0">
+            <div className="p-2 rounded-lg bg-slate-50 desktop:p-8">
                 <h2 className="pb-2 text-xl font-bold border-b-2 border-b-brightGray">{`${capitalizeFirstLetter(
                     service,
                 )} ${message}`}</h2>
 
                 {!checkCodeFile && (
-                    <div className="flex items-center w-full">
+                    <div className="flex items-center w-full pb-4 overflow-x-auto">
                         <p className="flex flex-col">
                             <span className="mt-4 mr-2 font-bold">
                                 Appeared in:
@@ -50,7 +50,7 @@ const Details = ({ STATUS, notification, ...props }) => {
 
                 <h3></h3>
 
-                <div className="pb-4 mt-4 overflow-hidden overflow-x-scroll rounded-sm bg-flashWhite">
+                <div className="pb-4 mt-4 overflow-hidden overflow-x-auto rounded-sm bg-flashWhite">
                     {errorMessage?.length >= 1 ? (
                         <>
                             <span className="font-bold">Error message:</span>
@@ -232,52 +232,65 @@ const TicketElement = ({ type, notification }) => {
             </h2>
 
             <aside className="flex flex-col pb-4 my-4 border-b-2 border-b-brightGray">
-                <section className="flex h-8 ">
-                    <h3 className="w-[50%] text-sm font-bold">Priority</h3>
+                <section className="flex h-8 gap-4">
+                    <h3 className="w-full text-sm font-bold">Priority</h3>
+                    <div className="w-full">
+                        <Priority
+                            priority={priorityLevel}
+                            styles={'w-[50%] py-4 px-6'}
+                        />
+                    </div>
                 </section>
-                <section className="flex items-center h-12">
-                    <h3 className="w-[50%] text-sm font-bold">Assignee:</h3>
-                    <Select
-                        className="w-48 text-xs"
-                        options={userOptions}
-                        onChange={handleUserChange}
-                        value={
-                            selectedUser
-                                ? userOptions.find(
-                                      (obj) => obj.value === selectedUser,
-                                  )
-                                : userOptions.find((obj) =>
-                                      assignedTo
-                                          ? obj.value === assignedTo
-                                          : obj.value === 'Nobody',
-                                  )
-                        }
-                    />
+                <section className="flex items-center h-8 gap-4 mb-2">
+                    <h3 className="w-full text-sm font-bold">Last update:</h3>
+                    <p className="w-full">1h ago</p>
                 </section>
-                <section className="flex items-center h-12">
-                    <h3 className="w-[50%] text-sm font-bold">Status:</h3>
-
-                    <div>
+                <section className="flex gap-4">
+                    <div className="w-full">
+                        <h3 className="mb-2 w-[50%] text-sm font-bold">
+                            Assignee:
+                        </h3>
                         <Select
-                            className="w-48 text-xs"
-                            options={ticketOptions}
-                            onChange={handleFilterChange}
+                            className="w-full text-xs"
+                            options={userOptions}
+                            onChange={handleUserChange}
                             value={
-                                selectedFilter
-                                    ? ticketOptions.find(
-                                          (obj) => obj.value === selectedFilter,
+                                selectedUser
+                                    ? userOptions.find(
+                                          (obj) => obj.value === selectedUser,
                                       )
-                                    : ticketOptions.find(
-                                          (obj) => obj.value === status,
+                                    : userOptions.find((obj) =>
+                                          assignedTo
+                                              ? obj.value === assignedTo
+                                              : obj.value === 'Nobody',
                                       )
                             }
                         />
-                        <div className="max-w"></div>
                     </div>
-                </section>
-                <section className="flex h-8 ">
-                    <h3 className="w-[50%] text-sm font-bold">Last update:</h3>
-                    <p>1h ago</p>
+                    <div className="w-full">
+                        <h3 className="mb-2 w-[50%] text-sm font-bold">
+                            Status:
+                        </h3>
+
+                        <div>
+                            <Select
+                                className="w-full text-xs"
+                                options={ticketOptions}
+                                onChange={handleFilterChange}
+                                value={
+                                    selectedFilter
+                                        ? ticketOptions.find(
+                                              (obj) =>
+                                                  obj.value === selectedFilter,
+                                          )
+                                        : ticketOptions.find(
+                                              (obj) => obj.value === status,
+                                          )
+                                }
+                            />
+                            <div className="max-w"></div>
+                        </div>
+                    </div>
                 </section>
             </aside>
 
@@ -292,7 +305,7 @@ const TicketElement = ({ type, notification }) => {
 
             <aside className="flex flex-col justify-center w-full">
                 <div className="flex items-center h-8">
-                    <h3 className="w-[50%] text-sm font-bold">
+                    <h3 className="w-full text-sm font-bold">
                         Connected ticket
                     </h3>
                     <div className="flex justify-end w-full">
@@ -303,16 +316,16 @@ const TicketElement = ({ type, notification }) => {
                                 className="w-6 h-6 mr-2"
                             />
                             <p>{capitalizeFirstLetter(type)}</p>
-                        </span>{' '}
+                        </span>
                     </div>
                 </div>
 
                 <div className="flex items-center h-8 ">
-                    <h3 className="w-[50%] text-sm font-bold">Link</h3>
+                    <div />{' '}
                     <div className="flex justify-end w-full">
                         <button
                             onClick={onHandleReset}
-                            className="px-2 py-1 text-sm font-bold border-2 rounded-md border-violetBlue text-violetBlue"
+                            className="px-2 py-1 text-xs font-bold border-2 rounded-md border-violetBlue text-violetBlue"
                         >
                             Reset ticket type
                         </button>
@@ -320,7 +333,7 @@ const TicketElement = ({ type, notification }) => {
                 </div>
 
                 <Link href="#">
-                    <a className="px-2 py-1 mt-2 text-sm text-center border-2 rounded-lg border-violetBlue text-violetBlue hover:bg-violetBlue hover:text-white">
+                    <a className="px-2 py-1 mt-2 text-sm text-center duration-200 ease-in rounded-lg text-violetBlue bg-slate-200 hover:bg-slate-700 hover:text-white">
                         Link to the {capitalizeFirstLetter(type)} board
                     </a>
                 </Link>

@@ -199,7 +199,7 @@ const ProfileSettingsTab = ({ user, projects }) => {
                         <input
                             type="submit"
                             value="Save project settings"
-                            className="bg-violetBlue h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="h-10 w-[175px] rounded-lg bg-blue-500 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </form>
                 </article>
@@ -220,7 +220,7 @@ const ProfileSettingsTab = ({ user, projects }) => {
                         <input
                             type="submit"
                             value="Upload profile image"
-                            className="bg-violetBlue h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="h-10 w-[175px] rounded-lg bg-blue-500 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </form>
                 </article>
@@ -353,7 +353,7 @@ const ProjectSettingsTab = ({}) => {
                         <input
                             type="submit"
                             value="Add new user"
-                            className="bg-violetBlue mt-10 h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="mt-10 h-10 w-[175px] rounded-lg bg-blue-500 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </fieldset>
                 </form>
@@ -410,7 +410,7 @@ const ProjectSettingsTab = ({}) => {
                         <input
                             type="submit"
                             value="Add new project"
-                            className="bg-violetBlue mt-10 h-10 w-[175px] rounded-lg py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
+                            className="mt-10 h-10 w-[175px] rounded-lg bg-blue-500 py-2 text-sm text-white duration-150 ease-in hover:cursor-pointer hover:opacity-80"
                         />
                     </fieldset>
                 </form>

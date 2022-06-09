@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -8,15 +7,10 @@ import { capitalizeFirstLetter } from '_utils/helpers/stringHelpers'
 import SignOut from '_components/blocks/icons/SignOut'
 
 const ProfileButton = ({ user, userData, toggledHeader }) => {
-    const [toggle, setToggle] = useState(false)
     const router = useRouter()
 
     function eraseCookie(name) {
         document.cookie = name + '=; Max-Age=0'
-    }
-
-    const onHandleClick = (e) => {
-        setToggle(!toggle)
     }
 
     const onHandleSignOut = async (e) => {
@@ -43,8 +37,8 @@ const ProfileButton = ({ user, userData, toggledHeader }) => {
                         className={`relative flex w-full flex-row  items-center rounded-lg  p-2 text-sm`}
                     >
                         <span className="flex flex-col items-center justify-center w-6 h-6 p-4 text-white rounded-full stroke-grey-800 bg-slate-800">
-                            {user?.user_metadata.firstName
-                                ? user?.user_metadata.firstName.charAt(0)
+                            {user?.user_metadata?.firstName
+                                ? user?.user_metadata?.firstName.charAt(0)
                                 : userData?.firstName?.charAt(0)}
                             {user?.user_metadata.lastName
                                 ? user?.user_metadata.lastName.charAt(0)
@@ -59,7 +53,9 @@ const ProfileButton = ({ user, userData, toggledHeader }) => {
                             </p>
                             <p className="text-grey-700 ml-2 w-max min-w-[125px] overflow-hidden  text-xs font-extralight">
                                 {capitalizeFirstLetter(
-                                    user?.user_metadata.role,
+                                    user?.user_metadata?.role
+                                        ? user?.user_metadata.role
+                                        : userData?.user_role,
                                 )}
                             </p>
                         </div>

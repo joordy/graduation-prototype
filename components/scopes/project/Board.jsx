@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Select from 'react-select'
 
 import { getValueInArrayCounter } from '_utils/helpers/arrayHelpers'
@@ -6,36 +6,44 @@ import { getValueInArrayCounter } from '_utils/helpers/arrayHelpers'
 import IssueBlock from '_components/common/IssueBlock'
 
 const Board = ({ notifications }) => {
-    const [selectedValue, setSelectedValue] = useState(null)
-
-    const handleChange = (e) => {
-        setSelectedValue(e.value)
-    }
-
-    const filterOptions = [
-        { value: 'week', label: 'Week' },
-        { value: 'month', label: 'Month' },
-        { value: 'all', label: 'All' },
+    const options = [
+        { value: 'prioHighLow', label: 'Priority high to low' },
+        { value: 'prioLowHigh', label: ' Priority low to high' },
+        { value: 'lastUpdated', label: 'Last updated' },
     ]
 
+    const [selected, setSelected] = useState(options[0])
+
+    const handleChange = (e) => {
+        setSelected(e.value)
+    }
+
+    const filteredNotifications = useMemo(() => {
+        return notifications.sort((a, b) => {
+            if (selected === 'prioLowHigh') {
+                return b.priorityLevel - a.priorityLevel
+            } else if (selected === 'lastUpdated') {
+                return b.created_at - a.created_at
+            } else {
+                return a.priorityLevel - b.priorityLevel
+            }
+            // if (selectedValue)
+        })
+    }, [selected])
+
+    console.log(selected)
     return (
-        <section className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2 ">
             <aside className="flex items-center justify-between gap-4 ">
                 <h2 className="text-xl font-bold">Notifications</h2>
 
                 <form className="flex items-center">
                     <label className="mr-2 text-xs font-medium">Sort by:</label>
                     <Select
-                        options={filterOptions}
-                        value={
-                            selectedValue
-                                ? filterOptions.find(
-                                      (obj) => obj.value === selectedValue,
-                                  )
-                                : filterOptions[2]
-                        }
+                        options={options}
+                        value={selected.value}
                         onChange={handleChange}
-                        className="w-32 text-xs"
+                        className="w-48 text-xs"
                     />
                 </form>
             </aside>
@@ -64,7 +72,7 @@ const Board = ({ notifications }) => {
                         issueTitle="Recent"
                         issueStatus="Reported"
                         emptyText="No notifications reported."
-                        notifications={notifications}
+                        notifications={filteredNotifications}
                         background="bg-white border-2 shadow-transparent mx-0"
                         innerWrapper="pb-8"
                     />
@@ -93,7 +101,7 @@ const Board = ({ notifications }) => {
                         issueTitle="In Progress"
                         issueStatus="In progress"
                         emptyText="No notifications in progress yet."
-                        notifications={notifications}
+                        notifications={filteredNotifications}
                         background="bg-white border-2 shadow-transparent mx-0"
                         innerWrapper="pb-8"
                     />
@@ -122,7 +130,7 @@ const Board = ({ notifications }) => {
                         issueTitle="Solved"
                         issueStatus="Solved"
                         emptyText="No notifications solved."
-                        notifications={notifications}
+                        notifications={filteredNotifications}
                         background="bg-white border-2 shadow-transparent mx-0"
                         innerWrapper="pb-8"
                     />

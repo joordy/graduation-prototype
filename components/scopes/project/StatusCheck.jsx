@@ -70,8 +70,8 @@ const StatusCheck = ({ project = {}, notifications = [] }) => {
                     </span>
                 </div>
             </div>
-            <div className="w-full px-8 pt-8 pb-2 overflow-x-auto bg-white rounded-md shadow-sm shadow-slate-300">
-                <div className="grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 border-b-slate-500  font-bold desktop:w-full desktop:px-6">
+            <div className="w-full px-4 pt-4 pb-2 overflow-x-auto bg-white rounded-md shadow-sm shadow-slate-300">
+                <div className="grid w-fit grid-cols-[minmax(100px,_1fr)_minmax(75px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(175px,_1fr)] gap-x-6 border-b-2 border-b-slate-500  font-bold desktop:w-full desktop:px-6 desktop:py-2">
                     <span
                         className="flex justify-between"
                         onClick={() => {

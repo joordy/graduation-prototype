@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react'
-import moment from 'moment'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 
@@ -7,14 +6,10 @@ import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
 import { supabase } from 'utils/database/init'
 
 import Priority from '_components/blocks/notificationElements/Priority'
-import Status from '_components/blocks/notificationElements/Status'
-import Title from '_components/blocks/notificationElements/Title'
-import Assigned from '_components/blocks/notificationElements/Assigned'
-import Close from '_components/blocks/icons/Close'
 import Changelog from '_components/blocks/Changelog'
 import Popup from '_components/common/notifications/Popup'
 
-const NotificationPreview = ({ data }) => {
+const Preview = ({ data }) => {
     const {
         assignedTo,
         priorityLevel,
@@ -232,17 +227,5 @@ const NotificationPreview = ({ data }) => {
         </section>
     )
 }
-const Element = ({ char, name }) => {
-    return (
-        <div className="flex">
-            {char && (
-                <span className="flex flex-col items-center justify-center w-6 h-6 row-start-2 mr-2 text-sm text-right rounded-full z-1 text-grey-900 bg-brightGray group">
-                    {char}
-                </span>
-            )}
-            {name && <p>{name}</p>}
-        </div>
-    )
-}
 
-export default NotificationPreview
+export default Preview

@@ -1,7 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
-
-import { capitalizeFirstLetter } from 'utils/helpers/stringHelpers'
 
 import Card from '_components/blocks/Card'
 import Priority from '_components/blocks/notificationElements/Priority'
@@ -13,45 +10,30 @@ const Notification = ({
     notificationType,
     linked,
     data,
-    type,
     background,
     onClick,
-    ...props
+    projectIcon = false,
 }) => {
-    const NotificationType = ({ type }) => {
-        switch (type) {
-            case 'inProgress':
-                return <InProgress data={data} />
-            case 'solved':
-                return <FixedIssue data={data} />
-            default:
-                return (
-                    <NewNotification
-                        notificationType={notificationType}
-                        linked={linked}
-                        data={data}
-                        background={background}
-                        onClick={onClick}
-                    />
-                )
-        }
-    }
-
-    return <NotificationType type={type} />
+    return (
+        <ReportedNotification
+            imgType={notificationType}
+            linked={linked}
+            data={data}
+            background={background}
+            onClick={onClick}
+            projectIcon={projectIcon}
+        />
+    )
 }
 
-const NewNotification = ({
+const ReportedNotification = ({
     onClick,
     data,
-    notificationType,
+    imgType,
     linked,
     background,
-    ...props
 }) => {
-    const img =
-        notificationType === 'projectImg'
-            ? data?.projectIcon
-            : data?.serviceIcon
+    const img = imgType === 'projectImg' ? data?.projectIcon : data?.serviceIcon
 
     return (
         <Card
@@ -74,7 +56,7 @@ const NewNotification = ({
                                 <img
                                     src={img}
                                     alt={`icon of ${data?.service} on the ${data?.projectName} project`}
-                                    className="h-[32px] w-[32px] opacity-40"
+                                    className="h-[32px] w-[32px] grayscale filter"
                                 />
                             </div>
                             <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-1">
@@ -95,7 +77,7 @@ const NewNotification = ({
                         <img
                             src={img}
                             alt={`icon of ${data?.service} on the ${data?.projectName} project`}
-                            className="h-[32px] w-[32px] opacity-40"
+                            className="h-[32px] w-[32px] grayscale filter"
                         />
                     </div>
                     <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-1">
@@ -106,75 +88,6 @@ const NewNotification = ({
                     </div>
                 </div>
             )}
-        </Card>
-    )
-}
-
-const InProgress = ({ data, ...props }) => {
-    return (
-        <Card tag="li">
-            <Link
-                href={`/projects/${data?.name.toLocaleLowerCase()}/notifications/${
-                    data?.slug
-                }`}
-            >
-                <a>
-                    <div className="grid grid-cols-[32px_auto] gap-4">
-                        <div className="flex items-center justify-center">
-                            <img
-                                src={data?.serviceIcon}
-                                alt={`icon of ${data?.serviceIcon} on the ${data?.projectName} project`}
-                                className="h-[32px] w-[32px] opacity-40"
-                            />
-                        </div>
-                        <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">
-                            <Title
-                                service={data.service}
-                                message={data.message}
-                            />
-                            <PriorityElement priority="Low" />
-                            <CurrentStatus status="8h ago" />
-                            <AssignedTo assignedTo={data.assignedTo} />
-                        </div>
-                    </div>
-                </a>
-            </Link>
-        </Card>
-    )
-}
-
-const FixedIssue = ({ data, ...props }) => {
-    return (
-        <Card tag="li">
-            <Link
-                href={`/projects/${data?.name.toLocaleLowerCase()}/notifications/${
-                    data?.slug
-                }`}
-            >
-                <a>
-                    <div className="grid grid-cols-[32px_auto] gap-4">
-                        <div className="flex items-center justify-center">
-                            <img
-                                src={data?.serviceIcon}
-                                alt={`icon of ${data?.serviceIcon} on the ${data?.projectName} project`}
-                                className="h-[32px] w-[32px] opacity-40"
-                            />
-                        </div>
-                        <div className="relative col-start-2 grid grid-rows-[auto_20px] gap-2">
-                            <Title
-                                service={data.service}
-                                message={data.message}
-                            />
-                            <PriorityElement priority="Low" />
-                            <CurrentStatus status="Solved" />
-
-                            <p className="row-start-2 text-right bg-brightGray">
-                                {data.assignedTo ? data.assignedTo : '—'}
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </Link>
         </Card>
     )
 }

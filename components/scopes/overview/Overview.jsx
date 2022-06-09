@@ -28,6 +28,20 @@ const ProjectSelection = ({ projectData, notifications }) => {
         }).length
     }
 
+    const getLength = (project) => {
+        const openIssues = notifications.filter((elem) => {
+            if (
+                elem.name === project.slug.toLocaleLowerCase() &&
+                elem.status !== 'Solved'
+            ) {
+                return elem
+            } else return
+        })
+
+        console.log(openIssues)
+        return openIssues.length
+    }
+
     return (
         <section className="py-4 desktop:col-start-1 desktop:col-end-3">
             <h2 className="mb-4 ml-1 text-xl font-medium">Your projects</h2>
@@ -60,10 +74,7 @@ const ProjectSelection = ({ projectData, notifications }) => {
                                             Current notifications:
                                         </p>
                                         <span className="p-2 text-xs rounded-md bg-brightGray">
-                                            {elementsCount(
-                                                notifications,
-                                                project.slug.toLocaleLowerCase(),
-                                            )}
+                                            {getLength(project)}
                                         </span>
                                     </div>
                                 </a>
