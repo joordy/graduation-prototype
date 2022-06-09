@@ -24,7 +24,7 @@ export default function SignInPage({}) {
             </section>
             <section className="flex flex-col items-center mt-16 text-xs text-center font-body">
                 <div className="my-2 w-[350px] rounded-md bg-white py-4 shadow-sm shadow-slate-400">
-                    <h2 className="mb-2">Developer role:</h2>
+                    <h2 className="mb-2">Technical Director role:</h2>
                     <p className="font-normal">
                         <span>Email:</span> jmfronik@gmail.com
                     </p>
@@ -33,7 +33,7 @@ export default function SignInPage({}) {
                     </p>
                 </div>
                 <div className="my-2 w-[350px] rounded-md bg-white py-4 shadow-sm shadow-slate-400">
-                    <h2 className="mb-2">Technical Director role:</h2>
+                    <h2 className="mb-2">Developer role:</h2>
                     <p className="font-normal">
                         <span>Email:</span> jordy@buildinamsterdam.com
                     </p>

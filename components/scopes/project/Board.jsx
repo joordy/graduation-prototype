@@ -27,11 +27,9 @@ const Board = ({ notifications }) => {
             } else {
                 return a.priorityLevel - b.priorityLevel
             }
-            // if (selectedValue)
         })
     }, [selected])
 
-    console.log(selected)
     return (
         <section className="flex flex-col gap-2 ">
             <aside className="flex items-center justify-between gap-4 ">

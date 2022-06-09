@@ -38,7 +38,6 @@ const ProjectSelection = ({ projectData, notifications }) => {
             } else return
         })
 
-        console.log(openIssues)
         return openIssues.length
     }
 

@@ -143,7 +143,7 @@ const TicketSelector = ({ notification, type }) => {
                         <input
                             type="submit"
                             value="Set ticket type"
-                            className="w-full py-2 font-medium rounded-md bg-violetBlue text-offWhite"
+                            className="w-full py-2 font-medium text-white duration-200 ease-in bg-blue-500 rounded-md hover:cursor-pointer hover:bg-blue-300 hover:text-black"
                         />
                     </fieldset>
                 </form>
@@ -325,7 +325,7 @@ const TicketElement = ({ type, notification }) => {
                     <div className="flex justify-end w-full">
                         <button
                             onClick={onHandleReset}
-                            className="px-2 py-1 text-xs font-bold border-2 rounded-md border-violetBlue text-violetBlue"
+                            className="py-1 text-xs font-bold text-blue-500 border-b-2 border-b-blue-500"
                         >
                             Reset ticket type
                         </button>
@@ -333,7 +333,7 @@ const TicketElement = ({ type, notification }) => {
                 </div>
 
                 <Link href="#">
-                    <a className="px-2 py-1 mt-2 text-sm text-center duration-200 ease-in rounded-lg text-violetBlue bg-slate-200 hover:bg-slate-700 hover:text-white">
+                    <a className="p-2 mt-2 text-sm text-center text-white duration-200 ease-in bg-blue-500 rounded-lg hover:bg-blue-300 hover:text-black">
                         Link to the {capitalizeFirstLetter(type)} board
                     </a>
                 </Link>

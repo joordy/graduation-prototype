@@ -17,6 +17,7 @@ import Plus from '_components/blocks/icons/Plus'
 
 const DesktopNav = ({}) => {
     const { user } = useAuth()
+    console.log('🚀 ~ file: DesktopNav.jsx ~ line 20 ~ DesktopNav ~ user', user)
     const { query, pathname } = useRouter()
     const userData = useUserData()
     const toggledHeader = useToggleHeader()
