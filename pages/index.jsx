@@ -1,92 +1,76 @@
-import Link from 'next/link'
-import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { getSession } from 'next-auth/react'
+import { useEffect, useMemo } from 'react'
 
-import { db } from '_utils/database/firebase'
-import { NOTIFICATION_DATA, PROJECT_DATA } from '_utils/database/dataset'
-import { useUserData, useSetUserData } from '_utils/atoms/userData'
+import { supabase } from '_utils/database/init'
+import { useSetUserData, useUserData } from '_utils/atoms/userData'
 
-import Page from '_components/scopes/Page'
-import NotificationElement from '_components/blocks/NotificationElement'
-import { useEffect } from 'react'
+import Page from '_components/scopes/global/Page'
+import Overview from '_components/scopes/overview/Overview'
 
-const Home = ({ data, userData, notificationData, ...props }) => {
-    console.log('page props: ', props)
+const Home = ({ notifications, projects, user, data, ...props }) => {
+    const userData = useUserData()
     const setUserData = useSetUserData()
+
+    const projectData = useMemo(() => {
+        return projects.filter((projects) => {
+            return userData?.projects?.indexOf(projects.projectName) > -1
+        })
+    }, [projects, userData])
 
     useEffect(() => {
         setUserData(data)
-    }, [])
+    }, [data])
 
     return (
-        <Page topNav={true}>
-            <header>
-                <h1 className="mb-8 text-3xl font-bold">Notifications:</h1>
-            </header>
+        <Page>
+            <section className="h-[calc(100%-3em)]">
+                <header>
+                    <h1 className="ml-1 text-3xl font-bold ">
+                        Hi {user?.user_metadata?.firstName}!
+                    </h1>
+                </header>
 
-            <section className="grid gap-12 xl:grid-cols-2">
-                <p>notifications</p>
-                <ul className="flex flex-col gap-y-4">
-                    {notificationData.map((data, i) => {
-                        return <NotificationElement key={i} hit={data} />
-                    })}
-                </ul>
+                <main className="flex flex-col gap-4 pb-28 desktop:grid desktop:h-[inherit] desktop:grid-cols-2 desktop:grid-rows-[200px_auto]">
+                    <Overview
+                        notifications={notifications}
+                        projectData={projectData}
+                    />
+                </main>
             </section>
         </Page>
     )
 }
 
-export async function getServerSideProps(ctx) {
-    const user = await getSession(ctx)
+export async function getServerSideProps({ req, res }) {
+    const { user } = await supabase.auth.api.getUserByCookie(req)
+    const { data, error } = await supabase
+        .from('users')
+        .select()
+        .eq('uid', user?.id)
+        .single()
 
-    const docRef = doc(db, 'users', user.user.uid)
-    const docSnap = await getDoc(docRef)
+    const { data: projectData, error: projectError } = await supabase
+        .from('projects')
+        .select()
 
-    const selectedProjects = PROJECT_DATA.map((elem) => {
-        return elem.projectName
-    })
-
-    const data = docSnap.exists() && docSnap.data()
-
-    checkData(data, user, selectedProjects)
+    const { data: notificationData, error: notificationError } = await supabase
+        .from('notifications')
+        .select()
 
     if (!user) {
-        return { props: {}, redirect: { destination: '/auth/sign-in' } }
+        return {
+            props: {},
+            redirect: { destination: '/sign-in', permanent: false },
+        }
     }
 
     return {
         props: {
+            user: user,
             data: data,
-            userData: user,
-            projectData: PROJECT_DATA,
-            notificationData: NOTIFICATION_DATA,
+            projects: projectData || [],
+            notifications: notificationData || [],
         },
     }
 }
 
 export default Home
-
-const checkData = async (data, user, selectedProjects) => {
-    // const userData = useUser()
-    // const openSearch = useOpenSearch()
-    // const toggledHeader = useToggleHeader()
-
-    // const setAuthState = useSetIsUserAuth()
-
-    if (data.uid && data.projects.length != 0) {
-        console.log('hi')
-        return userData
-    } else {
-        console.log('bye')
-        await setDoc(
-            doc(db, 'users', user.user.uid),
-            {
-                uid: user.user.uid,
-                username: user.user.username,
-                projects: selectedProjects,
-            },
-            { merge: true },
-        )
-        return userData
-    }
-}

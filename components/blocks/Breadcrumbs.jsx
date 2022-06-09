@@ -35,13 +35,16 @@ const Breadcrumbs = () => {
     }
 
     return (
-        <nav aria-label="breadcrumbs" className="text-[13px] font-light ">
-            <ol className="flex">
+        <nav
+            aria-label="breadcrumbs"
+            className="text-[13px] font-light italic "
+        >
+            <ol className="flex ">
                 <li>
                     <a href="/">Overview</a>
                 </li>
                 {breadcrumbs.map((breadcrumb, i) => {
-                    return (
+                    return breadcrumb.breadcrumb === 'Notifications' ? null : (
                         <li key={breadcrumb.href} className="ml-1">
                             <Link href={breadcrumb.href}>
                                 <a>

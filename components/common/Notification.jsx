@@ -1,7 +1,10 @@
-const Notification = (
-    props,
-    { projectName = '', intro = '', pathName = '#', closeToast },
-) => {
+const Notification = ({
+    projectName = '',
+    intro = '',
+    pathName = '#',
+    closeToast,
+    ...props
+}) => {
     return (
         <>
             <a href={pathName}>
