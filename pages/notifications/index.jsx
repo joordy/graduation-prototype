@@ -80,6 +80,7 @@ const NotificationCenter = ({ notifications }) => {
                                 type="Reported"
                                 fallbackText="Currently nothing reported."
                                 setCurrentIndex={setCurrentIndex}
+                                currentIndex={currentIndex}
                             />
                         </div>
 
@@ -93,6 +94,7 @@ const NotificationCenter = ({ notifications }) => {
                                 type="In progress"
                                 fallbackText="Currently no notifications in progress."
                                 setCurrentIndex={setCurrentIndex}
+                                currentIndex={currentIndex}
                             />
                         </div>
                     </section>
@@ -119,17 +121,23 @@ const NotificationList = ({
     type,
     fallbackText,
     setCurrentIndex,
+    currentIndex,
 }) => {
     return checkIfValueExist(notifications, 'status', type) ? (
         <ul
             className={
-                'flex h-full flex-col gap-y-3 overflow-y-auto px-0 pt-2 '
+                'flex h-full flex-col gap-y-3 overflow-y-auto px-0 pt-2  '
             }
         >
             {notifications.map((data, i) => {
                 if (data.status === type)
                     return (
                         <Notification
+                            background={
+                                currentIndex === i
+                                    ? 'border border-slate-600'
+                                    : ''
+                            }
                             onClick={(e) => setCurrentIndex(i)}
                             linked={false}
                             notificationType={'projectImg'}
