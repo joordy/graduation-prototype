@@ -147,10 +147,7 @@ const ProfileSettingsTab = ({ user, projects }) => {
                             navigation bar
                         </p>
                     </div>
-                    <form
-                        className="flex w-[50%] items-end justify-between"
-                        onSubmit={onHandleSubmit}
-                    >
+                    <form className="flex w-[50%] items-end justify-between">
                         <fieldset className="flex flex-col">
                             {projects.map((project, i) => {
                                 const { projectName } = project
