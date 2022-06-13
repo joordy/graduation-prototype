@@ -135,7 +135,6 @@ const ProfileSettingsTab = ({ user, projects }) => {
     const obj = {}
 
     const [checkboxes, setCheckboxes] = useState(obj)
-    const onHandleSubmit = (e) => {}
 
     return (
         <>
